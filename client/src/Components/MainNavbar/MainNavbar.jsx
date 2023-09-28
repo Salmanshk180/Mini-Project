@@ -13,7 +13,7 @@ const MainNavbar = () => {
       <Navbar expand="lg" className="bg-body-tertiary p-4 fs-5" fixed="top">
         <Container>
           <Navbar.Brand href="#home" className="mx-3">
-            logo
+            DesignWorld
           </Navbar.Brand>
           <Navbar.Toggle
             aria-controls="basic-navbar-nav"
