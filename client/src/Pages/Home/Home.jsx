@@ -1,11 +1,15 @@
 import React from "react";
-import { Bottombar } from '../../Components/MainNavbar/Bottombar';
+import MainNavbar from "../../Components/MainNavbar/MainNavbar";
+import Login from "../../Components/Login/Login";
+import SignUp from "../../Components/SignUp/SignUp";
 
 const Home = () => {
   return (
     <>
     <div>
-      <Bottombar/>
+      <MainNavbar></MainNavbar>
+      <Login></Login>
+      <SignUp></SignUp>
     </div>
     
     </>

@@ -1,0 +1,11 @@
+.sidebar{
+    background-color:gray;
+    width: fit-content;
+    min-height: 100vh;
+    @media (max-width: 992px) {
+        overflow-x: scroll;
+        background-color: black;
+        width: 100%;
+        min-height: fit-content;
+      }
+}
