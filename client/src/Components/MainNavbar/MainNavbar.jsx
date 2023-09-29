@@ -4,13 +4,26 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Button from "react-bootstrap/esm/Button";
-
+import { useDispatch } from "react-redux";
+import {
+  openLoginModal,
+  openSignupModal,
+} from "../../redux/actions/modalActions";
 const MainNavbar = () => {
   const [hovered, setHovered] = useState(false);
+  const dispatch = useDispatch();
+
+  const handleLoginClick = () => {
+    dispatch(openLoginModal());
+  };
+
+  const handleSignupClick = () => {
+    dispatch(openSignupModal());
+  };
 
   return (
     <>
-      <Navbar expand="lg" className="bg-body-tertiary p-4 fs-5" fixed="top">
+      <Navbar expand="lg" className="bg-body-tertiary p-4 fs-5">
         <Container>
           <Navbar.Brand href="#home" className="mx-3">
             DesignWorld
@@ -43,6 +56,7 @@ const MainNavbar = () => {
             </Nav>
             <Nav className="d-flex flex-md-row">
               <Button
+                onClick={handleLoginClick}
                 className="mx-2 my-1 my-lg-0"
                 variant="light"
                 style={{
@@ -65,6 +79,7 @@ const MainNavbar = () => {
                   backgroundColor: hovered ? "#fa7b05" : "#ffffff",
                   color: hovered ? "#ffffff" : "#fa7b05",
                 }}
+                onClick={handleSignupClick}
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
               >
