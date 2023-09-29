@@ -1,11 +1,13 @@
 import React from "react";
-import MainNavbar from "../../Components/MainNavbar/MainNavbar";
+import { Bottombar } from '../../Components/MainNavbar/Bottombar';
+
 const Home = () => {
   return (
     <>
     <div>
-      <MainNavbar></MainNavbar>     
+      <Bottombar/>
     </div>
+    
     </>
   );
 };
