@@ -98,12 +98,7 @@ const SignUp = () => {
                 ></div>
               </div>
             </Form.Group>
-            <Form.Group className="w-75 mx-auto my-4">
-              <div className="d-flex justify-content-between">
-                <Form.Check label="Remember me"></Form.Check>
-                <NavLink style={{ color: "black" }}>Forgot Password</NavLink>
-              </div>
-            </Form.Group>
+            
             <Form.Group className="w-75 mx-auto my-4">
               <Button
                 className="w-100"
