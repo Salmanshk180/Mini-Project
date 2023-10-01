@@ -1,0 +1,6 @@
+.footer-icon i:hover{
+    cursor:pointer;
+    background: red !important;
+    color:white !important;
+    transition: 0.5s;
+}

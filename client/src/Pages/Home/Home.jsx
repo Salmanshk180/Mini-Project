@@ -1,13 +1,14 @@
 import React from "react";
-import { Bottombar } from '../../Components/MainNavbar/Bottombar';
+import {About} from '../About/About';
+// import {Footer} from '../../Components/Footer/Footer';
+import {Contact} from '../../Components/Contact/Contact';
 
 const Home = () => {
   return (
     <>
-    <div>
-      <Bottombar/>
-    </div>
-    
+    {/* <Footer/> */}
+    {/* <About/> */}
+    <Contact/>
     </>
   );
 };
