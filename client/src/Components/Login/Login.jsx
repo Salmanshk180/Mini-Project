@@ -3,8 +3,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { NavLink } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
+import {BsEnvelopeFill,BsLockFill} from "react-icons/bs"
 import { useDispatch, useSelector } from "react-redux";
 import {
   openLoginModal,
@@ -52,10 +51,7 @@ const Login = () => {
             <Form.Group className="w-75 mx-auto">
               <div className="mb-3">
                 <div className="d-flex align-items-center">
-                  <FontAwesomeIcon
-                    icon={faEnvelope}
-                    style={{ fontSize: "28px", color: "#999999" }}
-                  />
+                  <BsEnvelopeFill style={{fontSize:"24px",color:"gray"}}></BsEnvelopeFill>
                   <Form.Control
                     type="email"
                     placeholder="Email"
@@ -76,10 +72,7 @@ const Login = () => {
               </div>
               <div className="my-3">
                 <div className="d-flex align-items-center">
-                  <FontAwesomeIcon
-                    icon={faLock}
-                    style={{ fontSize: "28px", color: "#999999" }}
-                  />
+                <BsLockFill style={{fontSize:"24px",color:"gray"}}></BsLockFill>
                   <Form.Control
                     type="password"
                     placeholder="Password"

@@ -3,8 +3,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { NavLink } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
+import {BsEnvelopeFill,BsLockFill} from "react-icons/bs"
 import { useSelector, useDispatch } from "react-redux";
 import {
   openSignupModal,
@@ -51,10 +50,7 @@ const SignUp = () => {
             <Form.Group className="w-75 mx-auto">
               <div className="mb-3">
                 <div className="d-flex align-items-center">
-                  <FontAwesomeIcon
-                    icon={faEnvelope}
-                    style={{ fontSize: "28px", color: "#999999" }}
-                  />
+                <BsEnvelopeFill style={{fontSize:"24px",color:"gray"}}></BsEnvelopeFill>
                   <Form.Control
                     type="email"
                     placeholder="Email"
@@ -75,13 +71,31 @@ const SignUp = () => {
               </div>
               <div className="my-3">
                 <div className="d-flex align-items-center">
-                  <FontAwesomeIcon
-                    icon={faLock}
-                    style={{ fontSize: "28px", color: "#999999" }}
-                  />
+                <BsLockFill style={{fontSize:"24px",color:"gray"}}></BsLockFill>
                   <Form.Control
                     type="password"
                     placeholder="Password"
+                    className="w-100"
+                    style={{
+                      border: "none",
+                      boxShadow: "none",
+                    }}
+                  ></Form.Control>
+                </div>
+                <div
+                  style={{
+                    width: "100%",
+                    height: "1px",
+                    backgroundColor: "black",
+                  }}
+                ></div>
+              </div>
+              <div className="my-3">
+                <div className="d-flex align-items-center">
+                <BsLockFill style={{fontSize:"24px",color:"gray"}}></BsLockFill>
+                  <Form.Control
+                    type="password"
+                    placeholder="Confirm Password"
                     className="w-100"
                     style={{
                       border: "none",
@@ -111,7 +125,7 @@ const SignUp = () => {
                   color: "#ffffff",
                 }}
               >
-                Login
+                Sign Up
               </Button>
               <p className="mt-4 text-center">
                 Already have an account?
