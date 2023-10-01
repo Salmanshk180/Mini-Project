@@ -32,7 +32,7 @@ const Canvas = () => {
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    height: '100%',
+    height: 'calc(100vh - 93px)',
     overflow: 'hidden',
   };
 
