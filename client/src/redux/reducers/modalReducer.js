@@ -8,6 +8,7 @@ import {
 const initialState = {
   showLoginModal: false,
   showSignupModal: false,
+  
 };
 
 const modalReducer = (state = initialState, action) => {
