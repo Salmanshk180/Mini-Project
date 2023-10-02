@@ -1,7 +1,6 @@
 import React from 'react'
-import MainNavbar from '../MainNavbar/MainNavbar';
-import { Footer } from '../Footer/Footer';
-import './Contact.css';
+import MainNavbar from '../../Components/MainNavbar/MainNavbar';
+import { Footer } from '../../Components/Footer/Footer';
 
 export const Contact = () => {
     return (

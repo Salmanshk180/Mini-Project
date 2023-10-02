@@ -4,7 +4,7 @@ import './Footer.css';
 export const Footer = () => {
     return (
         <>
-        <div className='Footer bg-light'>
+        <div className='Footer bg-light text-center text-md-start'>
             <div className='container  bg-opacity-60'>
                 <div className='row p-4'>
                     <div className='col-md-6 col-lg-5 col-12'>

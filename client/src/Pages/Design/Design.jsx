@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import DesignNavbar from "../../Components/DesignMav/designNavbar";
+import DesignNavbar from "../../Components/DesignMav/DesignNavbar";
 import Sidebar from "../../Components/DesignSidebar/Sidebar";
 import ComponentSidebar from "../../Components/ComponentSidebar/ComponentSidebar";
 import { Col, Row } from "react-bootstrap";

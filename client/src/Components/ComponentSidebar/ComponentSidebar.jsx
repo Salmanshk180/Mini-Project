@@ -1,35 +1,62 @@
 import React, { useState } from "react";
 import { Form, Button, Nav, Collapse } from "react-bootstrap";
 import { BsSearch } from "react-icons/bs";
-import { FaGreaterThan,FaLessThan} from "react-icons/fa";
+import { MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from "react-icons/md";
+import TextModule from "../Text/TextModule";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleSidebar } from "../../redux/actions/sidebarAction";
+import "./Sidebar.css";
+import ShapeModule from "../ShapeModule/ShapeModule";
+import UploadModule from "../UploadModule/UploadModule";
+import ImageModule from "../ImageModule/ImageModule";
 const ComponentSidebar = () => {
-  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const isOpen = useSelector((state) => state.sidebar.isOpen);
+  const selectedModule = useSelector((state) => state.module.selectedModule);
 
-  const toggleSidebar = () => {
-    setOpen(!open);
-    console.log(open);
+  const toggle = () => {
+    dispatch(toggleSidebar()); // Close the login modal
   };
+
+  let componentToRender = null;
+
+  switch (selectedModule) {
+    case "Text":
+      componentToRender = <TextModule></TextModule>;
+      break;
+    case "Design":
+      componentToRender = "Design";
+      break;
+    case "Shapes":
+      componentToRender = <ShapeModule></ShapeModule>;
+      break;
+    case "Upload":
+      componentToRender = <UploadModule></UploadModule>;
+      break;
+    case "Images":
+      componentToRender = <ImageModule></ImageModule>;
+      break;
+
+    default:
+      break;
+  }
+
   return (
     <>
-      <div className="bg-secondary d-flex flex-column-reverse flex-md-row">
-    
-
-        {
-            open?<Form className="p-2">
-            <div className="d-flex align-items-center bg-light rounded px-2">
-              <BsSearch style={{ fontSize: "18px" }}></BsSearch>
-              <Form.Control
-                type="searchbox"
-                placeholder="Search Templates"
-                className="fw-bold border-0 shadow-none me-auto"
-              ></Form.Control>
-            </div>
-          </Form>:""
-        }
-        <Button onClick={toggleSidebar} className="h-100 my-auto bg-secondary border-0 ">
-        {open?<FaLessThan></FaLessThan>:
-          <FaGreaterThan></FaGreaterThan>}
-        </Button>
+      <div className="bg-light d-flex flex-lg-row flex-column-reverse csidebar">
+        <div>{isOpen && componentToRender}</div>
+        <div>
+          <Button
+            onClick={toggle}
+            className="h-100 my-auto bg-light rounded-0 border-0 shadow-none p-0"
+          >
+            {isOpen ? (
+              <MdKeyboardDoubleArrowLeft className="bg-dark"></MdKeyboardDoubleArrowLeft>
+            ) : (
+              <MdKeyboardDoubleArrowRight className="bg-dark"></MdKeyboardDoubleArrowRight>
+            )}
+          </Button>
+        </div>
       </div>
     </>
   );
