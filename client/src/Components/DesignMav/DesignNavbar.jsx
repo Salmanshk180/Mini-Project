@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 const DesignNavbar = () => {
   return (
     <>
-      <Navbar className="py-4" style={{backgroundColor:"#2c2c44"}}>
+      <Navbar className="py-2" style={{backgroundColor:"#2c2c44"}}>
         <Container className="d-flex flex-wrap justify-content-between align-items-center">
           <Navbar.Brand className="mx-auto mx-md-0 text-light fw-bold ">DesignWorld</Navbar.Brand>
           <div className="d-flex flex-wrap align-items-center mx-auto mx-md-0 mt-2 mt-md-0">

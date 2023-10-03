@@ -9,6 +9,7 @@ import "./Sidebar.css";
 import ShapeModule from "../ShapeModule/ShapeModule";
 import UploadModule from "../UploadModule/UploadModule";
 import ImageModule from "../ImageModule/ImageModule";
+import DesignModule from "../DesignModule/DesignModule";
 const ComponentSidebar = () => {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.sidebar.isOpen);
@@ -25,7 +26,7 @@ const ComponentSidebar = () => {
       componentToRender = <TextModule></TextModule>;
       break;
     case "Design":
-      componentToRender = "Design";
+      componentToRender = <DesignModule></DesignModule>;
       break;
     case "Shapes":
       componentToRender = <ShapeModule></ShapeModule>;

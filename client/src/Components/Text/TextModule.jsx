@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Button, Container, CardGroup, Image } from "react-bootstrap";
 import { FiSearch } from "react-icons/fi";
+import { useSelector, useDispatch } from 'react-redux';
 const cardData = [
   { src:"https://designcap.s3-us-west-1.amazonaws.com/groups/0933312d392cbf960775f4266a7741a9/preview.png" },
   { src:"https://designcap.s3-us-west-1.amazonaws.com/groups/0933312d392cbf960775f4266a7741a9/preview.png" },
@@ -35,11 +36,34 @@ const TextModule = () => {
       </CardGroup>
     );
   }
+
+
+  const dispatch = useDispatch();
+
+  const handleAddText = () => {
+    const newText = {
+      text: 'Sample Text',
+      x: 50,
+      y: 50,
+      fontSize: 18,
+      draggable: true,
+      fill:"black"
+    };
+
+    dispatch({ type: 'ADD_TEXT', payload: newText });
+  };
+
+  const handleTextChange = (index, newText) => {
+    dispatch({ type: 'UPDATE_TEXT', payload: { index, newText } });
+  };
+
+
+
   return (
     <>
       <div>
         <Container className="d-flex flex-column">
-        <Button className="my-1 fs-1 border-0 bg-white text-dark fw-bold">Add Heading</Button>
+        <Button className="my-1 fs-1 border-0 bg-white text-dark fw-bold"  onClick={()=>handleAddText()}>Add Heading</Button>
         <Button className="my-1 fs-3  border-0 bg-white text-dark fw-bold">Add Heading</Button>
         <Button className="my-1 fs-6  border-0 bg-white text-dark fw-bold">Add Heading</Button>
         <div className="my-2" style={{ overflowY: 'scroll', maxHeight: '400px' }}>

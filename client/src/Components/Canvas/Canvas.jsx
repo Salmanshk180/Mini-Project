@@ -1,12 +1,14 @@
 import React, { useEffect, useRef } from "react";
 import Konva from "konva";
 import { Stage, Layer, Rect, Text } from "react-konva";
+import { useSelector } from "react-redux";
 function isMobile() {
   return window.innerWidth <= 768; // Adjust the threshold as needed
 }
 
 const Canvas = () => {
 
+ const texts = useSelector((state)=>state.text.texts)
   useEffect(() => {
     const canvasWidth = isMobile() ? window.innerWidth : 800;
     const canvasHeight = isMobile() ? window.innerHeight : 500;
@@ -23,7 +25,7 @@ const Canvas = () => {
       height: stage.height(),
       fill: 'white',
     });
-
+   
     layer.add(rect);
     stage.add(layer);
   }, []);
@@ -41,7 +43,7 @@ const Canvas = () => {
     <div id="canvas-container" style={containerStyle}>
       <Stage width={isMobile() ? window.innerWidth : 800} height={isMobile() ? window.innerHeight : 600}>
         <Layer>
-          {/* Add your Konva shapes and elements here */}
+        
         </Layer>
       </Stage>
     </div>

@@ -8,6 +8,7 @@ import { GrCloudUpload } from "react-icons/gr";
 import { useDispatch,useSelector } from "react-redux";
 import { selectModule } from "../../redux/actions/moduleAction";
 import { toggleSidebar } from "../../redux/actions/sidebarAction";
+import ComponentSidebar from "../componentSidebar/componentSidebar";
 
 
 const Sidebar = () => {
@@ -22,7 +23,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className="sidebar">
+      <div className="sidebar d-flex flex-column-reverse flex-md-row">
         <Nav className="flex-lg-column mx-1 px-2 flex-lg-wrap flex-nowrap flex-row text-light align-items-baseline align-items-lg-center fw-bold">
           <Nav.Item
             className="my-2 mt-4  mx-3 mx-lg-0 d-flex  flex-column align-items-center text-secondary"
@@ -87,6 +88,7 @@ const Sidebar = () => {
             </Button>
           </Nav.Item>
         </Nav>
+        <ComponentSidebar></ComponentSidebar>
       </div>
     </>
   );

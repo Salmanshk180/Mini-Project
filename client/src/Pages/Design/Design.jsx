@@ -14,7 +14,6 @@ const Design = () => {
           <div className="px-0">
             <div className="d-flex flex-column-reverse flex-lg-row">
               <Sidebar></Sidebar>
-              <ComponentSidebar></ComponentSidebar>
             </div>
           </div>
           <div className="mx-md-auto my-md-auto p-2">

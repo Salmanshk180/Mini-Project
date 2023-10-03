@@ -2,12 +2,10 @@ import React from 'react'
 import MainNavbar from '../../Components/MainNavbar/MainNavbar'
 import {Footer} from '../../Components/Footer/Footer';
 import "./About.css"
-
 export const About = () => {
   return (
     <>
       <MainNavbar />
-
       <div class="maintxt d-flex flex-column align-items-center justify-content-center text-center">
         <h1 className='text-danger'>Who are we?</h1>
         <div>
