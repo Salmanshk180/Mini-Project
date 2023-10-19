@@ -10,9 +10,26 @@ import {
   closeModal,
   openLoginModal,
 } from "../../redux/actions/modalActions";
+import { registerUser } from '../../redux/actions/userAction';
 const SignUp = () => {
   const dispatch = useDispatch();
   const showSignupModal = useSelector((state) => state.modal.showSignupModal);
+
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    confirmpassword: '',
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(registerUser(formData));
+  };
 
   const handleClose = () => {
     dispatch(closeModal()); // Close the login modal
@@ -46,7 +63,7 @@ const SignUp = () => {
           - or -
         </p>
         <div>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <Form.Group className="w-75 mx-auto">
               <div className="mb-3">
                 <div className="d-flex align-items-center">
@@ -54,11 +71,14 @@ const SignUp = () => {
                   <Form.Control
                     type="email"
                     placeholder="Email"
+                    name="email"
                     className="w-100"
                     style={{
                       border: "none",
                       boxShadow: "none",
                     }}
+                    value = {formData.email}
+                    onChange={handleInputChange}
                   ></Form.Control>
                 </div>
                 <div
@@ -75,11 +95,14 @@ const SignUp = () => {
                   <Form.Control
                     type="password"
                     placeholder="Password"
+                    name="password"
                     className="w-100"
                     style={{
                       border: "none",
                       boxShadow: "none",
                     }}
+                    value = {formData.password}
+                    onChange={handleInputChange}
                   ></Form.Control>
                 </div>
                 <div
@@ -96,11 +119,14 @@ const SignUp = () => {
                   <Form.Control
                     type="password"
                     placeholder="Confirm Password"
+                    name="confirmpassword"
                     className="w-100"
                     style={{
                       border: "none",
                       boxShadow: "none",
                     }}
+                    value = {formData.confirmpassword}
+                    onChange={handleInputChange}
                   ></Form.Control>
                 </div>
                 <div

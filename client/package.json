@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.7",
+    "axios": "^1.5.1",
     "bootstrap": "^5.3.2",
     "konva": "^9.2.1",
     "rc-drawer": "^6.5.2",
