@@ -3,13 +3,16 @@ import { createStore, combineReducers } from 'redux';
 import modalReducer from './reducers/modalReducer';
 import sidebarReducer from './reducers/sidebarReducer';
 import moduleReducer from './reducers/moduleReducer';
-import { textReducer } from './reducers/textReducer';
+import headingReducer from './reducers/headingReducer';
+import shapeReducer from './reducers/shapeReducer';
+import imageReducer from './reducers/imageReducer';
 const rootReducer = combineReducers({
   modal: modalReducer,
   sidebar: sidebarReducer,
   module: moduleReducer,
-  text:textReducer,
-  
+  heading : headingReducer,
+  shape : shapeReducer,
+  image: imageReducer,
 });
 
 const store = createStore(rootReducer);

@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import { Button, Container, Nav, NavItem } from "react-bootstrap";
+import { Button, Col, Container, Nav, NavItem, Row } from "react-bootstrap";
 import "./Sidebar.css";
 import { BsGrid1X2, BsCloudUploadFill, BsImages } from "react-icons/bs";
 import { FaShapes } from "react-icons/fa";
 import { RxText } from "react-icons/rx";
 import { GrCloudUpload } from "react-icons/gr";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectModule } from "../../redux/actions/moduleAction";
 import { toggleSidebar } from "../../redux/actions/sidebarAction";
-import ComponentSidebar from "../componentSidebar/componentSidebar";
+import ComponentSidebar from "../ComponentSidebar/ComponentSidebar";
+import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 
-
-const Sidebar = () => {
+const DesignSidebar = () => {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.sidebar.isOpen);
   const toggle = () => {
@@ -88,10 +88,11 @@ const Sidebar = () => {
             </Button>
           </Nav.Item>
         </Nav>
-        <ComponentSidebar></ComponentSidebar>
+      {/* <ComponentSidebar></ComponentSidebar> */}
       </div>
+      
     </>
   );
 };
 
-export default Sidebar;
+export default DesignSidebar;

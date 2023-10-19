@@ -1,13 +1,13 @@
 import "./App.css";
-import Home from "./Pages/Home/Home";
-import Login from "./Components/Login/Login";
-import SignUp from "./Components/SignUp/SignUp";
+import Home from "../src/clientSide/Pages/Home/Home";
+import Login from "../src/clientSide/Components/Login/Login";
+import SignUp from "../src/clientSide/Components/SignUp/SignUp";
 import { Provider } from "react-redux";
-import store from "./redux/store";
+import store from "../src/clientSide/redux/store";
 import { Route, Routes } from "react-router-dom";
-import Design from "./Pages/Design/Design";
-import { About } from "./Pages/About/About";
-import { Contact } from "./Pages/Contact/Contact";
+import Design from "../src/clientSide/Pages/Design/Design";
+import { About } from "../src/clientSide/Pages/About/About";
+import { Contact } from "../src/clientSide/Pages/Contact/Contact";
 
 function App() {
   return (

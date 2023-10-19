@@ -44,10 +44,10 @@ const ComponentSidebar = () => {
 
   return (
     <>
-      <div className="bg-light d-flex flex-lg-row flex-column-reverse csidebar">
-        <div>{isOpen && componentToRender}</div>
+      <div className="bg-light d-flex flex-lg-row flex-column-reverse w-100 csidebar">
+        <div>{componentToRender}</div>
         <div>
-          <Button
+          {/* <Button
             onClick={toggle}
             className="h-100 my-auto bg-light rounded-0 border-0 shadow-none p-0"
           >
@@ -56,9 +56,10 @@ const ComponentSidebar = () => {
             ) : (
               <MdKeyboardDoubleArrowRight className="bg-dark"></MdKeyboardDoubleArrowRight>
             )}
-          </Button>
+          </Button> */}
         </div>
       </div>
+     
     </>
   );
 };

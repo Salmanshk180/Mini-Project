@@ -1,6 +1,7 @@
 import React from 'react'
 import { Form,Card, Button, Container, CardGroup, Image} from 'react-bootstrap'
-
+import { useDispatch } from "react-redux";
+import { addImage } from "../../redux/actions/imageAction";
 const cardData = [
     { src:"https://designcap.s3-us-west-1.amazonaws.com/groups/0933312d392cbf960775f4266a7741a9/preview.png" },
     { src:"https://designcap.s3-us-west-1.amazonaws.com/groups/0933312d392cbf960775f4266a7741a9/preview.png" },
@@ -20,7 +21,7 @@ const ImageModule = () => {
     const renderCard = (card, index) => (
         <Card key={index} className="m-2 border-3">
           <Card.Body>
-            <Image src={card.src} style={{width:"100%"}}></Image>
+            <Image src={card.src} style={{width:"100%"}} onClick={()=>addImages()}></Image>
           </Card.Body>
         </Card>
       );
@@ -33,6 +34,15 @@ const ImageModule = () => {
           </CardGroup>
         );
       }
+
+ const dispatch = useDispatch();
+ const addImages=()=>{
+  const newImage = {
+   img : "https://konvajs.github.io/assets/yoda.jpg",
+  };
+
+  dispatch(addImage(newImage));
+ }
 
   return (
     <>
