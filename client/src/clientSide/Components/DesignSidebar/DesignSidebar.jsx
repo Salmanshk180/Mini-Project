@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectModule } from "../../redux/actions/moduleAction";
 import { toggleSidebar } from "../../redux/actions/sidebarAction";
 import ComponentSidebar from "../ComponentSidebar/ComponentSidebar";
-import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 
 const DesignSidebar = () => {
   const dispatch = useDispatch();
