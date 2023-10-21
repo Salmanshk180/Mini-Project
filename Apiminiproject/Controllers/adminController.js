@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-var login = require('/Users/HP/OneDrive/Documents/GitHub/Mini-Project/Apiminiproject/Models/Login');
-var signup = require('/Users/HP/OneDrive/Documents/GitHub/Mini-Project/Apiminiproject/Models/Signup');
+var login = require('../Models/Login');
+var signup = require('../Models/Signup');
 const { emit } = require('process');
 
 const { body } = require('express-validator');

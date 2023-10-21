@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-var login = require('/Users/HP/OneDrive/Documents/GitHub/Mini-Project/Apiminiproject/Models/Login');
-var signup = require('/Users/HP/OneDrive/Documents/GitHub/Mini-Project/Apiminiproject/Models/Signup');
+var login = require('../Models/Login');
+var signup = require('../Models/Signup');
 const { emit } = require('process');
 
 //Login
@@ -74,7 +74,7 @@ router.get('/fetchLogin', async (req, res) => {
 });
 
 //Signup
-router.post('/addSignup', async (req, res) => {
+router.post('/addsignup', async (req, res) => {
     var objSignup = new signup();
     objSignup.email = req.body.email,
     objSignup.password = req.body.password,

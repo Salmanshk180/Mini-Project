@@ -3,6 +3,7 @@ var express = require('express');
 var mgClient = require('./server')
 var app = express();
 var bodyParser =  require("body-parser");
+require('dotenv').config();
 const PORT = process.env.PORT || 3001;
 
 const session = require('express-session');

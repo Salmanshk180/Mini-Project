@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import { NavLink } from "react-router-dom";
+import { NavLink, Navigate } from "react-router-dom";
 import {BsEnvelopeFill,BsLockFill} from "react-icons/bs"
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -10,26 +10,35 @@ import {
   closeModal,
   openLoginModal,
 } from "../../redux/actions/modalActions";
-import { registerUser } from '../../redux/actions/userAction';
+import { signUp } from "../../redux/actions/authAction";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const SignUp = () => {
   const dispatch = useDispatch();
   const showSignupModal = useSelector((state) => state.modal.showSignupModal);
+  const authError = useSelector((state) => state.auth.error);
+  const authSuccess = useSelector((state) => state.auth.user);
 
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    confirmpassword: '',
+    email: "",
+    password: "",
+    confirmpassword:"",
   });
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(registerUser(formData));
+
+
+
+const navigate = useNavigate()
+const handleSubmit = async(e) => {
+  e.preventDefault();
+    dispatch(signUp(formData));
+    alert("Success")
   };
+
 
   const handleClose = () => {
     dispatch(closeModal()); // Close the login modal
@@ -55,7 +64,7 @@ const SignUp = () => {
               color: "black",
               borderRadius: "20px",
             }}
-          >
+            >
             SignUp with Google
           </Button>
         </div>
@@ -63,7 +72,8 @@ const SignUp = () => {
           - or -
         </p>
         <div>
-          <Form onSubmit={handleSubmit}>
+          <Form method="post" name="formData" onSubmit={handleSubmit}>
+         
             <Form.Group className="w-75 mx-auto">
               <div className="mb-3">
                 <div className="d-flex align-items-center">
@@ -77,9 +87,7 @@ const SignUp = () => {
                       border: "none",
                       boxShadow: "none",
                     }}
-                    value = {formData.email}
-                    onChange={handleInputChange}
-                  ></Form.Control>
+                    onChange={(e)=>handleChange(e)}                  ></Form.Control>
                 </div>
                 <div
                   style={{
@@ -101,9 +109,7 @@ const SignUp = () => {
                       border: "none",
                       boxShadow: "none",
                     }}
-                    value = {formData.password}
-                    onChange={handleInputChange}
-                  ></Form.Control>
+                    onChange={(e)=>handleChange(e)}                  ></Form.Control>
                 </div>
                 <div
                   style={{
@@ -125,8 +131,7 @@ const SignUp = () => {
                       border: "none",
                       boxShadow: "none",
                     }}
-                    value = {formData.confirmpassword}
-                    onChange={handleInputChange}
+                    onChange={(e)=>handleChange(e)}
                   ></Form.Control>
                 </div>
                 <div
@@ -142,6 +147,7 @@ const SignUp = () => {
             <Form.Group className="w-75 mx-auto my-4">
               <Button
                 className="w-100"
+                type="submit"
                 style={{
                   fontWeight: "500",
                   border: "2px solid #fa7b05",
