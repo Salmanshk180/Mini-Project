@@ -19,7 +19,7 @@ const ComponentSidebar = () => {
     dispatch(toggleSidebar()); // Close the login modal
   };
 
-  let componentToRender = null;
+  let componentToRender = <TextModule></TextModule>;
 
   switch (selectedModule) {
     case "Text":
@@ -44,7 +44,7 @@ const ComponentSidebar = () => {
 
   return (
     <>
-      <div className="bg-light d-flex flex-lg-row flex-column-reverse w-100 csidebar">
+      <div className="bg-light d-flex flex-lg-row flex-column-reverse  csidebar">
         <div>{componentToRender}</div>
         <div>
           {/* <Button

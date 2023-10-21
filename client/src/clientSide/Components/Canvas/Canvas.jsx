@@ -4,6 +4,7 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import { useSelector } from "react-redux";
 import useImage from 'use-image';
+import EditBar from "../EditBar/EditBar";
 const Canvas = () => {
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
@@ -44,19 +45,19 @@ const Canvas = () => {
     );
   }
   return (
-    <div>
-      <div className="mt-5 h-100 bg-light">
-        Canvas
+    <div className="my-auto mt-5 vh-100">
+      
+      <div className="vh-100">
         <Stage
-          width={800}
-          height={600}
-          scaleX={scale}
-          scaleY={scale}
-          className="m-2 bg-white"
-        >
+          width={640}
+          height={360}
+          
+          style={{display:"flex",justifyContent:"center",alignItems:"center"}} 
+          >
           <Layer>
-            <Group>
-            
+            <Group >
+              <Rect fill="#ffffff" height={360} width={640} stroke={"#aaaaaa"}>
+              </Rect>
             {headings.map((heading) => (
               <>
                 <Text text={heading.text} draggable />
