@@ -1,0 +1,17 @@
+.custom-font-size-h1 {
+    font-size: 3rem; /* Adjust the value as needed */
+  }
+  
+  .custom-font-size-span {
+    font-size: 1.8rem; /* Adjust the value as needed */
+  }
+  
+  .custom-image-size {
+    width: 100%; /* Set to the desired width */
+    height: auto; /* Maintain aspect ratio */
+  }
+  .card-img-top{
+    width: 40px; 
+    height: 50px;
+  }
+  
