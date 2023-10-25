@@ -8,7 +8,7 @@ import { Route, Routes } from "react-router-dom";
 import Design from "../src/clientSide/Pages/Design/Design";
 import { About } from "../src/clientSide/Pages/About/About";
 import { Contact } from "../src/clientSide/Pages/Contact/Contact";
-import {Dashboard} from '../src/admin/Dashboard';
+import Dashboard from '../src/admin/Dashboard';
 
 function App() {
   return (
