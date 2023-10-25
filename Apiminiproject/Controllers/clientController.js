@@ -1,26 +1,62 @@
 var express = require('express');
 var router = express.Router();
-
-var login = require('../Models/Login');
-var signup = require('../Models/Signup');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const { emit } = require('process');
+const Login = require('../Models/Login');
+const Signup = require('../Models/Signup');
+require('dotenv').config();
 
 //Login
-router.post('/addLogin', async (req, res) => {
-    var objLogin = new login();
-    objLogin.email = req.body.email,
-    objLogin.password = req.body.password,
-    objLogin.addedOn = new Date(),
-    objLogin.isActive = true;
-    console.log();
+router.post('/addlogin', async (req, res) => {
+    // var objLogin = new login();
+    // objLogin.email = req.body.email,
+    // objLogin.password = req.body.password,
+    // objLogin.addedOn = new Date(),
+    // objLogin.isActive = true;
+    // console.log();
 
-    const inserted = await objLogin.save();
+    // const inserted = await objLogin.save();
 
-    if (inserted != null) {
-        res.json({ result: "success", msg: "User Inserted", data: 1 });
-    } else {
-        res.json({ result: "failure", msg: "User Not Inserted", data: 0 });
-    }
+    // if (inserted != null) {
+    //     res.json({ result: "success", msg: "User Verified", data: 1 });
+    // } else {
+    //     res.json({ result: "failure", msg: "User Not Verified", data: 0 });
+    // }
+    try {
+        const { email, password } = req.body;
+    
+        // Find the user by their email
+        const user = await Signup.findOne({ email });
+    
+        if (!user) {
+          return res.status(401).json({ message: 'Invalid email or password' });
+        }
+    
+        // Compare the provided password with the hashed password in the database
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+    
+        if (!isPasswordValid) {
+          return res.status(401).json({ message: 'Invalid email or password' });
+        }
+    
+        // Generate a JSON Web Token (JWT) for authentication
+        const token = jwt.sign(
+          {
+            userId: user._id,
+            email: user.email,
+          },
+          process.env.SECRET_KEY, // Replace with your secret key
+          {
+            expiresIn: '1h', // Token expiration time (e.g., 1 hour)
+          }
+        );
+    
+        res.status(200).json({ message: 'Login successful', token, userId: user._id });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Login failed' });
+      }
 });
 router.post('/updateLogin',async (req, res) => {
     console.log(req.body.id)
@@ -75,21 +111,47 @@ router.get('/fetchLogin', async (req, res) => {
 
 //Signup
 router.post('/addsignup', async (req, res) => {
-    var objSignup = new signup();
-    objSignup.email = req.body.email,
-    objSignup.password = req.body.password,
-    objSignup.confirmpassword = req.body.confirmpassword,
-    objSignup.addedOn = new Date(),
-    objSignup.isActive = true;
-    console.log();
+    // var objSignup = new signup();
+    // objSignup.email = req.body.email,
+    // objSignup.password = req.body.password,
+    // objSignup.confirmpassword = req.body.confirmpassword,
+    // objSignup.addedOn = new Date(),
+    // objSignup.isActive = true;
+    // console.log();
 
-    const inserted = await objSignup.save();
+    // const inserted = await objSignup.save();
 
-    if (inserted != null) {
-        res.json({ result: "success", msg: "User Inserted", data: 1 });
-    } else {
-        res.json({ result: "failure", msg: "User Not Inserted", data: 0 });
-    }
+    // if (inserted != null) {
+    //     res.json({ result: "success", msg: "User Inserted", data: 1 });
+    // } else {
+    //     res.json({ result: "failure", msg: "User Not Inserted", data: 0 });
+    // }
+    try {
+        const { email, password, confirmpassword } = req.body;
+
+        // Check if the email is already registered
+        const existingUser = await Signup.findOne({ email });
+
+        if (existingUser) {
+          return res.status(400).json({ message: 'Email is already registered' });
+        }
+        if (password !== confirmpassword) {
+            return res.status(400).json({ message: 'Password and Confirm Password do not match' });
+        }
+
+        // Hash the password before saving it to the database
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create a new user and save it to the database
+        const newUser = new Signup({ email, password: hashedPassword });
+        await newUser.save();
+
+        res.status(201).json({ message: 'User registered successfully' });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'User registration failed' });
+      }
+
 });
 router.post('/updateSignup',async (req, res) => {
     console.log(req.body.id)

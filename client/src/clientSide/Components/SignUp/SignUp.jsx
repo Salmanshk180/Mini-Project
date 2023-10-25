@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { NavLink, Navigate } from "react-router-dom";
-import {BsEnvelopeFill,BsLockFill} from "react-icons/bs"
+import { BsEnvelopeFill, BsLockFill } from "react-icons/bs";
 import { useSelector, useDispatch } from "react-redux";
 import {
   openSignupModal,
@@ -18,27 +18,39 @@ const SignUp = () => {
   const showSignupModal = useSelector((state) => state.modal.showSignupModal);
   const authError = useSelector((state) => state.auth.error);
   const authSuccess = useSelector((state) => state.auth.user);
+  const message = useSelector((state) => state.message.message);
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    confirmpassword:"",
+    confirmpassword: "",
   });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-
-
-
-const navigate = useNavigate()
-const handleSubmit = async(e) => {
-  e.preventDefault();
-    dispatch(signUp(formData));
-    alert("Success")
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.email) {
+      alert("Please enter email");
+    } else if (!formData.password) {
+      alert("Please enter password");
+    } else if (!formData.confirmpassword) {
+      alert("Please enter confirm password");
+    } else {
+      dispatch(signUp(formData));
+      if (message == "User registered successfully") {
+        navigate("/design");
+      }
+    }
   };
-
+  useEffect(() => {
+    if (message) {
+      alert(message);
+    }
+  }, [message]);
 
   const handleClose = () => {
     dispatch(closeModal()); // Close the login modal
@@ -64,7 +76,7 @@ const handleSubmit = async(e) => {
               color: "black",
               borderRadius: "20px",
             }}
-            >
+          >
             SignUp with Google
           </Button>
         </div>
@@ -73,11 +85,12 @@ const handleSubmit = async(e) => {
         </p>
         <div>
           <Form method="post" name="formData" onSubmit={handleSubmit}>
-         
             <Form.Group className="w-75 mx-auto">
               <div className="mb-3">
                 <div className="d-flex align-items-center">
-                <BsEnvelopeFill style={{fontSize:"24px",color:"gray"}}></BsEnvelopeFill>
+                  <BsEnvelopeFill
+                    style={{ fontSize: "24px", color: "gray" }}
+                  ></BsEnvelopeFill>
                   <Form.Control
                     type="email"
                     placeholder="Email"
@@ -87,7 +100,8 @@ const handleSubmit = async(e) => {
                       border: "none",
                       boxShadow: "none",
                     }}
-                    onChange={(e)=>handleChange(e)}                  ></Form.Control>
+                    onChange={(e) => handleChange(e)}
+                  ></Form.Control>
                 </div>
                 <div
                   style={{
@@ -99,7 +113,9 @@ const handleSubmit = async(e) => {
               </div>
               <div className="my-3">
                 <div className="d-flex align-items-center">
-                <BsLockFill style={{fontSize:"24px",color:"gray"}}></BsLockFill>
+                  <BsLockFill
+                    style={{ fontSize: "24px", color: "gray" }}
+                  ></BsLockFill>
                   <Form.Control
                     type="password"
                     placeholder="Password"
@@ -109,7 +125,8 @@ const handleSubmit = async(e) => {
                       border: "none",
                       boxShadow: "none",
                     }}
-                    onChange={(e)=>handleChange(e)}                  ></Form.Control>
+                    onChange={(e) => handleChange(e)}
+                  ></Form.Control>
                 </div>
                 <div
                   style={{
@@ -121,7 +138,9 @@ const handleSubmit = async(e) => {
               </div>
               <div className="my-3">
                 <div className="d-flex align-items-center">
-                <BsLockFill style={{fontSize:"24px",color:"gray"}}></BsLockFill>
+                  <BsLockFill
+                    style={{ fontSize: "24px", color: "gray" }}
+                  ></BsLockFill>
                   <Form.Control
                     type="password"
                     placeholder="Confirm Password"
@@ -131,7 +150,7 @@ const handleSubmit = async(e) => {
                       border: "none",
                       boxShadow: "none",
                     }}
-                    onChange={(e)=>handleChange(e)}
+                    onChange={(e) => handleChange(e)}
                   ></Form.Control>
                 </div>
                 <div
@@ -143,7 +162,7 @@ const handleSubmit = async(e) => {
                 ></div>
               </div>
             </Form.Group>
-            
+
             <Form.Group className="w-75 mx-auto my-4">
               <Button
                 className="w-100"
