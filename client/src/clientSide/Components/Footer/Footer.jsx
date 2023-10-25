@@ -28,7 +28,8 @@ export const Footer = () => {
                                 <a className='text-decoration-none text-dark  fw-medium' href="../../Home/About.jsx">About</a>
                             </li>
                             <li className='nav-item p-2'>
-                                <a className='text-decoration-none text-dark fw-medium' href="/Contact.jsx">Contact Us</a>
+                                <a className='text-decoration-none text-dark fw-medium' href="/contact
+                                ">Contact Us</a>
                             </li>
                         </ul>
                     </div>
