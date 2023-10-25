@@ -6,7 +6,7 @@ export const About = () => {
   return (
     <>
       <MainNavbar />
-      <div class="maintxt d-flex flex-column align-items-center justify-content-center text-center">
+      <div className="maintxt d-flex flex-column align-items-center justify-content-center text-center">
         <h1 className='text-danger'>Who are we?</h1>
         <div>
           <p className='text-danger fw-medium'>We aim to make professional photo editing and graphic design capability accessible to everyone.</p>

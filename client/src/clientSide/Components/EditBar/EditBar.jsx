@@ -14,9 +14,9 @@ const EditBar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            {/* <TextEdit></TextEdit> */}
+            <TextEdit></TextEdit>
             {/* <ImageEdit></ImageEdit> */}
-            <ShapeEdit></ShapeEdit>
+            {/* <ShapeEdit></ShapeEdit> */}
           </Nav>
         </Navbar.Collapse>
       </Container>

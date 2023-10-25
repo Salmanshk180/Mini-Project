@@ -1,14 +1,15 @@
 var mongoose= require('mongoose');
 signupSchema = mongoose.Schema({
     email:{
-        type:String
+        type:String,
+    unique:true,
+    requied:true,
     },
     password:{
-        type:String
+        type:String,
+        requied:true,
     },
-    confirmpassword:{
-        type:String
-    },
+   
     addedOn:{
         type:String
     },

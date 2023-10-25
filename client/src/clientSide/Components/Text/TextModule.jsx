@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Button, Container, CardGroup, Image } from "react-bootstrap";
 import { FiSearch } from "react-icons/fi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addHeading1 } from "../../redux/actions/headingAction";
 
 const cardData = [
@@ -59,13 +59,11 @@ const TextModule = () => {
     );
   }
 
+  const fontSizes = useSelector((state)=>state.text.fontSizes)
  const dispatch = useDispatch();
  const addHeadingOne=()=>{
   const newText = {
     text: 'Sample Text',
-    x: 50,
-    y: 50,
-    fontSize: 18,
     fill: 'black',
   };
 
