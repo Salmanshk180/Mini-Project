@@ -21,35 +21,7 @@ export const Footer = () => {
                                 <i className=" fa-brands fa-linkedin p-2 bg-secondary-subtle text-danger m-2 rounded-circle"></i>
                             </div>
                         </div>
-                        {/* <div className="col-md-6 col-lg-3 col-12">
-                            <h3 className="text-danger">Quick links</h3>
-                            <ul className="list-unstyled m-2 pt-3">
-                                <li className="p-2">
-                                    <NavLink
-                                        to="/services"
-                                        className="text-decoration-none text-dark fw-medium"
-                                    >
-                                        Services
-                                    </NavLink>
-                                </li>
-                                <li className="p-3">
-                                    <NavLink
-                                        to="/about"
-                                        className="text-decoration-none text-dark fw-medium"
-                                    >
-                                        <About/>
-                                    </NavLink>
-                                </li>
-                                <li className="p-2">
-                                    <NavLink
-                                        to="/contact"
-                                        className="text-decoration-none text-dark fw-medium"
-                                    >
-                                        <Contact/>
-                                    </NavLink>
-                                </li>
-                            </ul>
-                        </div> */}
+                        
                         <div className="col-md-6 col-lg-3 col-12">
                             <h3 className="text-danger">Quick links</h3>
                             <ul className="list-unstyled m-2 pt-3">
@@ -74,19 +46,11 @@ export const Footer = () => {
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
+
             <div className='last-footer bg-danger pt-3 pb-3 text-center fw-bold text-white fs-6'>
                 <p className='text-capitalize'><i class="fa-regular fa-copyright p-1"></i>copyright all rights reserved</p>
             </div>
-
-=======
-        </div>
-        <div className='last-footer bg-danger pt-3 pb-3 text-center fw-bold text-white fs-6'>
-            <p className='text-capitalize'><i className="fa-regular fa-copyright p-1"></i>copyright all rights reserved</p>
-        </div>
-       
->>>>>>> 4a3ffdf185f770ed1f7371ca590a62a2baecfede
-        </>
+       </>
 
     )
 }
