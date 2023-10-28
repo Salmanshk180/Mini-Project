@@ -10,6 +10,7 @@ import ShapeModule from "../ShapeModule/ShapeModule";
 import UploadModule from "../UploadModule/UploadModule";
 import ImageModule from "../ImageModule/ImageModule";
 import DesignModule from "../DesignModule/DesignModule";
+import Background from "../BackgroundModule/Background";
 const ComponentSidebar = () => {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.sidebar.isOpen);
@@ -37,6 +38,9 @@ const ComponentSidebar = () => {
     case "Images":
       componentToRender = <ImageModule></ImageModule>;
       break;
+      case "Background":
+      componentToRender = <Background></Background>;
+      break;
 
     default:
       break;
@@ -44,8 +48,8 @@ const ComponentSidebar = () => {
 
   return (
     <>
-      <div className="bg-light d-flex flex-lg-row flex-column-reverse  csidebar">
-        <div>{componentToRender}</div>
+      <div className="d-flex flex-lg-row flex-column-reverse"  >
+        <div style={{width:"100%"}}>{componentToRender}</div>
         <div>
           {/* <Button
             onClick={toggle}

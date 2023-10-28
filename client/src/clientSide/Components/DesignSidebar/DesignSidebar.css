@@ -1,5 +1,5 @@
 .sidebar{
-    background-color:white;
+    background-color:rgb(255, 255, 255);
     width: fit-content;
     height:100vh;
     @media (max-width: 992px) {

@@ -9,6 +9,7 @@ import {
   openLoginModal,
   openSignupModal,
 } from "../../redux/actions/modalActions";
+import { NavLink } from "react-router-dom";
 const MainNavbar = () => {
   const [hovered, setHovered] = useState(false);
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const MainNavbar = () => {
       <Navbar expand="lg" className="bg-body-tertiary p-4 fs-5">
         <Container>
           <Navbar.Brand href="#home" className="mx-3">
-            DesignWorld
+          <NavLink to={"/"} style={{textDecoration:"none",color:"black"}}>DesignWorld</NavLink>
           </Navbar.Brand>
           <Navbar.Toggle
             aria-controls="basic-navbar-nav"
@@ -34,7 +35,7 @@ const MainNavbar = () => {
           />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <NavDropdown
+              {/* <NavDropdown
                 title="Category"
                 id="basic-nav-dropdown"
                 className="mx-3"
@@ -46,13 +47,13 @@ const MainNavbar = () => {
                 <NavDropdown.Item href="#action/3.3">
                   Something
                 </NavDropdown.Item>
-              </NavDropdown>
-              <Nav.Link href="#home" className="mx-3">
-                Templates
-              </Nav.Link>
-              <Nav.Link href="#link" className="mx-3">
-                Support
-              </Nav.Link>
+              </NavDropdown> */}
+              <NavLink to="/about" className="mx-3 text-decoration-none text-dark">
+                About Us
+              </NavLink>
+              <NavLink to="/contact" className="mx-3 text-decoration-none text-dark">
+                Contact Us
+              </NavLink>
             </Nav>
             <Nav className="d-flex flex-md-row">
               <Button

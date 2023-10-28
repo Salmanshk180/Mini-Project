@@ -15,7 +15,9 @@ const Design = () => {
         <Col lg={4}>
           <div className="d-flex flex-md-row flex-column-reverse">
         <DesignSidebar></DesignSidebar>
+        <div style={{width:"100%",backgroundColor:"#eeeeee"}}>
         <ComponentSidebar></ComponentSidebar>
+        </div>
           </div>
         </Col>
         <Col lg={8} className="my-auto bg-light">
