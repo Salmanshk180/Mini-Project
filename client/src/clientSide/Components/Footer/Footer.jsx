@@ -74,18 +74,10 @@ export const Footer = () => {
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
             <div className='last-footer bg-danger pt-3 pb-3 text-center fw-bold text-white fs-6'>
-                <p className='text-capitalize'><i class="fa-regular fa-copyright p-1"></i>copyright all rights reserved</p>
-            </div>
-
-=======
-        </div>
-        <div className='last-footer bg-danger pt-3 pb-3 text-center fw-bold text-white fs-6'>
             <p className='text-capitalize'><i className="fa-regular fa-copyright p-1"></i>copyright all rights reserved</p>
         </div>
-       
->>>>>>> 4a3ffdf185f770ed1f7371ca590a62a2baecfede
+        
         </>
 
     )

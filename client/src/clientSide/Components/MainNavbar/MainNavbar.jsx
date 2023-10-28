@@ -28,32 +28,14 @@ const MainNavbar = () => {
           <Navbar.Brand href="#home" className="mx-3">
             DesignWorld
           </Navbar.Brand>
-          <Navbar.Toggle
-            aria-controls="basic-navbar-nav"
-            style={{ color: "#fa7b05", border: "none" }}
-          />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <NavDropdown
-                title="Category"
-                id="basic-nav-dropdown"
-                className="mx-3"
-              >
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">
-                  Something
-                </NavDropdown.Item>
-              </NavDropdown>
+          
               <Nav.Link href="#home" className="mx-3">
                 Templates
               </Nav.Link>
-              <Nav.Link href="#link" className="mx-3">
-                Support
+              <Nav.Link href="/about" className="mx-3">
+                About
               </Nav.Link>
-            </Nav>
+            
             <Nav className="d-flex flex-md-row">
               <Button
                 onClick={handleLoginClick}
@@ -86,7 +68,7 @@ const MainNavbar = () => {
                 Sign Up-Free
               </Button>
             </Nav>
-          </Navbar.Collapse>
+          
         </Container>
       </Navbar>
     </>
