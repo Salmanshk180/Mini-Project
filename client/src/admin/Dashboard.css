@@ -38,80 +38,619 @@ body {
   }
   
   /* Header  */
+    /* Header.css */
+
   .header {
-    grid-area: header;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 30px 0 30px;
-    box-shadow: 0 6px 7px -3px rgba(0, 0, 0, 0.35);
-  }
-  
-  .menu-icon {
-    display: none;
-  }
-  /* End Header  */
-  
-  /* Sidebar  */
-  #sidebar {
-    grid-area: sidebar;
-    height: 100%;
-    background-color: #263043;
-    overflow-y: auto;
-    transition: all 0.5s;
-    -webkit-transition: all 0.5s;
-  }
-  
-  .sidebar-title {
+    background-color: #333;
+    color: #fff;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 30px 0px 30px;
-    margin-bottom: 30px;
+    padding: 1rem;
+    position: fixed; /* Fixed position for the header */
+    top: 0;
+    left: 0;
+    width: 100%; /* Make the header span the full width of the viewport */
+    z-index: 2;
+    min-height: 60px;
   }
-  
-  .sidebar-title > span {
-    display: none;
+  /* Add media query to control header behavior on smaller screens */
+  @media (max-width: 768px) {
+    .header {
+      flex-direction: column; /* Display elements vertically */
+      min-height: 80px;
+    }
   }
-  
-  .sidebar-brand {
-    margin-top: 15px;
-    font-size: 20px;
-    font-weight: 700;
+
+  .logo img {
+    width: 40px;
+    height: 20px;
+    margin-right: 10px;
   }
-  
-  .sidebar-list {
+
+  .navigation ul {
+    list-style: none;
     padding: 0;
-    list-style-type: none;
+    display: flex;
+  }
+
+  .navigation li {
+    margin-right: 20px;
+  } 
+
+  .navigation a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+  }
+
+  .navigation a:hover {
+    text-decoration: underline;
+  }
+
+  .user-dropdown {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    user-select: none;
   }
   
-  .sidebar-list-item {
-    padding: 20px 20px 20px 20px;
-    font-size: 18px;
+  .user-dropdown img {
+    margin-left: 5px;
   }
   
-  .sidebar-list-item:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #f2f2f2;
+  }
+  
+  .user-dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  .user-profile {
+    position: relative;
+  }
+  
+  /* Add a style for the logout icon */
+  .user-profile .icon {
     cursor: pointer;
   }
   
-  .sidebar-list-item > a {
-    text-decoration: none;
-    color: #9e9ea4;
-  }
+/* End Header  */
   
-  .sidebar-responsive {
-    display: inline !important;
-    position: absolute;
-    /*
-      we want the z-index of the sidebar higher so that
-      the charts are not showing over the sidebar 
-      on small screens
-    */
-    z-index: 12 !important;
+  /* Sidebar  */
+ /* Sidebar.css */
+
+.sidebar {
+  background-color: #333;
+  color: #fff;
+  width: 250px;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%; /* Make the sidebar span the full width of the viewport */
+    height: auto; /* Hide the sidebar on smaller screens */
+    top: auto;
+    bottom:0;
   }
-  
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item {
+  padding: 1rem;
+  border-bottom: 1px solid #555;
+}
+
+.nav-item a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  display: block;
+}
+
+.nav-item a:hover {
+  background-color: #555;
+}
+
+/* Optionally, you can style the active link */
+.nav-item.active a {
+  background-color: #555;
+}
+
+.apps-dropdown {
+  list-style: none;
+  margin: 10px 0; /* Add spacing above and below the apps dropdown */
+  padding: 0;
+}
+
+.apps-item {
+  padding: 12px 15px; /* Add spacing between each app item */
+  list-style: none;
+}
+
+.apps-link {
+  text-decoration: none;
+  color: #333;
+  display: block;
+  padding: 8px 0;
+}
+
+/* Styles for the arrow icon */
+.apps-dropdown-arrow {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.apps-dropdown-arrow::before {
+  content: ">"; /* Unicode for down-pointing triangle (greater than symbol) */
+  margin-left: 8px; /* Add some spacing between "Apps" and the arrow */
+}
+/*page*/
+/* EmailPage.css */
+.email-page {
+  font-family: Arial, sans-serif;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.email-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.email-logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.email-search-bar {
+  display: flex;
+}
+
+.email-search-bar input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-right: 5px;
+}
+
+.email-search-bar button {
+  padding: 5px 10px;
+  background-color: #0077b5;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.email-user-menu button {
+  background: none;
+  border: none;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.email-page-content {
+  padding: 20px;
+}
+
+/*Chat*/
+/* ChatPage.css */
+/* ChatPage.css */
+.chat-page {
+  display: flex;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  background: #f0f0f0;
+  height: 600px;
+  overflow: hidden;
+}
+
+.chat-sidebar {
+  width: 25%;
+  background: #fff;
+  border-right: 1px solid #ccc;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.chat-header {
+  font-weight: bold;
+  text-align: center;
+  font-size: 18px;
+  background-color: #25d366;
+  color: #fff;
+  padding: 10px;
+}
+
+.chat-accounts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chat-account {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+}
+
+.chat-account.active {
+  background-color: #25d366;
+  color: #fff;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 10px;
+  background: #fff;
+  overflow-y: auto;
+}
+
+.chat-header {
+  font-weight: bold;
+  text-align: center;
+  font-size: 18px;
+  background-color: #25d366;
+  color: #fff;
+  padding: 10px;
+}
+
+/* Style the email list and email content as needed */
+
+/*page*/
+/* User Start*/
+/* Style for User dropdown menu */
+.users-dropdown {
+  list-style: none;
+  margin: 10px 0; /* Add spacing above and below the apps dropdown */
+  padding: 0;
+}
+
+.users-dropdown.active {
+  display: block;
+}
+
+.users-item {
+  padding: 12px 15px;
+  list-style: none; /* Remove list-style */
+}
+
+.users-link {
+  text-decoration: none;
+  color: #333;
+  display: block;
+  padding: 8px 0;
+}
+
+.users-link:hover {
+  background-color: #f5f5f5;
+}
+
+/* Styles for the arrow icon */
+.users-dropdown-arrow {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.users-dropdown-arrow::before {
+  content: ">"; /* Unicode for down-pointing triangle (greater than symbol) */
+  margin-left: 8px; /* Add some spacing between "Users" and the arrow */
+}
+/*Account*/
+/* UserAccountPage.css */
+.user-account-page {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.profile-details {
+  background-color: #f8f8f8;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 24px;
+}
+
+.edit-profile, .view-profile {
+  margin-top: 20px;
+}
+
+input {
+  margin: 5px;
+  padding: 5px;
+}
+
+button {
+  background-color: #0077b5;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #005983;
+}
+
+/* Add more styling as needed */
+
+/* user End*/
+
+/* Component start*/
+.components-dropdown {
+  list-style: none;
+  margin: 10px 0; /* Add spacing above and below the apps dropdown */
+  padding: 0;
+}
+
+.components-item {
+  padding: 12px 15px; /* Add spacing between each app item */
+  list-style: none;
+}
+
+.components-link {
+  text-decoration: none;
+  color: #333;
+  display: block;
+  padding: 8px 0;
+}
+
+/* Styles for the arrow icon */
+.components-dropdown-arrow {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.components-dropdown-arrow::before {
+  content: ">"; /* Unicode for down-pointing triangle (greater than symbol) */
+  margin-left: 8px; /* Add some spacing between "Apps" and the arrow */
+}
+
+
+/*tab*/
+/* TabsPage.css */
+.tabs-page {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.tab-container {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 10px;
+}
+
+.tab-list {
+  display: flex;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 10px;
+}
+
+.tab-list > .react-tabs__tab {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  border-right: 1px solid #ccc;
+  transition: border-bottom 0.2s ease;
+}
+
+.tab-list > .react-tabs__tab:last-child {
+  border-right: none;
+}
+
+.tab-list > .react-tabs__tab:hover {
+  border-bottom: 3px solid #0077b5;
+}
+
+.tab-panel {
+  display: none;
+  padding: 20px;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+/* Style the Tabs component as needed */
+
+/* Add additional styling for different tab styles as needed */
+
+/*tab*/
+/*carouse*/
+/* CarouselPage.css */
+.carousel-container {
+  width: 80%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.carousel {
+  display: flex;
+  transition: transform 0.5s ease;
+  overflow: hidden; /* Ensure the images are cropped inside the carousel */
+}
+
+.slide {
+  flex: 0 0 33.33%; /* Three slides per view */
+}
+
+.slide img {
+  width: 100%;
+  height: auto;
+  margin: 5px; /* Add space between the images */
+}
+
+i.fas {
+  font-size: 24px; /* Adjust the size as needed */
+  color: #333; /* Change the color as needed */
+}
+
+
+/* Add responsive CSS styles as needed */
+
+
+/* Add responsive CSS styles as needed */
+
+/**/
+/*End of Component*/
+/*Start of Element*/
+.elements-dropdown {
+  list-style: none;
+  margin: 10px 0; /* Add spacing above and below the apps dropdown */
+  padding: 0;
+}
+
+.elements-item {
+  padding: 12px 15px; /* Add spacing between each app item */
+  list-style: none;
+}
+
+.elements-link {
+  text-decoration: none;
+  color: #333;
+  display: block;
+  padding: 8px 0;
+}
+
+/* Styles for the arrow icon */
+.elements-dropdown-arrow {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.elements-dropdown-arrow::before {
+  content: ">"; /* Unicode for down-pointing triangle (greater than symbol) */
+  margin-left: 8px; /* Add some spacing between "Apps" and the arrow */
+}
+/*End of Element*/
+
+/*Start of Page*/
+.pages-dropdown {
+  list-style: none;
+  margin: 10px 0; /* Add spacing above and below the apps dropdown */
+  padding: 0;
+}
+
+.pages-item {
+  padding: 12px 15px; /* Add spacing between each app item */
+  list-style: none;
+}
+
+.pages-link {
+  text-decoration: none;
+  color: #333;
+  display: block;
+  padding: 8px 0;
+}
+
+/* Styles for the arrow icon */
+.pages-dropdown-arrow {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pages-dropdown-arrow::before {
+  content: ">"; /* Unicode for down-pointing triangle (greater than symbol) */
+  margin-left: 8px; /* Add some spacing between "Apps" and the arrow */
+}
+/*End of Page*/
+
+/*Start of Authentication*/
+.authentication-dropdown {
+  list-style: none;
+  margin: 10px 0; /* Add spacing above and below the apps dropdown */
+  padding: 0;
+}
+
+.authentication-item {
+  padding: 12px 15px; /* Add spacing between each app item */
+  list-style: none;
+}
+
+.authentication-link {
+  text-decoration: none;
+  color: #333;
+  display: block;
+  padding: 8px 0;
+}
+
+/* Styles for the arrow icon */
+.authentication-dropdown-arrow {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.authentication-dropdown-arrow::before {
+  content: ">"; /* Unicode for down-pointing triangle (greater than symbol) */
+  margin-left: 8px; /* Add some spacing between "Apps" and the arrow */
+}
+/*Endof Authentication*/
+
   /* End Sidebar  */
   
   
@@ -226,3 +765,47 @@ body {
     }
   }
   
+/* videothumbnail */
+/* start*/
+/* VideoThumbnail.css */
+
+.video-thumbnail {
+  position: relative;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+  overflow: hidden;
+  margin: 10px;
+  background-color: #fff;
+}
+
+.thumbnail-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.thumbnail-details {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+
+.thumbnail-title {
+  margin: 0;
+  font-size: 16px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .video-thumbnail {
+    margin: 5px;
+  }
+}
+/*End*/

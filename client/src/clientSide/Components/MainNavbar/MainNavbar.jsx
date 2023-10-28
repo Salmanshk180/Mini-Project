@@ -55,6 +55,14 @@ const MainNavbar = () => {
                 Contact Us
               </NavLink>
             </Nav>
+          
+              <Nav.Link href="#home" className="mx-3">
+                Templates
+              </Nav.Link>
+              <Nav.Link href="/about" className="mx-3">
+                About
+              </Nav.Link>
+            
             <Nav className="d-flex flex-md-row">
               <Button
                 onClick={handleLoginClick}
@@ -87,7 +95,7 @@ const MainNavbar = () => {
                 Sign Up-Free
               </Button>
             </Nav>
-          </Navbar.Collapse>
+          
         </Container>
       </Navbar>
     </>

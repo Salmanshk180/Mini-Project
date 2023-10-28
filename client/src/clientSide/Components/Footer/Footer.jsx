@@ -15,6 +15,33 @@ export const Footer = () => {
                         <i className=" fa-brands fa-twitter p-2 bg-secondary-subtle text-danger m-2 rounded-circle"></i>
                         <i className=" fa-brands fa-instagram p-2 bg-secondary-subtle text-danger m-2 rounded-circle"></i>
                         <i className=" fa-brands fa-linkedin p-2 bg-secondary-subtle text-danger m-2 rounded-circle"></i>
+            <div className='Footer bg-light text-center text-md-start'>
+                <div className='container  bg-opacity-60'>
+                    <div className='row p-4'>
+                        <div className='col-md-6 col-lg-5 col-12'>
+                            <h3 className='fw-semibold text-uppercase '><span className='text-danger'>Design</span>World</h3>
+                            <p className='p-4'>Come to Design World and create the best Designs</p>
+                            <div className='footer-icon'>
+                                <i className=" fa-brands fa-facebook p-2 bg-secondary-subtle text-danger m-2 rounded-circle"></i>
+                                <i className=" fa-brands fa-twitter p-2 bg-secondary-subtle text-danger m-2 rounded-circle"></i>
+                                <i className=" fa-brands fa-instagram p-2 bg-secondary-subtle text-danger m-2 rounded-circle"></i>
+                                <i className=" fa-brands fa-linkedin p-2 bg-secondary-subtle text-danger m-2 rounded-circle"></i>
+                            </div>
+                        </div>
+                        
+                        <div className="col-md-6 col-lg-3 col-12">
+                            <h3 className="text-danger">Quick links</h3>
+                            <ul className="list-unstyled m-2 pt-3">
+                                <li className="p-2">
+                                    <a className="text-decoration-none text-dark fw-medium" href="/">Services</a>
+                                </li>
+                                <li className="p-3">
+                                    <a className="text-decoration-none text-dark fw-medium" href="/about">About</a>
+                                </li>
+                                <li className="p-2">
+                                    <a className="text-decoration-none text-dark fw-medium" href="/contact">Contact Us</a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     <div className='col-md-6 col-lg-3 col-12'>
@@ -47,6 +74,11 @@ export const Footer = () => {
        
         </>
 
+
+            <div className='last-footer bg-danger pt-3 pb-3 text-center fw-bold text-white fs-6'>
+                <p className='text-capitalize'><i class="fa-regular fa-copyright p-1"></i>copyright all rights reserved</p>
+            </div>
+       </>
     )
 }
 
