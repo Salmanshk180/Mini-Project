@@ -9,11 +9,11 @@ import ShapeEdit from './ShapeEdit/ShapeEdit';
 const EditBar = () => {
   return (
     <div>
-        <Navbar expand="lg" className="bg-body-tertiary p-0">
-      <Container fluid className=' bg-white p-3'>
+        <Navbar expand="lg" className="bg-body-tertiary w-100"style={{ padding: 0}}>
+      <Container fluid className=' p-0' style={{backgroundColor:"#ffffff"}} >
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
+          <Nav className="me-auto" >
             <TextEdit></TextEdit>
             {/* <ImageEdit></ImageEdit> */}
             {/* <ShapeEdit></ShapeEdit> */}
@@ -22,6 +22,7 @@ const EditBar = () => {
       </Container>
     </Navbar>
     </div>
+    
   )
 }
 

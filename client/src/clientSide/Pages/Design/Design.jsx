@@ -20,7 +20,7 @@ const Design = () => {
         </div>
           </div>
         </Col>
-        <Col lg={8} className="my-auto bg-light">
+        <Col lg={8} className="my-auto p-0 bg-light">
         <EditBar></EditBar>
         <Canvas></Canvas>
         </Col>

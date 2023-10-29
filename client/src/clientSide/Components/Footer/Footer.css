@@ -1,6 +1,8 @@
 .footer-icon i:hover{
     cursor:pointer;
-    background: red !important;
+    background: #fa7b05 !important;
     color:white !important;
-    transition: 0.5s;
+    transition: 0.2s;
+    border-radius: 50%;
+    transform: scale(120%);
 }

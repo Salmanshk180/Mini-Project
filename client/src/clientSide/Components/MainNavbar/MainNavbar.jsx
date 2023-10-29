@@ -24,16 +24,19 @@ const MainNavbar = () => {
 
   return (
     <>
-      <Navbar expand="lg" className="bg-body-tertiary p-4 fs-5">
+      <Navbar expand="lg" className="bg-body-tertiary p-3 fs-5">
         <Container>
-          <Navbar.Brand href="#home" className="mx-3">
-          <NavLink to={"/"} style={{textDecoration:"none",color:"black"}}>DesignWorld</NavLink>
-          </Navbar.Brand>
+          <Navbar.Brand className="ms-0">
+          <NavLink to={"/"} className="text-decoration-none text-dark fw-bold fs-3">
+              DESIGN<span style={{ color: "#fa7b05" }}>WORLD</span>
+            </NavLink>          </Navbar.Brand>
           <Navbar.Toggle
             aria-controls="basic-navbar-nav"
             style={{ color: "#fa7b05", border: "none" }}
-          />
+            />
           <Navbar.Collapse id="basic-navbar-nav">
+            </Navbar.Collapse>
+
             <Nav className="me-auto">
               {/* <NavDropdown
                 title="Category"
@@ -55,14 +58,6 @@ const MainNavbar = () => {
                 Contact Us
               </NavLink>
             </Nav>
-          
-              <Nav.Link href="#home" className="mx-3">
-                Templates
-              </Nav.Link>
-              <Nav.Link href="/about" className="mx-3">
-                About
-              </Nav.Link>
-            
             <Nav className="d-flex flex-md-row">
               <Button
                 onClick={handleLoginClick}

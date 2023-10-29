@@ -43,7 +43,7 @@ const ImageModule = () => {
 
   return (
     <>
-    <div className='d-flex flex-column p-1 mx-1 my-1 '>
+    <div className='d-flex flex-column p-1 mx-1 my-1 ' style={{height:"540px"}}>
     <Form>
         <Form.Control type='text' placeholder='Search Images' className='border-2'></Form.Control>
     </Form>

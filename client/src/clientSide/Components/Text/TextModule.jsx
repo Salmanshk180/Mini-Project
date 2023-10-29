@@ -66,7 +66,7 @@ const TextModule = () => {
   return (
     <>
       <div>
-        <Container className="d-flex flex-column ">
+        <Container className="d-flex flex-column mx-2 ms-0" style={{height:"530px"}}>
           <Button variant="transparent" className=" fs-1 border-0 text-dark fw-bold" onClick={()=>addHeadingOne()}  style={{ outline: 'none', boxShadow: 'none' }}>
             Add Heading
           </Button>

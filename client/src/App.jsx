@@ -4,7 +4,7 @@ import Login from "../src/clientSide/Components/Login/Login";
 import SignUp from "../src/clientSide/Components/SignUp/SignUp";
 import { Provider } from "react-redux";
 import {store} from "../src/clientSide/redux/store";
-import { PersistGate } from 'redux-persist/integration/react';
+// import { PersistGate } from 'redux-persist/integration/react';
 import { Route, Routes } from "react-router-dom";
 import Design from "../src/clientSide/Pages/Design/Design";
 import { About } from "../src/clientSide/Pages/About/About";
@@ -20,7 +20,7 @@ function App() {
   return (
     <>
         <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
+        {/* <PersistGate loading={null} persistor={persistor}> */}
           <Routes>
          <Route exact path={'/'} element={<Home></Home>}></Route>
          <Route exact path={'/app'} element={<DesignApp></DesignApp>}></Route>
@@ -28,13 +28,13 @@ function App() {
          <Route exact path={'/about'} element={<About></About>}></Route>
          <Route exact path={'/contact'} element={<Contact></Contact>}></Route>
          <Route exact path={'/dashboard'} element={<Dashboard></Dashboard>}></Route>
-         <Route exact path={'/admin/Email.jsx'} element={<EmailPage></EmailPage>}></Route>
-         <Route exact path={"/admin/Chat.jsx"} element={<ChatPage></ChatPage>}></Route>
-         <Route exact path={"/admin/Account.jsx"} element={<UserAccountPage></UserAccountPage>}></Route>
-         <Route exact path={"/admin/Tabs.jsx"} element={<TabsPage></TabsPage>}></Route>
-         <Route exact path={"/admin/Carousel.jsx"} element={<CarouselPage></CarouselPage>}></Route>
+         <Route exact path={'/admin/email'} element={<EmailPage></EmailPage>}></Route>
+         <Route exact path={"/admin/chat"} element={<ChatPage></ChatPage>}></Route>
+         <Route exact path={"/admin/account"} element={<UserAccountPage></UserAccountPage>}></Route>
+         <Route exact path={"/admin/tabs"} element={<TabsPage></TabsPage>}></Route>
+         <Route exact path={"/admin/carousel"} element={<CarouselPage></CarouselPage>}></Route>
           </Routes>
-          </PersistGate>
+          {/* </PersistGate> */}
         </Provider>
 
     </>

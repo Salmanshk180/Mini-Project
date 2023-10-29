@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import { BsCart3,BsGrid1X2Fill,BsFillArchiveFill,BsFillGrid3X3GapFill,BsListCheck,BsMenuButtonWideFill,BsFillGearFill} from 'react-icons/bs';
 const Sidebar = ({ sidebarVisible }) => {
   const [appsDropdownOpen, setAppsDropdownOpen] = useState(false);
   const [usersDropdownOpen, setUsersDropdownOpen] = useState(false);
@@ -42,12 +42,12 @@ const Sidebar = ({ sidebarVisible }) => {
 
 
   return (
-    <aside id="sidebar" className={openSidebarToggle ? "sidebar-responsive": ""}>
+    <aside id="sidebar" className={ "sidebar-responsive"} style={{marginTop:"200px"}}>
         <div className='sidebar-title'>
             <div className='sidebar-brand'>
                 <BsCart3  className='icon_header'/> SHOP
             </div>
-            <span className='icon close_icon' onClick={OpenSidebar}>X</span>
+            <span className='icon close_icon'>X</span>
         </div>
 
         <ul className='sidebar-list'>
@@ -68,7 +68,7 @@ const Sidebar = ({ sidebarVisible }) => {
             </li>
             <li className='sidebar-list-item'>
                 <a href="">
-                    <BsPeopleFill className='icon'/> Customers
+                    {/* <BsPeopleFill className='icon'/> Customers */}
                 </a>
             </li>
             <li className='sidebar-list-item'>
