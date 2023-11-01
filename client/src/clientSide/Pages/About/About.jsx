@@ -7,9 +7,9 @@ export const About = () => {
     <>
       <MainNavbar />
       <div className="maintxt d-flex flex-column align-items-center justify-content-center text-center">
-        <h1 className='text-danger'>Who are we?</h1>
+        <h1 className='text-white'>Who are we?</h1>
         <div>
-          <p className='text-danger fw-medium'>We aim to make professional photo editing and graphic design capability accessible to everyone.</p>
+          <p className='text-white fw-medium'>We aim to make professional photo editing and graphic design capability accessible to everyone.</p>
         </div>
       </div>
       <div className='p-5 m-5 text-center'>
