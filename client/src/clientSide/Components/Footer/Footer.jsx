@@ -49,7 +49,7 @@ export const Footer = () => {
 
 
             <div className='last-footer bg-danger pt-3 pb-3 text-center fw-bold text-white fs-6'>
-                <p className='text-capitalize'><i class="fa-regular fa-copyright p-1"></i>copyright all rights reserved</p>
+                <p className='text-capitalize'><i className="fa-regular fa-copyright p-1"></i>copyright all rights reserved</p>
             </div>
        </>
 
