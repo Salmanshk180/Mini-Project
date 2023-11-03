@@ -15,10 +15,12 @@ const Design = () => {
         <Col lg={4}>
           <div className="d-flex flex-md-row flex-column-reverse">
         <DesignSidebar></DesignSidebar>
+        <div style={{width:"100%",backgroundColor:"#eeeeee"}}>
         <ComponentSidebar></ComponentSidebar>
+        </div>
           </div>
         </Col>
-        <Col lg={8} className="my-auto bg-light">
+        <Col lg={8} className="my-auto p-0 bg-light">
         <EditBar></EditBar>
         <Canvas></Canvas>
         </Col>

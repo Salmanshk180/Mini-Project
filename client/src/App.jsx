@@ -10,11 +10,15 @@ import Design from "../src/clientSide/Pages/Design/Design";
 import { About } from "../src/clientSide/Pages/About/About";
 import { Contact } from "../src/clientSide/Pages/Contact/Contact";
 import Dashboard from '../src/admin/Dashboard';
+import DesignApp from '../src/clientSide/Pages/App/App';
 import EmailPage from "./admin/Email";
 import ChatPage from "./admin/Chat";
 import UserAccountPage from "./admin/Account";
 import TabsPage from "./admin/Tabs";
 import CarouselPage from "./admin/Carousel";
+import {Templates} from '../src/clientSide/Pages/App/Templates';
+import {YourDesign} from '../src/clientSide/Pages/App/YourDesign';
+import {Profile} from '../src/clientSide/Pages/App/Profile';
 function App() {
   return (
     <>
@@ -22,15 +26,21 @@ function App() {
         {/* <PersistGate loading={null} persistor={persistor}> */}
           <Routes>
          <Route exact path={'/'} element={<Home></Home>}></Route>
+         <Route exact path={'/app'} element={<DesignApp></DesignApp>}></Route>
          <Route exact path={'/design'} element={<Design></Design>}></Route>
          <Route exact path={'/about'} element={<About></About>}></Route>
          <Route exact path={'/contact'} element={<Contact></Contact>}></Route>
          <Route exact path={'/dashboard'} element={<Dashboard></Dashboard>}></Route>
-         <Route exact path={'/admin/Email.jsx'} element={<EmailPage></EmailPage>}></Route>
-         <Route exact path={"/admin/Chat.jsx"} element={<ChatPage></ChatPage>}></Route>
-         <Route exact path={"/admin/Account.jsx"} element={<UserAccountPage></UserAccountPage>}></Route>
-         <Route exact path={"/admin/Tabs.jsx"} element={<TabsPage></TabsPage>}></Route>
-         <Route exact path={"/admin/Carousel.jsx"} element={<CarouselPage></CarouselPage>}></Route>
+         <Route exact path={'/admin/email'} element={<EmailPage></EmailPage>}></Route>
+         <Route exact path={"/admin/chat"} element={<ChatPage></ChatPage>}></Route>
+         <Route exact path={"/admin/account"} element={<UserAccountPage></UserAccountPage>}></Route>
+         <Route exact path={"/admin/tabs"} element={<TabsPage></TabsPage>}></Route>
+         <Route exact path={"/admin/carousel"} element={<CarouselPage></CarouselPage>}></Route>
+         <Route exact path={'/templates'} element={<Templates></Templates>}></Route>
+         <Route exact path={'/yourdesign'} element={<YourDesign></YourDesign>}></Route>
+         <Route exact path={'/profile'} element={<Profile></Profile>}></Route>
+
+        
           </Routes>
           {/* </PersistGate> */}
         </Provider>
