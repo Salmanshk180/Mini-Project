@@ -25,7 +25,7 @@ const MainNavbar = () => {
   return (
     <>
       <Navbar expand="lg" className="bg-body-tertiary p-3 fs-5">
-        <Container>
+        <Container fluid>
           <Navbar.Brand className="ms-0">
           <NavLink to={"/"} className="text-decoration-none text-dark fw-bold fs-3">
               DESIGN<span style={{ color: "#fa7b05" }}>WORLD</span>
@@ -35,7 +35,6 @@ const MainNavbar = () => {
             style={{ color: "#fa7b05", border: "none" }}
             />
           <Navbar.Collapse id="basic-navbar-nav">
-            </Navbar.Collapse>
 
             <Nav className="me-auto">
               {/* <NavDropdown
@@ -86,10 +85,11 @@ const MainNavbar = () => {
                 onClick={handleSignupClick}
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
-              >
+                >
                 Sign Up-Free
               </Button>
             </Nav>
+                </Navbar.Collapse>
           
         </Container>
       </Navbar>
