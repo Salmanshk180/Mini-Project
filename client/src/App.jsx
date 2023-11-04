@@ -9,13 +9,13 @@ import { Route, Routes } from "react-router-dom";
 import Design from "../src/clientSide/Pages/Design/Design";
 import { About } from "../src/clientSide/Pages/About/About";
 import { Contact } from "../src/clientSide/Pages/Contact/Contact";
-import Dashboard from '../src/admin/Dashboard';
+import Dashboard from './admin/Dashboard';
 import DesignApp from '../src/clientSide/Pages/App/App';
-import EmailPage from "./admin/Email";
-import ChatPage from "./admin/Chat";
-import UserAccountPage from "./admin/Account";
-import TabsPage from "./admin/Tabs";
-import CarouselPage from "./admin/Carousel";
+// import EmailPage from "./admin/Email";
+// import ChatPage from "./admin/Chat";
+// import UserAccountPage from "./admin/Account";
+// import TabsPage from "./admin/Tabs";
+// import CarouselPage from "./admin/Carousel";
 function App() {
   return (
     <>
@@ -27,12 +27,12 @@ function App() {
          <Route exact path={'/design'} element={<Design></Design>}></Route>
          <Route exact path={'/about'} element={<About></About>}></Route>
          <Route exact path={'/contact'} element={<Contact></Contact>}></Route>
-         <Route exact path={'/dashboard'} element={<Dashboard></Dashboard>}></Route>
-         <Route exact path={'/admin/email'} element={<EmailPage></EmailPage>}></Route>
+         <Route exact path={'/admin/dashboard'} element={<Dashboard></Dashboard>}></Route>
+         {/* <Route exact path={'/admin/email'} element={<EmailPage></EmailPage>}></Route>
          <Route exact path={"/admin/chat"} element={<ChatPage></ChatPage>}></Route>
          <Route exact path={"/admin/account"} element={<UserAccountPage></UserAccountPage>}></Route>
          <Route exact path={"/admin/tabs"} element={<TabsPage></TabsPage>}></Route>
-         <Route exact path={"/admin/carousel"} element={<CarouselPage></CarouselPage>}></Route>
+         <Route exact path={"/admin/carousel"} element={<CarouselPage></CarouselPage>}></Route> */}
           </Routes>
           {/* </PersistGate> */}
         </Provider>

@@ -13,6 +13,7 @@ import textReducer from './reducers/textReducer';
 import selectedTextReducer from './reducers/selectedTextReducer';
 // import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // Defaults to local storage for web
+import  setActiveComponentReducer  from './reducers/setActiveComponentReducer';
 const rootReducer = combineReducers({
   modal: modalReducer,
   sidebar: sidebarReducer,
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   message:messageReducer,
   text:textReducer,
   selectedText : selectedTextReducer,
+  setActiveComponent : setActiveComponentReducer,
 });
 
 
