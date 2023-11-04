@@ -11,11 +11,8 @@ import { About } from "../src/clientSide/Pages/About/About";
 import { Contact } from "../src/clientSide/Pages/Contact/Contact";
 import Dashboard from './admin/Dashboard';
 import DesignApp from '../src/clientSide/Pages/App/App';
-// import EmailPage from "./admin/Email";
-// import ChatPage from "./admin/Chat";
-// import UserAccountPage from "./admin/Account";
-// import TabsPage from "./admin/Tabs";
-// import CarouselPage from "./admin/Carousel";
+
+
 function App() {
   return (
     <>
@@ -33,6 +30,12 @@ function App() {
          <Route exact path={"/admin/account"} element={<UserAccountPage></UserAccountPage>}></Route>
          <Route exact path={"/admin/tabs"} element={<TabsPage></TabsPage>}></Route>
          <Route exact path={"/admin/carousel"} element={<CarouselPage></CarouselPage>}></Route> */}
+         {/* <Route exact path={"/admin/carousel"} element={<CarouselPage></CarouselPage>}></Route>
+         <Route exact path={'/templates'} element={<Templates></Templates>}></Route>
+         <Route exact path={'/yourdesign'} element={<YourDesign></YourDesign>}></Route>
+         <Route exact path={'/profile'} element={<Profile></Profile>}></Route> */}
+
+        
           </Routes>
           {/* </PersistGate> */}
         </Provider>
