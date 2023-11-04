@@ -1,5 +1,6 @@
 #parentM  li a:hover{
-    background-color: blue;
+    background-color: rgb(255,123,0);
+    color: white !important;
 }
 .button:hover{
     background-color: rgb(72, 73, 74);
@@ -7,3 +8,6 @@
 .parent-container{
     text-align: center;
 }
+.selected {
+    background-color: #aaaaaa;
+  }

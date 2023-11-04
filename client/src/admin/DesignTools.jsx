@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Nav, Navbar, Container } from 'react-bootstrap';
 import Text from './TextEditor';
-
+import Image from './Image';
+import Shapes from "./Shapes";
 const DesignTools = () => {
   const [selectedNavItem, setSelectedNavItem] = useState('text');
 
@@ -12,7 +13,6 @@ const DesignTools = () => {
           <Nav.Link onClick={() => setSelectedNavItem('text')}>Text</Nav.Link>
           <Nav.Link  onClick={() => setSelectedNavItem('images')}>Images</Nav.Link>
           <Nav.Link  onClick={() => setSelectedNavItem('shapes')}>Shapes</Nav.Link>
-          <Nav.Link  onClick={() => setSelectedNavItem('background')}>Background</Nav.Link>
         </Nav>
       </Navbar>
 
@@ -28,7 +28,7 @@ const DesignTools = () => {
         {selectedNavItem === 'images' && (
           <div>
             {/* Images component content */}
-            <h2>Images Component</h2>
+           <Image></Image>
             {/* Add image-related functionality here */}
           </div>
         )}
@@ -36,18 +36,13 @@ const DesignTools = () => {
         {selectedNavItem === 'shapes' && (
           <div>
             {/* Shapes component content */}
-            <h2>Shapes Component</h2>
+            
+            <Shapes></Shapes>
             {/* Add shape-related functionality here */}
           </div>
         )}
 
-        {selectedNavItem === 'background' && (
-          <div>
-            {/* Background component content */}
-            <h2>Background Component</h2>
-            {/* Add background-related functionality here */}
-          </div>
-        )}
+       
       </Container>
     </Container>
   );

@@ -24,11 +24,11 @@ const TextEditor = () => {
   const [selectedTextIndex, setSelectedTextIndex] = useState(null);
   const [cardData, setCardData] = useState([
     {
-      name: "Image 1",
+      name: "Text 1",
       src: "https://designcap.s3-us-west-1.amazonaws.com/groups/0933312d392cbf960775f4266a7741a9/preview.png",
     },
     {
-      name: "Image 2",
+      name: "Text 2",
       src: "https://designcap.s3-us-west-1.amazonaws.com/groups/a0dd10ce5ede642240af3226583b7dd7/preview.png",
     },
     // Add more card data as needed
