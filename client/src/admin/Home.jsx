@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
+import styled from 'styled-components';
+
 import {
   BarChart,
   Bar,
@@ -13,11 +15,11 @@ import {
 
 const Home = () => {
   const data = [
-    { name: "January", value: 12 },
-    { name: "February", value: 19 },
-    { name: "March", value: 3 },
-    { name: "April", value: 5 },
-    { name: "May", value: 2 },
+    { name: "August", value: 3 },
+    { name: "September", value: 9 },
+    { name: "Octomber", value: 3 },
+   
+    
   ];
 
   const cardGradientColors = [
@@ -40,41 +42,53 @@ const Home = () => {
     setHoveredCard(-1);
   };
 
+  const CardContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+const StyledCard = styled.div`
+  width: 48%;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 0 1%;
+`;
+
+const CardTitle = styled.h2`
+  font-size: 1.5rem;
+  color: #333;
+`;
+
+const CardValue = styled.p`
+  font-size: 2rem;
+  font-weight: bold;
+  color: rgb(255,123,0);
+`;
+
   return (
     <Container fluid>
-      <h1 className="mt-4">Admin Dashboard</h1>
-
-      <Row className="my-4">
-        {Array.from({ length: 3 }).map((_, index) => (
-          <Col md={4} key={index}>
-            <Card
-              className="h-100"
-              style={{
-                background: hoveredCard === index
-                  ? cardHoverColors[index]
-                  : cardGradientColors[index],
-                borderRadius: "10px",
-                padding: "15px",
-                transition: "background 0.2s",
-                color: hoveredCard === index ? hoverTextColor : defaultTextColor,
-              }}
-              onMouseEnter={() => handleCardMouseEnter(index)}
-              onMouseLeave={handleCardMouseLeave}
-            >
-              <Card.Body>
-                <Card.Title>Card {index + 1}</Card.Title>
-                <Card.Text>This is card {index + 1}.</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+      <div className="d-flex justify-content-between mt-3"> 
+      <CardContainer>
+      <StyledCard>
+        <CardTitle>No Of Users</CardTitle>
+        <CardValue>3</CardValue>
+      </StyledCard>
+      <StyledCard>
+        <CardTitle>No Of Designs</CardTitle>
+        <CardValue>10</CardValue>
+      </StyledCard>
+    </CardContainer>
+      </div>
+      <Row className="my-4"></Row>
 
       <Row>
         <Col md={12}>
           <Card>
             <Card.Body>
-              <Card.Title className="mb-4">Chart</Card.Title>
+              <Card.Title className="mb-4">Montly Report</Card.Title>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={data}>
                   <CartesianGrid strokeDasharray="3 3" />
@@ -82,7 +96,7 @@ const Home = () => {
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  <Bar dataKey="value" fill="#82ca9d" />
+                  <Bar dataKey="value" fill="rgb(255,123,0)" />
                 </BarChart>
               </ResponsiveContainer>
             </Card.Body>

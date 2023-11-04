@@ -22,7 +22,7 @@ const Sidebar = () => {
     >
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
-        <Nav className="flex-row flex-lg-row flex-lg-column h-100">
+        <Nav className="flex-row flex-lg-row flex-lg-column vh-100">
           <Button
             className="sidebar-button text-start"
             style={{

@@ -6,9 +6,9 @@ import {Footer} from '../../Components/Footer/Footer';
 const App = () => {
   return (
     <div>
-        <MainNavbar></MainNavbar>
+        {/* <MainNavbar></MainNavbar> */}
         <Sidebar/>
-        <Footer/>
+        {/* <Footer/> */}
         
     </div>
   )

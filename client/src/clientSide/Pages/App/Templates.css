@@ -1,5 +1,4 @@
-/* Basic card styles */
-.card {
+/* .card {
     width: 18rem;
     border: 1px solid #e1e1e1;
     border-radius: 8px;
@@ -7,28 +6,28 @@
     margin: 1rem;
     transition: transform 0.2s;
   }
+   */
+  /* .card:hover {
+    transform: scale(1.05); 
+  } */
   
-  .card:hover {
-    transform: scale(1.05); /* Add a slight scale effect on hover */
-  }
-  
-  .card-img-top {
+  /* .card-img-top {
     max-height: 200px;
     object-fit: cover;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
-  }
+  } */
   
-  .card-body {
+  /* .card-body {
     padding: 1.5rem;
-    background-color: #f9f9f9; /* Background color for the card body */
-  }
+    background-color: #f9f9f9;
+  } */
   
-  .card-title {
+  /* .card-title {
     font-size: 1.25rem;
     font-weight: bold;
     margin: 0;
-  }
+  } */
   
   /* Add any additional styles you prefer */
   
