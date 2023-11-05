@@ -71,23 +71,8 @@ const SignUp = () => {
             <h3>Sign Up</h3>
           </div>
         </Modal.Header>
-        <div className="d-flex justify-content-center my-2">
-          <Button
-            className="w-75 p-2"
-            style={{
-              border: "1px solid black",
-              backgroundColor: "white",
-              color: "black",
-              borderRadius: "20px",
-            }}
-          >
-            SignUp with Google
-          </Button>
-        </div>
-        <p className="text-center m-0 fs-5" style={{ color: "#999999" }}>
-          - or -
-        </p>
-        <div>
+      
+        <div className="mt-5">
           <Form method="post" name="formData" onSubmit={handleSubmit}>
             <Form.Group className="w-75 mx-auto">
               <div className="mb-2">
@@ -186,7 +171,6 @@ const SignUp = () => {
                 Already have an account?
                 <NavLink
                   style={{ color: "#fa7b05" }}
-                  to={"/"}
                   onClick={openLogin}
                   className="ms-1"
                 >

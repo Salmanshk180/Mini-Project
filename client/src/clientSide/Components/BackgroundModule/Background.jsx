@@ -20,7 +20,7 @@ const Background = () => {
   const columnsPerRow = 3;
   return (
     <div className="p-1  my-1">
-      <Card className="w-100">
+      <Card className="w-100" style={{borderRadius:"0px"}}>
         <p className="text-center mb-0" style={{ color: "#aaaaaa" }}>
           Choose Background Color
         </p>
