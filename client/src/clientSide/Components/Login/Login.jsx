@@ -65,7 +65,7 @@ const Login = () => {
             <h3>Login</h3>
           </div>
         </Modal.Header>
-        <div className="d-flex justify-content-center my-3">
+        {/* <div className="d-flex justify-content-center my-3">
           <Button
             className="w-75 p-2"
             style={{
@@ -80,7 +80,8 @@ const Login = () => {
         </div>
         <p className="text-center fs-4" style={{ color: "#999999" }}>
           - or -
-        </p>
+        </p> */}
+        <br></br>
         <div>
           <Form method="post" name="formData" onSubmit={handleLogin}>
             <Form.Group className="w-75 mx-auto">

@@ -28,7 +28,7 @@ const MainNavbar = () => {
         <Container fluid>
           <Navbar.Brand className="ms-0">
           <NavLink to={"/"} className="text-decoration-none text-dark fw-bold fs-3">
-              DESIGN<span style={{ color: "#fa7b05" }}>WORLD</span>
+              THUMB<span style={{ color: "#fa7b05" }}>CRAFT</span>
             </NavLink>          </Navbar.Brand>
           <Navbar.Toggle
             aria-controls="basic-navbar-nav"

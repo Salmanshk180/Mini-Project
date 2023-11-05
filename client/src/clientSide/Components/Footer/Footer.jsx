@@ -9,7 +9,7 @@ export const Footer = () => {
     <div className="row">
       <div className="col-md-6 col-lg-4">
       <NavLink to={"/"} className="text-decoration-none text-light fw-bold fs-4">
-              DESIGN<span style={{ color: "#fa7b05" }}>WORLD</span>
+              THUMB<span style={{ color: "#fa7b05" }}>CRAFT</span>
             </NavLink>
         <p className="mt-3">
           Come to Design World and create the best designs.

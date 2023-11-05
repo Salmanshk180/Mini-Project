@@ -20,7 +20,7 @@ const DesignNavbar = () => {
         >
           <Navbar.Brand className="mx-auto mx-md-0 text-light fw-bold ">
             <NavLink to={"/"} className="text-decoration-none text-light">
-              DESIGN<span style={{ color: "#fa7b05" }}>WORLD</span>
+              THUMB<span style={{ color: "#fa7b05" }}>CRAFT</span>
             </NavLink>
           </Navbar.Brand>
           <div className="d-flex">

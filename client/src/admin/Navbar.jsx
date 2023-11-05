@@ -57,7 +57,7 @@ const AdminNavbar = () => {
               to={"/"}
               className="text-decoration-none text-light fw-bold fs-3"
             >
-              DESIGN<span style={{ color: "#fa7b05" }}>WORLD</span>
+              THUMB<span style={{ color: "#fa7b05" }}>CRAFT</span>
             </NavLink>{" "}
           </Navbar.Brand>
           <Navbar.Toggle
