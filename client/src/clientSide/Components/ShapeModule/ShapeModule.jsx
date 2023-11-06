@@ -101,7 +101,7 @@ const ShapeModule = () => {
 
   const renderTopCards = () => {
     return topCardsData.map((topCard) => (
-      <Card key={topCard.id} className="my-1 border-0">
+      <Card key={topCard.id} className="my-1 border-0" style={{borderRadius:'0px'}}>
         <Card.Body>
           <Card.Title>{topCard.title}</Card.Title>
           <div className="d-flex flex-wrap">

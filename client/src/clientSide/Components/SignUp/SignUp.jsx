@@ -88,7 +88,10 @@ const SignUp = () => {
           - or -
         </p> */}
         <br></br>
-        <div>
+
+      
+        <div className="mt-5">
+
           <Form method="post" name="formData" onSubmit={handleSubmit}>
             <Form.Group className="w-75 mx-auto">
               <div className="mb-2">
@@ -187,7 +190,6 @@ const SignUp = () => {
                 Already have an account?
                 <NavLink
                   style={{ color: "#fa7b05" }}
-                  to={"/"}
                   onClick={openLogin}
                   className="ms-1"
                 >

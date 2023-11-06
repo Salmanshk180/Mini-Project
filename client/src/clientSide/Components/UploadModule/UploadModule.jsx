@@ -27,7 +27,7 @@ const UploadModule = () => {
     fileInputRef.current.click();
   };
   return (
-    <div className="mx-1 my-1 p-1">
+    <div className="mx-1 my-1 p-1" >
       <div>
         {selectedImage ? (
           <div className="d-flex flex-column">
@@ -59,7 +59,7 @@ const UploadModule = () => {
                 position: "absolute",
               }}
             />
-            <div className="card">
+            <div className="card" style={{borderRadius:"0px"}}>
               <div className="card-body text-center">
                 <FaFileUpload
                   className="fs-4"
@@ -78,7 +78,7 @@ const UploadModule = () => {
             </div>
           </>
         )}
-        <Card className="mt-1">
+        <Card className="mt-1" style={{borderRadius:"0px"}}>
           <Card.Body>
             <p style={{color:"#aaaaaa"}}>{imageArray.length} Images</p>
             {imageArray.map((image, index) => (

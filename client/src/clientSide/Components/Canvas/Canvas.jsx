@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import useImage from "use-image";
 import EditBar from "../EditBar/EditBar";
 import { selectedText } from "../../redux/actions/selectedTextAction";
+import { RxCross2 } from "react-icons/rx";
 const Canvas = () => {
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
@@ -129,6 +130,7 @@ const Canvas = () => {
             </Group>
           </Layer>
         </Stage>
+        <p style={{marginLeft:"660px",color:"#aaaaaa",fontSize:"14px"}}>1280<RxCross2></RxCross2>720 px</p>
       </div>
     </div>
   );
