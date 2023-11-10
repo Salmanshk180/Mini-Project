@@ -1,6 +1,9 @@
 import React from "react";
 import "./Footer.css";
 import { NavLink } from "react-router-dom";
+import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
+import { BsTelephoneFill,BsEnvelopeFill,BsMapFill} from "react-icons/bs";
+import { MdLocationCity } from "react-icons/md";
 export const Footer = () => {
   return (
     <>
@@ -9,24 +12,24 @@ export const Footer = () => {
     <div className="row">
       <div className="col-md-6 col-lg-4">
       <NavLink to={"/"} className="text-decoration-none text-light fw-bold fs-4">
-              DESIGN<span style={{ color: "#fa7b05" }}>WORLD</span>
+              THUMB<span style={{ color: "#fa7b05" }}>CRAFT</span>
             </NavLink>
         <p className="mt-3">
-          Come to Design World and create the best designs.
+          Come to Design World and create the best youtube thumbnails.
         </p>
         <div className="footer-icon">
-          <a href="#" className="text-decoration-none text-light m-2">
-            <i className="fab fa-facebook"></i>
-          </a>
-          <a href="#" className="text-decoration-none text-light m-2">
-            <i className="fab fa-twitter"></i>
-          </a>
-          <a href="#" className="text-decoration-none text-light m-2">
-            <i className="fab fa-instagram"></i>
-          </a>
-          <a href="#" className="text-decoration-none text-light m-2">
-            <i className="fab fa-linkedin"></i>
-          </a>
+          <NavLink to="/" className="text-decoration-none text-light me-2">
+            <FaFacebook></FaFacebook>
+          </NavLink>
+          <NavLink to="/" className="text-decoration-none text-light me-2">
+            <FaTwitter></FaTwitter>
+          </NavLink>
+          <NavLink to="/" className="text-decoration-none text-light me-2">
+            <FaInstagram></FaInstagram>
+          </NavLink>
+          <NavLink to="/" className="text-decoration-none text-light me-2">
+            <FaLinkedin></FaLinkedin>
+          </NavLink>
         </div>
       </div>
 
@@ -34,19 +37,19 @@ export const Footer = () => {
         <h3 className="fw-bold" style={{color:"#fa7b05"}}>Quick Links</h3>
         <ul className="list-unstyled mt-3">
           <li>
-            <a className="text-decoration-none text-light" href="/">
-              Services
-            </a>
+            <NavLink className="text-decoration-none text-light" to="/">
+              Templates
+            </NavLink>
           </li>
           <li>
-            <a className="text-decoration-none text-light" href="/about">
+            <NavLink className="text-decoration-none text-light" to="/about">
               About
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a className="text-decoration-none text-light" href="/contact">
+            <NavLink className="text-decoration-none text-light" to="/contact">
               Contact Us
-            </a>
+            </NavLink>
           </li>
         </ul>
       </div>
@@ -54,13 +57,13 @@ export const Footer = () => {
       <div className="col-md-6 col-lg-4">
         <h3 className="fw-bold" style={{color:"#fa7b05"}}>Contact Info</h3>
         <p className="mt-3">
-          <i className="fas fa-phone text-light"></i> +91 9638504805
+      <BsTelephoneFill></BsTelephoneFill> +91 9638504805
         </p>
         <p>
-          <i className="fas fa-envelope text-light"></i> dhrutandel508@gmail.com
+          <BsEnvelopeFill></BsEnvelopeFill> dhrutandel508@gmail.com
         </p>
         <p>
-          <i className="fas fa-map-marker text-light"></i> Bardoli, Gujarat
+         <MdLocationCity></MdLocationCity> Bardoli, Gujarat
         </p>
       </div>
     </div>
@@ -69,7 +72,7 @@ export const Footer = () => {
     <div className="row">
       <div className="col-12 text-center mt-4">
         <p className="text-capitalize">
-          <i className="far fa-copyright"></i> Copyright All Rights Reserved
+          <i className="far fa-copyright"></i> @Copyright All Rights Reserved By ThumbCraft
         </p>
       </div>
     </div>

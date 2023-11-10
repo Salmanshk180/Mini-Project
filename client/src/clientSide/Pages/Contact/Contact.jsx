@@ -1,14 +1,18 @@
 import React from 'react'
 import MainNavbar from '../../Components/MainNavbar/MainNavbar';
 import { Footer } from '../../Components/Footer/Footer';
+import Login from '../../Components/Login/Login';
+import SignUp from "../../Components/SignUp/SignUp";
 
 export const Contact = () => {
     return (
         <>
             <MainNavbar />
+            <Login></Login>
+            <SignUp></SignUp>
             <div className='text-center p-5 m-5'>
                 <h1 className='p-3'>Contact Us</h1>
-                <p className='fw-medium fs-5'>Please let us know if you have any feedback, suggestions or comments on DesignCap. We'd love to hear your thoughts!</p>
+                <p className='fw-medium fs-5'>Please let us know if you have any feedback, suggestions or comments on ThumbCraft. We'd love to hear your thoughts!</p>
                 <p className='text-danger fw-medium fs-6'>Fields marked with * are mandatory.</p>
             </div>
             <div className='container'>

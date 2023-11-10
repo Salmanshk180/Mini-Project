@@ -65,23 +65,7 @@ const Login = () => {
             <h3>Login</h3>
           </div>
         </Modal.Header>
-        <div className="d-flex justify-content-center my-3">
-          <Button
-            className="w-75 p-2"
-            style={{
-              border: "1px solid black",
-              backgroundColor: "white",
-              color: "black",
-              borderRadius: "20px",
-            }}
-          >
-            Login with Google
-          </Button>
-        </div>
-        <p className="text-center fs-4" style={{ color: "#999999" }}>
-          - or -
-        </p>
-        <div>
+        <div className="mt-5">
           <Form method="post" name="formData" onSubmit={handleLogin}>
             <Form.Group className="w-75 mx-auto">
               <div className="mb-3">
@@ -160,7 +144,6 @@ const Login = () => {
                 Not a registered user yet?
                 <NavLink
                   style={{ color: "#fa7b05" }}
-                  to={"/"}
                   onClick={openSignup}
                   className="ms-1"
                 >
