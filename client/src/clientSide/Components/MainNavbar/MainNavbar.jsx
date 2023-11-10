@@ -4,13 +4,14 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Button from "react-bootstrap/esm/Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   openLoginModal,
   openSignupModal,
 } from "../../redux/actions/modalActions";
 import { NavLink } from "react-router-dom";
 const MainNavbar = () => {
+
   const [hovered, setHovered] = useState(false);
   const dispatch = useDispatch();
 
@@ -58,6 +59,21 @@ const MainNavbar = () => {
               </NavLink>
             </Nav>
             <Nav className="d-flex flex-md-row">
+                            <Button
+                onClick={handleLoginClick}
+                className="mx-2 my-1 my-lg-0"
+                variant="light"
+                style={{
+                  fontWeight: "500",
+                  border: "1px solid #c4c3c2",
+                  borderRadius: "50px",
+                  padding: "10px 20px",
+                }}
+              >
+                Log Out
+              </Button>
+              
+                <>
               <Button
                 onClick={handleLoginClick}
                 className="mx-2 my-1 my-lg-0"
@@ -88,6 +104,8 @@ const MainNavbar = () => {
                 >
                 Sign Up-Free
               </Button>
+              </>
+              
             </Nav>
                 </Navbar.Collapse>
           

@@ -8,12 +8,21 @@ import SignUp from "../../Components/SignUp/SignUp";
 import "./Home.css";
 import image from "../../images/homeimage.png";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 const Home = () => {
+  const isAuthenticated = useSelector((state) =>state.auth.isAuthenticated);
   return (
     <>
       <MainNavbar></MainNavbar>
+    {
+      isAuthenticated?
+      <></>
+      :<>
       <Login></Login>
       <SignUp></SignUp>
+      </> 
+    }
+      
       <div className="container-fluid d-flex align-items-center justify-content-center px-5 py-5 bg-primary-subtle ">
         <div className="row">
           <div className="col-md-6 ">
@@ -33,7 +42,12 @@ const Home = () => {
                 className="btn  fs-5 custom-small-btn ms-0 border-0 rounded-pill p-3"
                 style={{ background: "rgb(255,123,0)" }}
               >
-                <NavLink to={"/app"} className={"text-decoration-none text-white"}>Get Started now</NavLink>
+                <NavLink
+                  to={"/app"}
+                  className={"text-decoration-none text-white"}
+                >
+                  Get Started now
+                </NavLink>
               </button>
             </div>
           </div>
