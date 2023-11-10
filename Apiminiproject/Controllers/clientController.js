@@ -111,21 +111,6 @@ router.get('/fetchLogin', async (req, res) => {
 
 //Signup
 router.post('/addsignup', async (req, res) => {
-    // var objSignup = new signup();
-    // objSignup.email = req.body.email,
-    // objSignup.password = req.body.password,
-    // objSignup.confirmpassword = req.body.confirmpassword,
-    // objSignup.addedOn = new Date(),
-    // objSignup.isActive = true;
-    // console.log();
-
-    // const inserted = await objSignup.save();
-
-    // if (inserted != null) {
-    //     res.json({ result: "success", msg: "User Inserted", data: 1 });
-    // } else {
-    //     res.json({ result: "failure", msg: "User Not Inserted", data: 0 });
-    // }
     try {
         const { email, password, confirmpassword } = req.body;
 
