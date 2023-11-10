@@ -32,7 +32,16 @@ const VerifyText = styled.p`
 `;
 
 const LoaderContainer = styled.div`
-  text-align: center;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+background: rgba(255, 255, 255, 0.8);
+z-index: 1000;  
 `;
 
 const Verification = () => {
@@ -45,7 +54,6 @@ const Verification = () => {
 
   const handleVerification = async (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
-    setLoading(true);
 
     try {
       const response = await axios.post('http://localhost:3000/admin/verify-otp', {
@@ -54,8 +62,8 @@ const Verification = () => {
       });
 
       if (response.status === 200) {
+        toast.success("Admin Registered Successfully")
         setLoading(true);
-        // On successful verification, proceed to the login page after a delay
         setTimeout(() => {
           setLoading(false);
           navigate('/admin/login');
@@ -69,12 +77,13 @@ const Verification = () => {
   };
 
    return (
-    <VerificationContainer fluid>
+    <>
       {loading ? (
         <LoaderContainer>
-          <SyncLoader color={"#4a9022"} loading={loading} />
+          <SyncLoader color={"#4a90e2"} loading={loading} />
         </LoaderContainer>
       ) : (
+    <VerificationContainer fluid>
         <VerifyCard>
           <VerifyText>
             Enter the OTP sent to your email for verification:
@@ -86,7 +95,7 @@ const Verification = () => {
                 value={otp}
                 onChange={(e) => setOTP(e.target.value)}
                 placeholder="Enter OTP"
-              />
+                />
             </Form.Group>
             <Button className="w-100 mt-2" type="submit">
               Verify OTP
@@ -96,8 +105,9 @@ const Verification = () => {
             </Button>
           </Form>
         </VerifyCard>
-      )}
     </VerificationContainer>
+      )}
+      </>
   );
 };
 

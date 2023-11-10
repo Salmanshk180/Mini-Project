@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Admin = require("../Models/AdminSignUp");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
 dotenv.config();
@@ -82,5 +83,40 @@ router.post("/verify-otp", async (req, res) => {
     res.status(500).json({ message: "Failed to verify OTP" });
   }
 });
+
+
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await Admin.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Check if the user's account is active or verified, if applicable
+    if (!user.isActive) {
+      return res.status(403).json({ message: "Account not verified" });
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h", // Expiry time for the token
+    });
+
+    // Return the token and any other necessary data
+    res.status(200).json({ message: "Login successful", token });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Login failed" });
+  }
+});
+
 
 module.exports = router;

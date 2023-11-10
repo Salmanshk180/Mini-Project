@@ -1,9 +1,9 @@
-// redux/reducers/adminAuthReducer.js
-
 const initialState = {
   signupLoading: false,
   verificationLoading: false,
+  loginLoading: false,
   error: null,
+  token: null,
 };
 
 const adminAuthReducer = (state = initialState, action) => {
@@ -40,6 +40,24 @@ const adminAuthReducer = (state = initialState, action) => {
       return {
         ...state,
         verificationLoading: false,
+        error: action.payload,
+      };
+    case 'LOGIN_REQUEST':
+      return {
+        ...state,
+        loginLoading: true,
+      };
+    case 'LOGIN_SUCCESS':
+      return {
+        ...state,
+        loginLoading: false,
+        error: null,
+        token: action.payload,
+      };
+    case 'LOGIN_FAILURE':
+      return {
+        ...state,
+        loginLoading: false,
         error: action.payload,
       };
     default:

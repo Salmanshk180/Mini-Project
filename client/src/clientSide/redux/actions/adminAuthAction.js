@@ -31,3 +31,34 @@ export const adminSignUp = (formData) => async (dispatch) => {
     }
   }
 };
+
+
+export const adminLogin = (formData) => async (dispatch) => {
+  try {
+    const response = await axios.post('http://localhost:3000/admin/login', formData);
+    const { message, token } = response.data;
+
+    if (message === 'Login successful') {
+      localStorage.setItem('message', message);
+      localStorage.setItem('token', token);
+      return { success: true, message };
+    } else {
+      return { success: false, message };
+    }
+  } catch (error) {
+    console.error('Login error:', error);
+
+    if (error.response?.data?.message) {
+      console.log('Error message:', error.response.data.message);
+
+      if (error.response.data.message === 'User not found') {
+        return { success: false, message: 'User not found' };
+      } else {
+        return { success: false, message: error.response.data.message };
+      }
+    } else {
+      console.log('Unknown error');
+      return { success: false, message: 'Login failed. Please try again.' };
+    }
+  }
+};
