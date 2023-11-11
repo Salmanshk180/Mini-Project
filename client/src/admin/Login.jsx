@@ -5,6 +5,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { SyncLoader} from "react-spinners";
 import axios from "axios";
+import { useSelector,useDispatch } from "react-redux";
+import { adminLogin } from "../clientSide/redux/actions/adminAuthAction";
 
 const LoginContainer = styled(Container)`
   min-height: 100vh;
@@ -84,6 +86,7 @@ const Login = () => {
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -107,9 +110,7 @@ const Login = () => {
   useEffect(() => {
     if (loading) {
       const delay = setTimeout(() => {
-        setLoading(false);
-        navigate("/admin/login");
-      }, 5000);
+        setLoading(false);      }, 5000);
 
       return () => clearTimeout(delay);
     }
@@ -145,11 +146,12 @@ const Login = () => {
           email: formData.email,
           password: formData.password,
         });
-
+        
         if (response.status === 200) {
           setLoading(true);
           // Assuming a successful login might redirect to a dashboard
           toast.success("Login successful!");
+          dispatch(adminLogin(formData));
           // Redirect to the dashboard after 4 seconds
           setTimeout(() => {
             setLoading(false);

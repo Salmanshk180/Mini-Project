@@ -1,4 +1,3 @@
-// redux/actions/adminAuthActions.js
 
 import axios from 'axios';
 
@@ -39,9 +38,10 @@ export const adminLogin = (formData) => async (dispatch) => {
     const { message, token } = response.data;
 
     if (message === 'Login successful') {
+      dispatch({ type: 'LOGIN_SUCCESS', payload: token });
       localStorage.setItem('message', message);
       localStorage.setItem('token', token);
-      return { success: true, message };
+      return { success: true, message,token };
     } else {
       return { success: false, message };
     }
@@ -61,4 +61,10 @@ export const adminLogin = (formData) => async (dispatch) => {
       return { success: false, message: 'Login failed. Please try again.' };
     }
   }
+};
+
+export const adminLogout = () => async (dispatch) => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('message');
+  dispatch({ type: 'LOGOUT' });
 };
