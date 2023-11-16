@@ -1,129 +1,162 @@
-import React, { useState } from "react";
-import { Button } from "react-bootstrap";
-import styled from "styled-components";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-const AddTemplates = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [templateData, setTemplateData] = useState([
-    {
-      id: 1,
-      image:
-        "   https://pixabay.com/get/g45650fc6f01f061c90d21c22a10d40270b2706c10b2a91074f87f4421758b2b10e66e05f7046604ab89821c3622475fa_150.jpg",
-      title: "Image 1",
-    },
-    {
-      id: 2,
-      image:
-        "https://pixabay.com/get/ge2c31a0fdd421600ef1bb19459c48de33c3ed8a94502427bdff495613124caf7cc09c6f89d2ae3cc4a691061645fb0fa621ec9495ef99570aef01e3514e14ecd_150.jpg",
-      title: "Image 2",
-    },
-    {
-      id: 3,
-      image:
-        "https://pixabay.com/get/gd19f2803ada2aa57020a0a509b615e7840c92ce75d565c87082d03b1ffa5930c7f5e4a529e1f2729cd2881848383dd263205a9c52e0778151154e585b1c58b8c_150.jpg",
-      title: "Image 3",
-    },
-  ]);
-  const [newImage, setNewImage] = useState(null);
+const Image = () => {
+  const [image, setImage] = useState(null);
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
+  const [allImage, setAllImage] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
 
-  const filteredTemplates = templateData.filter((template) =>
-    template.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  useEffect(() => {
+    getImage();
+  }, [image]);
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const newTemplate = {
-          id: templateData.length + 1,
-          image: e.target.result,
-          title: "New Image",
-        };
-        setTemplateData([...templateData, newTemplate]);
-      };
-      reader.readAsDataURL(file);
+  const submitImage = async (e) => {
+    e.preventDefault();
+    if (!title || !category) {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("category", category);
+
+    if (image) {
+      // Include the image in formData only if it is selected
+      formData.append("image", image);
+    }
+
+    try {
+      if (selectedImage) {
+        // If an image is selected, update it
+        await axios.put(
+          `http://localhost:3000/admin/images/${selectedImage._id}`,
+          formData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        );
+        setSelectedImage(null); // Reset selected image after update
+      } else {
+        // If no image is selected, create a new one
+        if(!image) {
+          alert("Please select an image");
+        }
+        else{
+
+          await axios.post("http://localhost:3000/admin/images/upload", formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+          });
+        }
+      }
+      getImage(); // Refresh the image list after successful upload/update
+      // Clear the input fields after successful upload/update
+      setImage(null);
+      setTitle("");
+      setCategory("");
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
+
+  const onInputChange = (e) => {
+    setImage(e.target.files[0]);
+  };
+
+  const getImage = async () => {
+    try {
+      const result = await axios.get("http://localhost:3000/admin/images");
+      setAllImage(result.data.data);
+    } catch (error) {
+      console.error("Error fetching images:", error);
+    }
+  };
+
+  const editImage = async (data) => {
+    setSelectedImage(data);
+    setTitle(data.title);
+    setCategory(data.category);
+  };
+
+  const deleteImage = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3000/admin/images/${id}`);
+      getImage(); // Refresh the image list after successful delete
+    } catch (error) {
+      console.error("Error deleting image:", error);
     }
   };
 
   return (
-    <>
-      <div className="d-flex justify-content-between mt-3 align-items-center ms-5">
-        <SearchInput
-          type="text"
-          placeholder="Search Images"
-          value={searchQuery}
-          className="w-50 shadow"
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <div>
-          <label
-            htmlFor="imageUpload"
-            className="me-5 text-center px-5 shadow"
-            style={{
-              background: "rgb(255,123,0)",
-              border: "0px",
-              borderRadius: "0px",
-              padding: "10px",
-              color: "rgba(255,255,255)"
-            }}
-          >
-            Upload Image
-          </label>
-          <input
-            id="imageUpload"
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
-            style={{ display: "none" }}
-          />
+    <div>
+      <form onSubmit={submitImage}>
+        <div className="card w-50 mx-auto border-0">
+          <div className="d-flex">
+            <input
+              type="text"
+              placeholder="Title"
+              className="my-1 me-1"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Category"
+              className="my-1 ms-1"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            />
+          </div>
+          <div className="d-flex">
+            <input
+              type="file"
+              accept="image/*"
+              className="my-1 me-1"
+              onChange={onInputChange}
+            />
+            <button type="submit" className="btn btn-primary my-1">
+              {selectedImage ? "Update" : "Upload"}
+            </button>
+          </div>
         </div>
+      </form>
+      <div className="d-flex mt-4">
+        {allImage.length === 0
+          ? "No images"
+          : allImage.map((data) => (
+              <React.Fragment key={data._id}>
+                <div className="card shadow me-3">
+                  <img
+                    src={`http://localhost:3000/admin/images/${data.image}`}
+                    alt={data.image}
+                    height={120}
+                    width={180}
+                    style={{ objectFit: "cover" }}
+                  />
+                  <p className="text-center">{data.title}</p>
+                  <p className="text-center">{data.category}</p>
+                  <div className="d-flex justify-content-between mx-2 mb-1 mt-0">
+                    <button
+                      className="btn btn-info me-2"
+                      onClick={() => editImage(data)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => deleteImage(data._id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </React.Fragment>
+            ))}
       </div>
-      <div
-        className="mt-1"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        {filteredTemplates.map((template, index) => (
-          <TemplateCard key={index} className="shadow">
-            <ImageContainer>
-              <Image src={template.image} alt={template.title} />
-            </ImageContainer>
-            <p className="text-center mt-1">{template.title}</p>
-          </TemplateCard>
-        ))}
-      </div>
-    </>
+    </div>
   );
 };
 
-const TemplateCard = styled.div`
-  width: 300px;
-  height: 150px ;
-  margin: 15px;
-`;
-
-const ImageContainer = styled.div`
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-  transition: transform 0.3s;
-`;
-const Image = styled.img`
-width: 300px; /* Set the width to match your desired display width */
-height: 150px; /* Set the height to match your desired display height */
-object-fit: cover;
-`;
-const SearchInput = styled.input`
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-`;
-
-export default AddTemplates;
+export default Image;

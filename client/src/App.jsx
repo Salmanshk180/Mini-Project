@@ -18,6 +18,7 @@ import AdminDashboard from "../src/admin/Dashboard";
 import TemplateEditor from "../src/admin/TemplateEditor";
 import ProtectedRouteAdmin from "../src/admin/ProtectedRouteAdmin";
 import Verification from "./admin/Verification";
+
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 function App() {
@@ -40,6 +41,11 @@ function App() {
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route exact path={"/admin/signup"} element={<AdminSignup />} />
           <Route exact path={"/admin/verify"} element={<Verification />} />
+          <Route exact path={"/admin/user-profile"} element={<AdminDashboard />} />
+          <Route exact path={"/admin/add-templates"} element={<AdminDashboard />} />
+          <Route exact path={"/admin/design-tools"} element={<AdminDashboard />} />
+          <Route exact path={"/admin/design-tools/images"} element={<AdminDashboard />} />
+          <Route exact path={"/admin/my-account"} element={<AdminDashboard />} />
           <Route exact path={"/*"} element={<ErrorPage></ErrorPage>}></Route>
           <Route
             exact

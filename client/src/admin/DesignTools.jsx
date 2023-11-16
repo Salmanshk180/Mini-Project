@@ -7,7 +7,7 @@ const DesignTools = () => {
   const [selectedNavItem, setSelectedNavItem] = useState('text');
 
   return (
-    <Container fluid className='p-0 vh-100'>
+    <Container fluid className='p-0'>
       <Navbar variant="dark" style={{background:"rgb(255,123,0)",color:"white"}}>
         <Nav className="px-2 ">
           <Nav.Link onClick={() => setSelectedNavItem('text')}>Text</Nav.Link>

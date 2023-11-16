@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Container, Form, Button,Spinner} from "react-bootstrap";
+import { Container, Form, Button, Spinner } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { SyncLoader} from "react-spinners";
+import { SyncLoader } from "react-spinners";
 import axios from "axios";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { adminLogin } from "../clientSide/redux/actions/adminAuthAction";
 
 const LoginContainer = styled(Container)`
@@ -110,13 +110,14 @@ const Login = () => {
   useEffect(() => {
     if (loading) {
       const delay = setTimeout(() => {
-        setLoading(false);      }, 5000);
+        setLoading(false);
+      }, 5000);
 
       return () => clearTimeout(delay);
     }
   }, [loading, navigate]);
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newErrors = {};
@@ -146,12 +147,12 @@ const Login = () => {
           email: formData.email,
           password: formData.password,
         });
-        
+
         if (response.status === 200) {
           setLoading(true);
           // Assuming a successful login might redirect to a dashboard
           toast.success("Login successful!");
-          dispatch(adminLogin(formData));
+          await dispatch(adminLogin(formData));
           // Redirect to the dashboard after 4 seconds
           setTimeout(() => {
             setLoading(false);
@@ -160,7 +161,11 @@ const Login = () => {
         }
       } catch (error) {
         // Handle different login error scenarios here
-        if (error.response && error.response.data && error.response.data.message) {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
           toast.error(error.response.data.message); // Show the specific error message from the backend
         } else {
           toast.error("Failed to log in. Please try again.");
@@ -236,7 +241,11 @@ const Login = () => {
             </StyledFormGroup>
 
             <StyledButton type="submit" disabled={submitting}>
-              {submitting ? <Spinner animation="border" size="sm" role="status" /> : "Log In"}
+              {submitting ? (
+                <Spinner animation="border" size="sm" role="status" />
+              ) : (
+                "Log In"
+              )}
             </StyledButton>
 
             <NavLink

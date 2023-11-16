@@ -24,7 +24,13 @@ const adminSchema = new mongoose.Schema({
   },
   otp: {
     type: String,
-  }
+  },
+  gender:{
+    type: String,
+  },
+  profilePicture:{
+    type:String,
+  },
 });
 
 module.exports = mongoose.model('Admin', adminSchema);

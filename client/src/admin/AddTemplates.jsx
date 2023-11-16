@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
@@ -33,14 +33,16 @@ const AddTemplates = () => {
 
   return (
     <>
-      <div className="d-flex justify-content-between mt-3 align-items-center  ms-5">
+    <Container fluid className="vh-100">
+
+      <div className="d-flex justify-content-between mt-3 align-items-center ms-5">
         <SearchInput
           type="text"
           placeholder="Search Templates"
           value={searchQuery}
           className="w-50 shadow"
           onChange={(e) => setSearchQuery(e.target.value)}
-        />
+          />
         <Button className="me-5 text-center px-5 shadow" style={{background:"rgb(255,123,0)",border:"0px",borderRadius:"0px",padding:"10px"}}>
           <NavLink style={{textDecoration:"none",color:"white"}}>Create New Template</NavLink>
         </Button>
@@ -52,7 +54,7 @@ const AddTemplates = () => {
           justifyContent: "center",
           alignItems: "center",
         }}
-      >
+        >
         {filteredTemplates.map((template, index) => (
           <TemplateCard key={index} className="shadow">
             <ImageContainer>
@@ -62,6 +64,7 @@ const AddTemplates = () => {
           </TemplateCard>
         ))}
       </div>
+        </Container>
     </>
   );
 };

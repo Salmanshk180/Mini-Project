@@ -1,213 +1,224 @@
-import React, { useState } from "react";
-import { Card, Form, Button, Container, Row, Col } from "react-bootstrap";
-import { BsPersonCircle } from "react-icons/bs";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import styled from "styled-components";
+import { Container, Card, Button, Form } from "react-bootstrap";
+import { css } from "@emotion/react";
+import { ClipLoader } from "react-spinners";
+import { useNavigate, useNavigation } from "react-router-dom";
+import { toast } from "react-toastify";
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 const ProfileContainer = styled(Container)`
-  p {
-    margin: 1rem 0;
-  }
-`;
-
-const ProfileCard = styled(Card)`
-  width: 50%;
-  margin: auto;
-  padding: 10px;
+  height: 100vh;
+  padding: 20px;
   display: flex;
-  justify-content: space-between;
-`;
-
-const ProfileImage = styled.img`
-  border-radius: 50%;
-  border: 1px solid rgb(255, 123, 0);
-  max-width: 100%;
-  max-height: 100%;
+  align-items: start;
+  justify-content: center;
+  background: linear-gradient(to left, #4a90e2, #8253de);
 `;
 
 const MyAccount = () => {
-  const [userProfile, setUserProfile] = useState({
-    name: "Salman",
-    email: "salmanshaik7118@gmail.com",
-    password: "password123",
-    profilePicture: "https://www.designcap.com/media/users/images/avatar.png",
+  const [adminInfo, setAdminInfo] = useState({});
+  const [isEditing, setIsEditing] = useState(false);
+  const navigate = useNavigate();
+  const [editedInfo, setEditedInfo] = useState({
+    name: "",
+    email: "",
+    gender: "",
+  });
+  const [errors, setErrors] = useState({
+    email: "",
+    name: "",
   });
 
-  const [updatedProfile, setUpdatedProfile] = useState({ ...userProfile });
-  const [isEditing, setIsEditing] = useState(false);
-  const [validationErrors, setValidationErrors] = useState({});
-  const [newProfilePicture, setNewProfilePicture] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleEditClick = () => {
+  const validateEmail = (email) => {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    let isValid = true;
+
+    if (!validateEmail(editedInfo.email)) {
+      newErrors.email = "Please enter a valid email address";
+      isValid = false;
+    }
+
+    if (editedInfo.name.trim() === "") {
+      newErrors.name = "Name is required";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  useEffect(() => {
+    const fetchAdminInfo = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/admin/myaccount"
+        );
+        setAdminInfo(response.data[0]);
+        setEditedInfo(response.data[0]);
+      } catch (error) {
+        console.error("Error fetching admin info:", error);
+      }
+    };
+
+    fetchAdminInfo();
+  }, []);
+
+  const handleEdit = () => {
     setIsEditing(true);
   };
 
-  const handleSaveClick = () => {
-    // Add validation checks before saving
-    if (!updatedProfile.name.trim()) {
-      setValidationErrors({ name: "Name is required" });
-    } else if (!isValidEmail(updatedProfile.email)) {
-      setValidationErrors({ email: "Invalid email format" });
-    } else {
-      setUserProfile({ ...updatedProfile, profilePicture: newProfilePicture });
-      setIsEditing(false);
+  const handleSave = async () => {
+    if (!validateForm()) {
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const { name, email, gender } = editedInfo;
+      const response = await axios.put(
+        `http://localhost:3000/admin/my-account/${adminInfo._id}`,
+        { name, email, gender }
+      );
+      toast.success("Admin Details Updated");
+      setTimeout(() => {
+        setAdminInfo(editedInfo);
+        setIsEditing(false);
+        setLoading(false);
+        console.log("Updated user info:", response.data);
+      }, 5000);
+    } catch (error) {
+      console.error("Error updating admin info:", error);
+      toast.error("Something went wrong updating admin info!!!");
     }
   };
 
-  const handleCancelClick = () => {
-    setUpdatedProfile({ ...userProfile });
+  const handleCancel = () => {
+    setLoading(false); // Ensure loading state is reset on cancel
+    setEditedInfo(adminInfo);
     setIsEditing(false);
-    setValidationErrors({});
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUpdatedProfile({
-      ...updatedProfile,
-      [name]: value,
-    });
-    // Clear validation error when the input changes
-    setValidationErrors({ ...validationErrors, [name]: null });
+    setEditedInfo({ ...editedInfo, [name]: value });
   };
-
-  const handleProfilePictureChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setNewProfilePicture(e.target.result);
-      };
-      reader.readAsDataURL(file);
+  const handleDelete = async () => {
+    if (window.confirm("Are you sure you want to delete your account?")) {
+      try {
+        setLoading(true);
+        await axios.delete(
+          `http://localhost:3000/admin/my-account/${adminInfo._id}`
+        );
+        console.log("Account deleted.");
+        // Adding a delay of 2 seconds to simulate the loading state after deletion
+        setTimeout(() => {
+          toast.success("Account deleted successfully!");
+          navigate("/admin/signup");
+          setLoading(false);
+        }, 5000);
+      } catch (error) {
+        console.error("Error deleting account:", error);
+        toast.error("Error deleting account!");
+        setLoading(false);
+      }
     }
   };
 
-  const isValidEmail = (email) => {
-    const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-    return emailPattern.test(email);
-  };
-
   return (
-    <ProfileContainer fluid className="p-1 h-100">
-      <p className="mt-3 fs-3 text-center fw-bold ms-4 fst-italic" style={{color:"rgb(255,123,0)"}}>My Account</p>
-      <ProfileCard className="shadow">
-        <Col lg={4} className="text-center mx-auto px-2">
-          <ProfileImage
-            src={newProfilePicture || userProfile.profilePicture}
-            alt="User Profile"
-          />
-          {isEditing && (
-            <Form.Group className="mt-3">
-              <Form.Label>Change Profile Picture</Form.Label>
-              <Form.Control
-                type="file"
-                accept="image/*"
-                onChange={handleProfilePictureChange}
-              />
-            </Form.Group>
-          )}
-        </Col>
-        <Col lg={1}>
-          <div
-            style={{
-              height: "100%",
-              width: "2px",
-              backgroundColor: "rgb(255,123,0)",
-            }}
-          ></div>
-        </Col>
-        <Col className="mx-0">
-          <Card.Text>
-            {isEditing ? (
-              <Form>
-                <Form.Group as={Row} className="mb-3">
-                  <Form.Label column sm="3" className="text-start">
-                    Name:
-                  </Form.Label>
-                  <Col sm="9">
+    <ProfileContainer fluid>
+      <Card>
+        <Card.Body>
+          <h3 className="text-center">My Account</h3>
+          {loading ? (
+            <div className="sweet-loading">
+              <ClipLoader loading={loading} css={override} size={150} />
+            </div>
+          ) : (
+            <>
+              {!isEditing ? (
+                <div className="mt-3">
+                  <div className="text-center my-2">
+                    <img src={adminInfo.profilePicture} alt="" srcset="" />
+                  </div>
+                  <p>
+                    <strong>Name:</strong> {adminInfo.name}
+                  </p>
+                  <p>
+                    <strong>Email:</strong> {adminInfo.email}
+                  </p>
+                  <p>
+                    <strong>Gender:</strong> {adminInfo.gender}
+                  </p>
+                  <div className="d-flex justify-content-between">
+                    <Button onClick={handleEdit}>Edit</Button>
+                    <Button variant="danger" onClick={handleDelete}>
+                      Delete
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <Form className="px-4">
+                  <Form.Group className="mb-3">
+                    <Form.Label>Name</Form.Label>
                     <Form.Control
                       type="text"
+                      value={editedInfo.name}
                       name="name"
-                      value={updatedProfile.name}
                       onChange={handleInputChange}
                     />
-                    {validationErrors.name && (
-                      <small className="text-danger">
-                        {validationErrors.name}
-                      </small>
+                    {errors.name && (
+                      <p style={{ color: "red" }}>{errors.name}</p>
                     )}
-                  </Col>
-                </Form.Group>
-                <Form.Group as={Row} className="mb-3">
-                  <Form.Label column sm="3" className="text-start">
-                    Email:
-                  </Form.Label>
-                  <Col sm="9">
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Email</Form.Label>
                     <Form.Control
                       type="email"
+                      value={editedInfo.email}
                       name="email"
-                      value={updatedProfile.email}
                       onChange={handleInputChange}
                     />
-                    {validationErrors.email && (
-                      <small className="text-danger">
-                        {validationErrors.email}
-                      </small>
+                    {errors.email && (
+                      <p style={{ color: "red" }}>{errors.email}</p>
                     )}
-                  </Col>
-                </Form.Group>
-                <Form.Group as={Row} className="mb-3">
-                  <Form.Label column sm="3" className="text-start">
-                    Password:
-                  </Form.Label>
-                  <Col sm="9">
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Gender</Form.Label>
                     <Form.Control
-                      type="password"
-                      name="password"
-                      value={updatedProfile.password}
+                      as="select"
+                      value={editedInfo.gender}
+                      name="gender"
                       onChange={handleInputChange}
-                    />
-                  </Col>
-                </Form.Group>
-                <div className="d-grid gap-2 w-25 d-flex mx-auto">
-                  <Button variant="success" onClick={handleSaveClick}>
-                    Save
-                  </Button>
-                  <Button variant="danger" onClick={handleCancelClick}>
-                    Cancel
-                  </Button>
-                </div>
-              </Form>
-            ) : (
-              <div className="mx-auto text-start w-75">
-                <table className="table">
-                  <tbody>
-                    <tr>
-                      <td>Name:</td>
-                      <td>{userProfile.name}</td>
-                    </tr>
-                    <tr>
-                      <td>Email:</td>
-                      <td>{userProfile.email}</td>
-                    </tr>
-                    <tr>
-                      <td>Password:</td>
-                      <td>********</td>
-                    </tr>
-                  </tbody>
-                </table>
-
-                <Button
-                  variant="primary"
-                  onClick={handleEditClick}
-                  style={{ background: "rgb(255,123,0)" }}
-                  className="border-0"
-                >
-                  Edit Profile
-                </Button>
-              </div>
-            )}
-          </Card.Text>
-        </Col>
-      </ProfileCard>
+                    >
+                      <option value="not specified">Not Specified</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
+                    </Form.Control>
+                  </Form.Group>
+                  <div className="d-flex justify-content-between">
+                    <Button onClick={handleSave}>Save</Button>
+                    <Button onClick={handleCancel}>Cancel</Button>
+                  </div>
+                </Form>
+              )}
+            </>
+          )}
+        </Card.Body>
+      </Card>
     </ProfileContainer>
   );
 };

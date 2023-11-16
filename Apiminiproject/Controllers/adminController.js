@@ -1,10 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const Admin = require("../Models/AdminSignUp");
+const Image = require("../Models/ImageUpload");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs")
 dotenv.config();
 
 router.post("/signup", async (req, res) => {
@@ -46,6 +50,9 @@ router.post("/signup", async (req, res) => {
           email,
           password: hashedPassword,
           otp,
+          gender: "not specified",
+          profilePicture:
+            "https://www.designcap.com/media/users/images/avatar.png",
         });
 
         await newUser.save();
@@ -84,7 +91,6 @@ router.post("/verify-otp", async (req, res) => {
   }
 });
 
-
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -107,7 +113,7 @@ router.post("/login", async (req, res) => {
     }
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h", // Expiry time for the token
+      expiresIn: "5h", // Expiry time for the token
     });
 
     // Return the token and any other necessary data
@@ -118,5 +124,142 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.get("/myaccount", async (req, res) => {
+  try {
+    const admins = await Admin.find({}, "name email gender profilePicture");
+    res.status(200).json(admins);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching admin information" });
+  }
+});
+router.put("/my-account/:id", async (req, res) => {
+  try {
+    const { name, email, gender } = req.body;
+
+    const updatedAdmin = await Admin.findOneAndUpdate(
+      { _id: req.params.id },
+      { name, email, gender },
+      { new: true }
+    );
+
+    res.status(200).json(updatedAdmin);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to update admin details" });
+  }
+});
+
+router.delete("/my-account/:id", async (req, res) => {
+  try {
+    await Admin.findOneAndDelete({ _id: req.params.id });
+    res.status(200).json({ message: "Admin account deleted" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to delete admin account" });
+  }
+});
+
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./upload//images");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, uniqueSuffix + path.extname(file.originalname));
+  },
+});
+
+const upload = multer({ storage: storage });
+
+router.post("/images/upload", upload.single("image"), async (req, res) => {
+  try {
+    const imageName = req.file.filename;
+    const title = req.body.title;
+    const category = req.body.category;
+
+    await Image.create({ image: imageName, title: title, category: category });
+
+    res.json({ status: 'ok' });
+  } catch (error) {
+    res.json({ status: error.message || 'Unknown error occurred' });
+  }
+});
+
+router.get("/images", async (req, res) => {
+  try {
+    const data = await Image.find({});
+    res.send({ status: 'ok', data });
+  } catch (error) {
+    res.json({ status: error.message || 'Unknown error occurred' });
+  }
+});
+router.get("/images/:filename", async (req, res) => {
+  try {
+    const { filename } = req.params;
+
+    const imagePath = path.join(__dirname, '../upload/images', filename);
+
+    // Read the image file
+    fs.readFile(imagePath, (err, data) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ status: 'error', message: 'Error reading image file' });
+      }
+
+      // Get the file extension
+      const extname = path.extname(filename).slice(1);
+
+      // Set the appropriate content type
+      res.contentType(`image/${extname}`);
+
+      // Send the image data
+      res.send(data);
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 'error', message: error.message || 'Unknown error occurred' });
+  }
+});
+
+
+router.put("/images/:id", upload.single("image"), async (req, res) => {
+  const { id } = req.params;
+  const { title, category } = req.body;
+
+  try {
+    const updatedImage = await Image.findByIdAndUpdate(
+      id,
+      { title, category },
+      { new: true }
+    );
+
+    if (!updatedImage) {
+      return res.status(404).json({ status: 'not found', message: 'Image not found' });
+    }
+
+    res.json({ status: 'ok', data: updatedImage });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 'error', message: 'Failed to update image details' });
+  }
+});
+
+router.delete("/images/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deletedImage = await Image.findByIdAndDelete(id);
+
+    if (!deletedImage) {
+      return res.status(404).json({ status: 'not found', message: 'Image not found' });
+    }
+
+    res.json({ status: 'ok', message: 'Image deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 'error', message: 'Failed to delete image' });
+  }
+});
 
 module.exports = router;
