@@ -12,12 +12,18 @@ import { Contact } from "../src/clientSide/Pages/Contact/Contact";
 import Dashboard from "./admin/Dashboard";
 import DesignApp from "../src/clientSide/Pages/App/App";
 import AdminLogin from "../src/admin/Login";
-import AdminRegister from "../src/admin/SignUp";
+import AdminSignup from "../src/admin/SignUp";
 import ErrorPage from "./ErrorPage";
-import TemplateEditor from "../src/admin/TemplateEditor"
+import AdminDashboard from "../src/admin/Dashboard";
+import TemplateEditor from "../src/admin/TemplateEditor";
+import ProtectedRouteAdmin from "../src/admin/ProtectedRouteAdmin";
+import Verification from "./admin/Verification";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
     <>
+      <ToastContainer position="top-right" autoClose={3000} />
       <Provider store={store}>
         {/* <PersistGate loading={null} persistor={persistor}> */}
         <Routes>
@@ -28,31 +34,18 @@ function App() {
           <Route exact path={"/contact"} element={<Contact></Contact>}></Route>
           <Route
             exact
-            path={"/admin/dashboard"}
-            element={<Dashboard></Dashboard>}
-          ></Route>
-          <Route
-            exact
-            path={"/admin/login"}
-            element={<AdminLogin></AdminLogin>}
-          ></Route>
-          <Route
-            exact
-            path={"/admin/register"}
-            element={<AdminRegister></AdminRegister>}
-          ></Route>
+            path="/admin/dashboard"
+            element={<ProtectedRouteAdmin element={<AdminDashboard />} />}
+          />
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route exact path={"/admin/signup"} element={<AdminSignup />} />
+          <Route exact path={"/admin/verify"} element={<Verification />} />
           <Route exact path={"/*"} element={<ErrorPage></ErrorPage>}></Route>
-          <Route exact path={"/admin/templateeditor"} element={<TemplateEditor></TemplateEditor>}></Route>
-
-          {/* <Route exact path={'/admin/email'} element={<EmailPage></EmailPage>}></Route>
-         <Route exact path={"/admin/chat"} element={<ChatPage></ChatPage>}></Route>
-         <Route exact path={"/admin/account"} element={<UserAccountPage></UserAccountPage>}></Route>
-         <Route exact path={"/admin/tabs"} element={<TabsPage></TabsPage>}></Route>
-         <Route exact path={"/admin/carousel"} element={<CarouselPage></CarouselPage>}></Route> */}
-          {/* <Route exact path={"/admin/carousel"} element={<CarouselPage></CarouselPage>}></Route>
-         <Route exact path={'/templates'} element={<Templates></Templates>}></Route>
-         <Route exact path={'/yourdesign'} element={<YourDesign></YourDesign>}></Route>
-         <Route exact path={'/profile'} element={<Profile></Profile>}></Route> */}
+          <Route
+            exact
+            path={"/admin/templateeditor"}
+            element={<TemplateEditor></TemplateEditor>}
+          ></Route>
         </Routes>
         {/* </PersistGate> */}
       </Provider>

@@ -1,98 +1,76 @@
-// import { useState } from 'react'
-// import './Dashboard.css'
-// import Header from './Header'
-// import Sidebar from './Sidebar'
-// import Home from './Home'
-// import VideoThumbnail from './Videothumbnail'
-// function Dashboard() {
-//   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
-
-//   const OpenSidebar = () => {
-//     setOpenSidebarToggle(!openSidebarToggle)
-//   }
-
-//   return (
-//     <div className='grid-container'>
-//       <Header OpenSidebar={OpenSidebar}/>
-//       <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
-//       <Home />
-//       <VideoThumbnail imageURL="your_image_url_here" title="Your Video Title" />
-//     </div>
-//   )
-// }
-
-// export default Dashboard
-
 import React from "react";
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import Button from "react-bootstrap/esm/Button";
-import { NavLink } from "react-router-dom";
+import { Container, Nav, Navbar, Dropdown,Button } from "react-bootstrap";
+import { NavLink, useNavigate } from "react-router-dom";
 import { SlLogout } from "react-icons/sl";
- <NavDropdown
-              title={
-                <>
-                <span className="me-1" style={{fontSize:"14px"}}>salmanshaikh7118</span>
-                <img
-                  src="https://www.designcap.com/media/users/images/avatar.png"
-                  style={{ height: "30px", borderRadius: "50%" }}
-                  ></img>
-                  </>
-              }
-              className="text-light"
-              >
-              <NavDropdown.Item>My Design</NavDropdown.Item>
-              <NavDropdown.Item>My Account</NavDropdown.Item>
-              <NavDropdown.Item><SlLogout style={{color:"#fa7b05"}} className="me-1"></SlLogout>Log Out</NavDropdown.Item>
-            </NavDropdown>
+import { useDispatch } from "react-redux";
+import { adminLogout } from "../clientSide/redux/actions/adminAuthAction";
+
 const AdminNavbar = () => {
+  const blueGradientColor = "linear-gradient(to right, #4a90e2, #8253de)";
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handlelogout = ()=>{
+    dispatch(adminLogout())
+    navigate("/admin/login");
+    
+  }
   return (
     <div>
-      <Navbar expand="lg" className="bg-dark p-3 fs-5 admin-navbar">
+      <Navbar expand="lg" className="bg-dark p-3 fs-5 admin-navbar"/>
         <Container fluid>
-          <Navbar.Brand className="ms-0">
+          <Navbar.Brand className="ms-0"/>
             <NavLink
-              to={"/"}
+              to={"/admin/dashboard"}
               className="text-decoration-none text-light fw-bold fs-3"
             >
+
               THUMB<span style={{ color: "#fa7b05" }}>CRAFT</span>
             </NavLink>{" "}
-          </Navbar.Brand>
+
+              Thumb<span style={{ background: blueGradientColor, WebkitBackgroundClip: "text", color: "transparent" }}>Craft</span>
+            <NavLink/></Container>
+          <Navbar.Brand/>
           <Navbar.Toggle
             aria-controls="basic-navbar-nav"
-            style={{ color: "#fa7b05", border: "none" }}
+            className="bg-light border-0"
           />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto"></Nav>
-
-            <NavDropdown
-              title={
-                <>
-                  <span className="me-1" style={{ fontSize: "14px" }}>
-                    salmanshaikh7118
-                  </span>
+            <Nav className="w-100 justify-content-end w-100">
+              <Dropdown className="text-light" >
+                <Dropdown.Toggle
+                  id="dropdown-basic"
+                  className="d-flex align-items-center bg-dark border-0"
+                >
+                  <span className="text-light fs-6 me-1">salmanshaikh7118</span>
                   <img
                     src="https://www.designcap.com/media/users/images/avatar.png"
-                    style={{ height: "30px", borderRadius: "50%" }}
-                  ></img>
-                </>
-              }
-              className="text-light"
-            >
-              <NavDropdown.Item>My Account</NavDropdown.Item>
-              <NavDropdown.Item>
-                <SlLogout
-                  style={{ color: "#fa7b05" }}
-                  className="me-1"
-                ></SlLogout>
-                Log Out
-              </NavDropdown.Item>
-            </NavDropdown>
+                    style={{
+                      height: "40px",
+                      borderRadius: "50%",
+                      marginRight: "10px",
+                    }}
+                    alt="user"
+                  />
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item>My Account</Dropdown.Item>
+                  <Dropdown.Item>
+                    <Button
+                      to="/logout"
+                      className="text-decoration-none text-dark"
+                      onClick={()=>{handlelogout()}}
+
+                    >
+                      <SlLogout  className="me-1" />
+                      Logout
+                    </Button>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </Nav>
           </Navbar.Collapse>
-        </Container>
-      </Navbar>
+        <Container/>
+      <Navbar/>
     </div>
   );
 };

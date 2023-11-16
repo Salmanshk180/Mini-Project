@@ -37,7 +37,7 @@ export const Sidebar = () => {
                   to={"/"}
                   className="text-decoration-none  text-dark fw-bold fs-4"
                 >
-                  DESIGN<span style={{ color: "#fa7b05" }}>WORLD</span>
+                  THUMB<span style={{ color: "#fa7b05" }}>CRAFT</span>
                 </NavLink>
               </div>
               {/* <a className="text text-decoration-none ms-4 align-items-center text-white d-none d-sm-inline">
@@ -66,7 +66,7 @@ export const Sidebar = () => {
                     >
                       <HiSquare3Stack3D
                         className="me-1"
-                        style={{ "font-size": "22px" }}
+                        style={{ "fontSize": "22px" }}
                       />
                       <span className="ms-2 d-none d-sm-inline">Templates</span>
                     </a>
@@ -78,7 +78,7 @@ export const Sidebar = () => {
                     >
                       <MdDesignServices
                         className="me-1"
-                        style={{ "font-size": "22px" }}
+                        style={{ "fontSize": "22px" }}
                       />
                       <span className="ms-2 d-none d-sm-inline">
                         Your Design
@@ -92,7 +92,7 @@ export const Sidebar = () => {
                     >
                       <BsPersonFillGear
                         className="me-1"
-                        style={{ "font-size": "22px" }}
+                        style={{ "fontSize": "22px" }}
                       />
                       <span className="ms-2 d-none d-sm-inline">Profile</span>
                     </a>

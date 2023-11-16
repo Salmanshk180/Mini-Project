@@ -1,149 +1,122 @@
-var express = require('express');
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
+const Admin = require("../Models/AdminSignUp");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
+const dotenv = require("dotenv");
+dotenv.config();
 
-var login = require('../Models/Login');
-var signup = require('../Models/Signup');
-const { emit } = require('process');
+router.post("/signup", async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    const existingUser = await Admin.findOne({ email });
 
-const { body } = require('express-validator');
-
-
-//Login
-router.post('/addlogin', async (req, res) => {
-    var objLogin = new login();
-    objLogin.email = req.body.email,
-    objLogin.password = req.body.password,
-    objLogin.addedOn = new Date(),
-    objLogin.isActive = true;
-    console.log();
-
-    const inserted = await objLogin.save();
-
-    if (inserted != null) {
-        res.json({ result: "success", msg: "User Inserted", data: 1 });
-    } else {
-        res.json({ result: "failure", msg: "User Not Inserted", data: 0 });
+    if (existingUser) {
+      return res.status(400).json({ message: "Email is already registered" });
     }
-});
-router.post('/updatelogin',async (req, res) => {
-    console.log(req.body.id)
-        const objLogin = await login.updateOne({
-            _id: req.body.id
-        }, {
-            email: req.body.email,
-            password: req.body.password
+
+    const otp = Math.floor(100000 + Math.random() * 900000);
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.MAIL_USER,
+      to: email,
+      subject: "Verification Code",
+      text: `Your OTP for verification: ${otp}`,
+    };
+
+    transporter.sendMail(mailOptions, async (error, info) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Failed to send OTP" });
+      } else {
+        console.log("Email sent: " + info.response);
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = new Admin({
+          name,
+          email,
+          password: hashedPassword,
+          otp,
         });
-        
-        if (objLogin != null) {
-            res.json({ result: "success", msg: "User update", data: 1 });
-        } else {
-            res.json({ result: "failure", msg: "User Not update", data: 0 });
-        }
-});
-router.delete('/deletelogin/:id', async (req, res) => {
-    console.log(req.params.id);
-    const objDeleteLogin = await login.updateOne({
-        _id: req.params.id
-    },{
-        isActive : false
+
+        await newUser.save();
+        return res
+          .status(201)
+          .json({ message: "Admin registered successfully" });
+      }
     });
-    if (objDeleteLogin != null) {
-        res.json({ result: "success", msg: "User deleted", data: 1 });
-    } else {
-        res.json({ result: "failure", msg: "User Not deleted", data: 0 });
-    }
-});
-router.get('/fetchlogin/:id', async (req, res) => {
-    const fetchLoginObj = await login.findOne({
-        _id: req.params.id
-    });
-
-    if (fetchLoginObj != null) {
-        res.json({ result: "success", msg: "User Fetch", data: fetchLoginObj });
-    } else {
-        res.json({ result: "failure", msg: "User Not Fetch", data: fetchLoginObj});
-    }
-});
-router.get('/fetchlogin', async (req, res) => {
-    const fetchLoginObj = await login.find({
-        isActive:true,
-    });
-
-    if (fetchLoginObj != null) {
-        res.json({ result: "success", msg: "User List Load", data: fetchLoginObj });
-    } else {
-        res.json({ result: "failure", msg: "unsuccessfull", data: fetchLoginObj});
-    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Admin registration failed" });
+  }
 });
 
-//Signup
-router.post('/addsignup', async (req, res) => {
-    var objSignup = new signup();
-    objSignup.email = req.body.email,
-    objSignup.password = req.body.password,
-    objSignup.confirmpassword = req.body.confirmpassword,
-    objSignup.addedOn = new Date(),
-    objSignup.isActive = true;
-    console.log();
+router.post("/verify-otp", async (req, res) => {
+  const { email, otp } = req.body;
 
-    const inserted = await objSignup.save();
+  try {
+    const user = await Admin.findOne({ email });
 
-    if (inserted != null) {
-        res.json({ result: "success", msg: "User Inserted", data: 1 });
-    } else {
-        res.json({ result: "failure", msg: "User Not Inserted", data: 0 });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
-});
-router.post('/updatesignup',async (req, res) => {
-    console.log(req.body.id)
-        const objSignup = await signup.updateOne({
-            _id: req.body.id
-        }, {
-            email: req.body.email,
-            password: req.body.password,
-            confirmpassword: req.body.confirmpassword,
-        });
-        
-        if (objSignup != null) {
-            res.json({ result: "success", msg: "User update", data: 1 });
-        } else {
-            res.json({ result: "failure", msg: "User Not update", data: 0 });
-        }
-});
-router.delete('/deletesignup/:id', async (req, res) => {
-    console.log(req.params.id);
-    const objDeleteSignup = await signup.updateOne({
-        _id: req.params.id
-    },{
-        isActive : false
-    });
-    if (objDeleteSignup != null) {
-        res.json({ result: "success", msg: "User deleted", data: 1 });
+
+    if (user.otp === otp) {
+      user.isActive = true; // Optionally set a 'verified' flag in the schema
+      user.otp = null; // Remove the OTP after successful verification
+      await user.save();
+      res.status(200).json({ message: "OTP verified. Account activated" });
     } else {
-        res.json({ result: "failure", msg: "User Not deleted", data: 0 });
+      res.status(400).json({ message: "Invalid OTP" });
     }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to verify OTP" });
+  }
 });
-router.get('/fetchsignup/:id', async (req, res) => {
-    const fetchSignupObj = await signup.findOne({
-        _id: req.params.id
+
+
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await Admin.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Check if the user's account is active or verified, if applicable
+    if (!user.isActive) {
+      return res.status(403).json({ message: "Account not verified" });
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h", // Expiry time for the token
     });
 
-    if (fetchSignupObj != null) {
-        res.json({ result: "success", msg: "User Fetch", data: fetchSignupObj });
-    } else {
-        res.json({ result: "failure", msg: "User Not Fetch", data: fetchSignupObj});
-    }
+    // Return the token and any other necessary data
+    res.status(200).json({ message: "Login successful", token });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Login failed" });
+  }
 });
-router.get('/fetchSignup', async (req, res) => {
-    const fetchSignupObj = await signup.find({
-        isActive:true,
-    });
 
-    if (fetchSignupObj != null) {
-        res.json({ result: "success", msg: "User List Load", data: fetchSignupObj });
-    } else {
-        res.json({ result: "failure", msg: "unsuccessfull", data: fetchSignupObj});
-    }
-});
 
 module.exports = router;
