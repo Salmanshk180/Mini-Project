@@ -47,9 +47,9 @@ const AdminNavbar = ({ setPageLoading }) => {
 
   return (
     <div>
-      <Navbar expand="lg" className="bg-dark p-3 fs-5 admin-navbar">
+      <Navbar expand="lg" className="bg-dark p-3 fs-5 admin-navbar"/>
         <Container fluid>
-          <Navbar.Brand className="ms-0">
+          <Navbar.Brand className="ms-0"/>
             <NavLink
               to={"/admin/dashboard"}
               className="text-decoration-none text-light fw-bold fs-3"
@@ -66,6 +66,7 @@ const AdminNavbar = ({ setPageLoading }) => {
               </span>
             </NavLink>
           </Navbar.Brand>
+             
           <Navbar.Toggle
             aria-controls="basic-navbar-nav"
             className="bg-light border-0"
@@ -125,8 +126,8 @@ const AdminNavbar = ({ setPageLoading }) => {
               </Dropdown>
             </Nav>
           </Navbar.Collapse>
-        </Container>
-      </Navbar>
+        <Container/>
+      <Navbar/>
     </div>
   );
 };
