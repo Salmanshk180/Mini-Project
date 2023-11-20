@@ -11,6 +11,7 @@ import { css } from "@emotion/react";
 import { SyncLoader } from "react-spinners";
 import axios from "axios";
 const SignupContainer = styled(Container)`
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;

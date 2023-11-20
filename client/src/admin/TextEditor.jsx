@@ -1,220 +1,313 @@
-import React, { useState } from "react";
-import { Stage, Layer, Rect, Text } from "react-konva";
-import {
-  Form,
-  Button,
-  ToggleButton,
-  ToggleButtonGroup,
-  Card,
-  CardBody,
-  CardHeader,
-  CardFooter,
-} from "react-bootstrap";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { Card, Col, Form, Row, Button } from "react-bootstrap";
+import { Stage, Layer, Rect, Text, Group } from "react-konva";
 
 const TextEditor = () => {
   const [texts, setTexts] = useState([]);
-  const [newText, setNewText] = useState("Type here");
+  const [newText, setNewText] = useState("");
   const [fontSize, setFontSize] = useState(16);
-  const [fontColor, setFontColor] = useState("black");
+  const [fontColor, setFontColor] = useState("white ");
+  const [textBackgroundColor, setTextBackgroundColor] = useState("black");
   const [textStyle, setTextStyle] = useState({
     bold: false,
     italic: false,
     underline: false,
   });
-  const [selectedTextIndex, setSelectedTextIndex] = useState(null);
-  const [cardData, setCardData] = useState([
-    {
-      name: "Text 1",
-      src: "https://designcap.s3-us-west-1.amazonaws.com/groups/0933312d392cbf960775f4266a7741a9/preview.png",
-    },
-    {
-      name: "Text 2",
-      src: "https://designcap.s3-us-west-1.amazonaws.com/groups/a0dd10ce5ede642240af3226583b7dd7/preview.png",
-    },
-    // Add more card data as needed
-  ]);
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const filteredCardData = cardData.filter((card) =>
-    card.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
+  const [fontFamily, setFontFamily] = useState("Arial, sans-serif");
+  const [textAlignment, setTextAlignment] = useState("left");
+  const [canvasName, setCanvasName] = useState("test");
+  const [displayText, setDisplayText] = useState([]);
+  const stageRef = React.createRef();
+  const [selectedCanvasId, setSelectedCanvasId] = useState(null);
   const addTextToCanvas = () => {
     const newTextObj = {
       text: newText,
       fontSize,
       fontColor,
+      textBackgroundColor,
       textStyle: { ...textStyle },
+      fontFamily,
       x: 20,
       y: 20,
       draggable: true,
+      fontWeight: textStyle.bold ? "bold" : "normal",
+      textAlignment,
     };
     setTexts([...texts, newTextObj]);
   };
-
-  const addCanvasToCardData = () => {
-    // You need to convert the canvas to an image and add it to cardData
-    // This is a placeholder action and may require additional logic
+  
+  const saveCanvas = () => {
     const canvasImage = stageRef.current.toDataURL();
-    const newCard = {
-      name: "New Image",
+    axios
+    .post("http://localhost:3000/admin/addtext", {
+      name: canvasName,
+      elements: texts,
       src: canvasImage,
-    };
-    setCardData([...cardData, newCard]);
+    })
+    .then((response) => {
+      console.log("Canvas saved to database:", response.data);
+
+        // Fetch the updated canvas list after saving
+        fetchCanvases();
+      })
+      .catch((error) => {
+        console.error("Error saving canvas to database:", error);
+      });
   };
 
-  const stageRef = React.createRef();
+  useEffect(() => {
+    fetchCanvases();
+  }, [displayText]); // The empty dependency array ensures this effect runs once on mount
 
-  const applyTextStyle = (style) => {
-    if (selectedTextIndex !== null) {
-      const updatedTexts = [...texts];
-      updatedTexts[selectedTextIndex].textStyle = {
-        ...updatedTexts[selectedTextIndex].textStyle,
-        ...style,
-      };
-      setTexts(updatedTexts);
-    }
+  const fetchCanvases = () => {
+    axios
+      .get("http://localhost:3000/admin/getaddtext")
+      .then((response) => {
+        setDisplayText(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching canvas data:", error);
+      });
   };
 
+  const selectCanvas = (canvasId) => {
+    setSelectedCanvasId(canvasId);
+    const selectedCanvas = displayText.find((canvas) => canvas._id === canvasId);
+    setTexts(selectedCanvas.elements);
+  };
+  const updateCanvas = () => {
+    const canvasImage = stageRef.current.toDataURL();
+    axios
+      .put(`http://localhost:3000/admin/updatetext/${selectedCanvasId}`, {
+        name: canvasName,
+        elements: texts,
+        src: canvasImage,
+      })
+      .then((response) => {
+        console.log("Canvas updated in database:", response.data);
+        // Fetch the updated canvas list after updating
+        fetchCanvases();
+        // Clear the selected canvas
+        setSelectedCanvasId(null);
+      })
+      .catch((error) => {
+        console.error("Error updating canvas in database:", error);
+      });
+  };
+
+  const deleteCanvas = (canvasId) => {
+    axios
+      .delete(`http://localhost:3000/admin/deletetext/${canvasId}`)
+      .then((response) => {
+        console.log("Canvas deleted from database:", response.data);
+        // Fetch the updated canvas list after deleting
+        fetchCanvases();
+        // Clear the selected canvas
+        setSelectedCanvasId(null);
+      })
+      .catch((error) => {
+        console.error("Error deleting canvas from database:", error);
+      });
+  };
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-12 mb-4">
+    <div>
+      <div>
+        <Form>
           <Form.Group>
             <Form.Control
-              type="text"
+              type="search"
               placeholder="Search Text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="shadow p-2"
-            />
+            ></Form.Control>
           </Form.Group>
-        </div>
+        </Form>
       </div>
-      <div className="row">
-        {filteredCardData.map((card, index) => (
-          <div key={index} className="col-lg-3 col-md-6 col-sm-12 mb-4">
-            <Card className="border-0 shadow">
-              <CardBody className="p-0">
-                <CardHeader>
-                  <img src={card.src} alt={card.name} className="img-fluid" />
-                </CardHeader>
-                <CardFooter>
-                  <div className="text-center">
-                    <div className="mb-1 fst-italic">{card.name}</div>
-                    <div className="d-flex justify-content-between">
-                      <Button
-                        variant="info"
-                        size="sm"
-                        className="me-2"
-                        onClick={() => handleEditClick(card)}
+      <div className="mt-2">
+        <Card>
+          <Card.Body className="bg-light">
+            <Row>
+              <Col>
+                <Stage width={400} height={400} className="bg-white" ref={stageRef}>
+                  <Layer>
+                    {texts.map((textObj, index) => (
+                      <Group
+                        key={index}
+                        x={textObj.x}
+                        y={textObj.y}
+                        draggable
+                        onClick={() => setSelectedTextIndex(index)}
                       >
-                        Edit
-                      </Button>
-                      <Button
-                        variant="danger"
-                        size="sm"
-                        onClick={() => handleDeleteClick(card)}
-                      >
-                        Delete
-                      </Button>
+                        <Rect
+                          width={textObj.text.length * textObj.fontSize}
+                          height={textObj.fontSize}
+                          fill={textObj.textBackgroundColor}
+                        />
+                        <Text
+                          text={textObj.text}
+                          fontSize={textObj.fontSize}
+                          fill={textObj.fontColor}
+                          fontStyle={
+                            textObj.textStyle.italic ? "italic" : "normal"
+                          }
+                          textDecoration={
+                            textObj.textStyle.underline ? "underline" : "none"
+                          }
+                          fontWeight={textObj.fontWeight}
+                          fontFamily={textObj.fontFamily}
+                          align={textObj.textAlignment}
+                          width={textObj.text.length * textObj.fontSize}
+                        />
+                      </Group>
+                    ))}
+                  </Layer>
+                </Stage>
+              </Col>
+              <Col>
+                <Form>
+                  <Form.Group>
+                    <Form.Control
+                      type="text"
+                      placeholder="Type here"
+                      value={newText}
+                      onChange={(e) => setNewText(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Font Size</Form.Label>
+                    <Form.Control
+                      type="number"
+                      value={fontSize}
+                      onChange={(e) => setFontSize(parseInt(e.target.value))}
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Font Color</Form.Label>
+                    <Form.Control
+                      type="color"
+                      value={fontColor}
+                      onChange={(e) => setFontColor(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Text Background Color</Form.Label>
+                    <Form.Control
+                      type="color"
+                      value={textBackgroundColor}
+                      onChange={(e) => setTextBackgroundColor(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Font Family</Form.Label>
+                    <Form.Control
+                      as="select"
+                      value={fontFamily}
+                      onChange={(e) => setFontFamily(e.target.value)}
+                    >
+                      <option value="Arial, sans-serif">
+                        Arial, sans-serif
+                      </option>
+                      <option value="Times New Roman, serif">
+                        Times New Roman, serif
+                      </option>
+                      <option value="Roboto, sans-serif">
+                        Roboto, sans-serif
+                      </option>
+                    </Form.Control>
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Text Style</Form.Label>
+                    <div className="d-flex justify-content-between w-50 my-1">
+                      <Form.Check
+                        type="checkbox"
+                        label="Bold"
+                        checked={textStyle.bold}
+                        onChange={() =>
+                          setTextStyle({ ...textStyle, bold: !textStyle.bold })
+                        }
+                      />
+                      <Form.Check
+                        type="checkbox"
+                        label="Italic"
+                        checked={textStyle.italic}
+                        onChange={() =>
+                          setTextStyle({
+                            ...textStyle,
+                            italic: !textStyle.italic,
+                          })
+                        }
+                      />
+                      <Form.Check
+                        type="checkbox"
+                        label="Underline"
+                        checked={textStyle.underline}
+                        onChange={() =>
+                          setTextStyle({
+                            ...textStyle,
+                            underline: !textStyle.underline,
+                          })
+                        }
+                      />
                     </div>
-                  </div>
-                </CardFooter>
-              </CardBody>
-            </Card>
-          </div>
-        ))}
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Text Alignment</Form.Label>
+                    <Form.Control
+                      as="select"
+                      value={textAlignment}
+                      onChange={(e) => setTextAlignment(e.target.value)}
+                    >
+                      <option value="left">Left</option>
+                      <option value="center">Center</option>
+                      <option value="right">Right</option>
+                    </Form.Control>
+                  </Form.Group>
+                  <Button variant="primary" onClick={addTextToCanvas}>
+                    Add Text to Canvas
+                  </Button>
+                  <Button variant="primary" onClick={saveCanvas}>
+                    Save Canvas
+                  </Button>
+                </Form>
+              </Col>
+            </Row>
+          </Card.Body>
+        </Card>
       </div>
-      <div className="d-flex m-1 bg-light shadow rounded" style={{ border: "1px solid #aaaaaa" }}>
-        <Stage
-          width={400}
-          height={400}
-          className="m-2"
-          style={{ border: "1px solid #dddddd" }}
-          ref={stageRef}
-        >
-          <Layer>
-            <Rect width={400} height={400} fill="white" />
-            {texts.map((textObj, index) => (
-              <Text
-                key={index}
-                x={textObj.x}
-                y={textObj.y}
-                text={textObj.text}
-                fontSize={textObj.fontSize}
-                fill={textObj.fontColor}
-                fontStyle={textObj.textStyle.italic ? "italic" : "normal"}
-                textDecoration={textObj.textStyle.underline ? "underline" : "none"}
-                fontWeight={textObj.textStyle.bold ? "bold" : "normal"}
-                draggable
-                onClick={() => setSelectedTextIndex(index)}
-              />
-            ))}
-          </Layer>
-        </Stage>
-        <Form className="m-2">
-  <Form.Group>
-    <Form.Control
-      type="text"
-      placeholder="Type here"
-      value={newText}
-      onChange={(e) => setNewText(e.target.value)}
-    />
-  </Form.Group>
-  <Form.Group>
-    <Form.Label>Font Size</Form.Label>
-    <Form.Control
-      type="number"
-      value={fontSize}
-      onChange={(e) => setFontSize(parseInt(e.target.value))}
-    />
-  </Form.Group>
-  <Form.Group>
-    <Form.Label>Font Color</Form.Label>
-    <Form.Control
-      type="color"
-      value={fontColor}
-      onChange={(e) => setFontColor(e.target.value)}
-    />
-  </Form.Group>
-  <Form.Group>
-    <Form.Label className="me-2">Text Style</Form.Label>
-    <ToggleButtonGroup type="checkbox">
-      <ToggleButton
-        variant="secondary"
-        value="bold"
-        active={textStyle.bold}
-        onChange={() => applyTextStyle({ bold: !textStyle.bold })}
-      >
-        Bold
-      </ToggleButton>
-      <ToggleButton
-        variant="secondary"
-        value="italic"
-        active={textStyle.italic}
-        onChange={() => applyTextStyle({ italic: !textStyle.italic })}
-      >
-        Italic
-      </ToggleButton>
-      <ToggleButton
-        variant="secondary"
-        value="underline"
-        active={textStyle.underline}
-        onChange={() => applyTextStyle({ underline: !textStyle.underline })}
-      >
-        Underline
-      </ToggleButton>
-    </ToggleButtonGroup>
-  </Form.Group>
-  <Button variant="primary" className="me-2 mt-2" onClick={addTextToCanvas}>
-    Add Text to Canvas
-  </Button>
-  <Button variant="success" className="mt-2" onClick={addCanvasToCardData}>
-    Add Canvas to Card Data
-  </Button>
-</Form>
-
+      <div className="my-2">
+      <Row>
+          {displayText.map((canvas, canvasIndex) => (
+            <Col key={canvasIndex} md={4} className="mb-3">
+              <Card>
+                <Card.Body>
+                  {canvas.src && (
+                    <div>
+                      <img
+                        src={canvas.src}
+                        alt={`Canvas ${canvasIndex}`}
+                        style={{ width: "100%", height: "auto", border: "1px solid #eeeeee" }}
+                      />
+                      <Card.Title className="text-center mt-1">{canvas.name}</Card.Title>
+                      <div className="d-flex justify-content-around">
+                        <Button
+                          variant="info"
+                          onClick={() => selectCanvas(canvas._id)}
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          variant="danger"
+                          onClick={() => deleteCanvas(canvas._id)}
+                        >
+                          Delete
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
       </div>
     </div>
   );

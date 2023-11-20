@@ -235,7 +235,7 @@ const UserProfiles = () => {
   }
 
   return (
-    <UserProfilesWrapper>
+    <UserProfilesWrapper className="vh-100">
       <UserProfilesContainer>
         <h2>User Profiles</h2>
         <SearchInput

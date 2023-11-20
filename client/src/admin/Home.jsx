@@ -69,14 +69,14 @@ const CardValue = styled.p`
 `;
 
   return (
-    <Container fluid>
+    <Container fluid className="vh-100">
       <div className="d-flex justify-content-between mt-3"> 
       <CardContainer>
-      <StyledCard>
+      <StyledCard className="shadow">
         <CardTitle>No Of Users</CardTitle>
         <CardValue>3</CardValue>
       </StyledCard>
-      <StyledCard>
+      <StyledCard className="shadow">
         <CardTitle>No Of Designs</CardTitle>
         <CardValue>10</CardValue>
       </StyledCard>
@@ -86,7 +86,7 @@ const CardValue = styled.p`
 
       <Row>
         <Col md={12}>
-          <Card>
+          <Card className="shadow">
             <Card.Body>
               <Card.Title className="mb-4">Montly Report</Card.Title>
               <ResponsiveContainer width="100%" height={300}>

@@ -37,7 +37,8 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.2",
     "styled-components": "^6.1.0",
-    "use-image": "^1.1.1"
+    "use-image": "^1.1.1",
+    "vite-plugin-require": "^1.1.11"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

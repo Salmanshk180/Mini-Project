@@ -10,19 +10,20 @@ import image from "../../images/homeimage.png";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 const Home = () => {
-  const isAuthenticated = useSelector((state) =>state.auth.isAuthenticated);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   return (
     <>
       <MainNavbar></MainNavbar>
-    {
-      isAuthenticated?
-      <></>
-      :<>
-      <Login></Login>
-      <SignUp></SignUp>
-      </> 
-    }
-      
+      {isAuthenticated ? (
+        <>
+        </>
+      ) : (
+        <>
+        <SignUp></SignUp>
+          <Login></Login>
+        </>
+      )}
+
       <div className="container-fluid d-flex align-items-center justify-content-center px-5 py-5 bg-primary-subtle ">
         <div className="row">
           <div className="col-md-6 ">

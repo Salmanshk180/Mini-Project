@@ -24,6 +24,10 @@ const Login = () => {
 
 
   return (
+
+    <>
+      
+      
     <Modal show={showLoginModal} onHide={handleClose} centered>
       <Modal.Header closeButton={true}>
         <div className="text-center w-100">
@@ -100,6 +104,7 @@ const Login = () => {
         </Form>
       </div>
     </Modal>
+    </>
   );
 };
 
