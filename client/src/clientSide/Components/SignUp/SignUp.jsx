@@ -57,35 +57,15 @@ const SignUp = () => {
   };
 
   return (
-
     <>
-      <Modal show={showSignupModal} onHide={handleClose} centered/>
+      <Modal show={showSignupModal} onHide={handleClose} centered>
         <Modal.Header closeButton>
           <div className="text-center w-100">
             <h3>Sign Up</h3>
           </div>
         </Modal.Header>
-        {/* <div className="d-flex justify-content-center my-2">
-          <Button
-            className="w-75 p-2"
-            style={{
-              border: "1px solid black",
-              backgroundColor: "white",
-              color: "black",
-              borderRadius: "20px",
-            }}
-          >
-            SignUp with Google
-          </Button>
-        </div>
-        <p className="text-center m-0 fs-5" style={{ color: "#999999" }}>
-          - or -
-        </p> */}
-        <br></br>
 
-      
-        <div className="mt-5"/>
-
+        <div className="mt-5">
           <Form method="post" name="formData" onSubmit={handleSubmit}>
             <Form.Group className="w-75 mx-auto">
               <div className="mb-2">
@@ -102,7 +82,7 @@ const SignUp = () => {
                       border: "none",
                       boxShadow: "none",
                     }}
-                    onChange={(e) => handleChange(e)}
+                    onChange={handleChange}
                   ></Form.Control>
                 </div>
                 <div
@@ -127,7 +107,7 @@ const SignUp = () => {
                       border: "none",
                       boxShadow: "none",
                     }}
-                    onChange={(e) => handleChange(e)}
+                    onChange={handleChange}
                   ></Form.Control>
                 </div>
                 <div
@@ -152,7 +132,7 @@ const SignUp = () => {
                       border: "none",
                       boxShadow: "none",
                     }}
-                    onChange={(e) => handleChange(e)}
+                    onChange={handleChange}
                   ></Form.Control>
                 </div>
                 <div
@@ -164,7 +144,13 @@ const SignUp = () => {
                 ></div>
               </div>
             </Form.Group>
-              {validMessage?<p className="text-center" style={{color:"red"}}>{validMessage}!!</p>:""}
+            {validMessage ? (
+              <p className="text-center" style={{ color: "red" }}>
+                {validMessage}!!
+              </p>
+            ) : (
+              ""
+            )}
             <Form.Group className="w-75 mx-auto my-4">
               <Button
                 className="w-100"
@@ -196,137 +182,10 @@ const SignUp = () => {
               </p>
             </Form.Group>
           </Form>
-
-    <Modal show={showSignupModal} onHide={handleClose} centered>
-      <Modal.Header closeButton>
-        <div className="text-center w-100">
-          <h3>Sign Up</h3>
-
         </div>
-      </Modal.Header>
-
-      <div className="mt-5">
-        <Form method="post" name="formData" onSubmit={handleSubmit}>
-          <Form.Group className="w-75 mx-auto">
-            <div className="mb-2">
-              <div className="d-flex align-items-center">
-                <BsEnvelopeFill
-                  style={{ fontSize: "24px", color: "gray" }}
-                ></BsEnvelopeFill>
-                <Form.Control
-                  type="email"
-                  placeholder="Email"
-                  name="email"
-                  className="w-100"
-                  style={{
-                    border: "none",
-                    boxShadow: "none",
-                  }}
-                  onChange={handleChange}
-                ></Form.Control>
-              </div>
-              <div
-                style={{
-                  width: "100%",
-                  height: "1px",
-                  backgroundColor: "black",
-                }}
-              ></div>
-            </div>
-            <div className="my-2">
-              <div className="d-flex align-items-center">
-                <BsLockFill
-                  style={{ fontSize: "24px", color: "gray" }}
-                ></BsLockFill>
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  className="w-100"
-                  style={{
-                    border: "none",
-                    boxShadow: "none",
-                  }}
-                  onChange={handleChange}
-                ></Form.Control>
-              </div>
-              <div
-                style={{
-                  width: "100%",
-                  height: "1px",
-                  backgroundColor: "black",
-                }}
-              ></div>
-            </div>
-            <div className="my-2">
-              <div className="d-flex align-items-center">
-                <BsLockFill
-                  style={{ fontSize: "24px", color: "gray" }}
-                ></BsLockFill>
-                <Form.Control
-                  type="password"
-                  placeholder="Confirm Password"
-                  name="confirmpassword"
-                  className="w-100"
-                  style={{
-                    border: "none",
-                    boxShadow: "none",
-                  }}
-                  onChange={handleChange}
-                ></Form.Control>
-              </div>
-              <div
-                style={{
-                  width: "100%",
-                  height: "1px",
-                  backgroundColor: "black",
-                }}
-              ></div>
-            </div>
-          </Form.Group>
-          {validMessage ? (
-            <p className="text-center" style={{ color: "red" }}>
-              {validMessage}!!
-            </p>
-          ) : (
-            ""
-          )}
-          <Form.Group className="w-75 mx-auto my-4">
-            <Button
-              className="w-100"
-              type="submit"
-              style={{
-                fontWeight: "500",
-                border: "2px solid #fa7b05",
-                borderRadius: "50px",
-                padding: "10px 20px",
-                backgroundColor: "#fa7b05",
-                color: "#ffffff",
-              }}
-            >
-              Sign Up
-            </Button>
-            <p className="mt-4 text-center">
-              Already have an account?
-              <NavLink
-                style={{ color: "#fa7b05" }}
-                onClick={openLogin}
-                className="ms-1"
-              >
-                Login
-              </NavLink>
-            </p>
-            <p className="text-center" style={{ color: "#999999" }}>
-              By logging in, you agree to our Terms of Use and<br></br> Privacy
-              Policy
-            </p>
-          </Form.Group>
-        </Form>
-      </div>
-    </Modal>
+      </Modal>
     </>
   );
-    }
-
+};
 
 export default SignUp;

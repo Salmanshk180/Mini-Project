@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Admin = require("../Models/AdminSignUp");
 const Image = require("../Models/ImageUpload");
+const AdminText = require("../Models/AdminText");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
@@ -261,5 +262,49 @@ router.delete("/images/:id", async (req, res) => {
     res.status(500).json({ status: 'error', message: 'Failed to delete image' });
   }
 });
+
+router.post("/addtext", async (req, res) => {
+  try {
+    const { name, src, elements } = req.body;
+    const newCanvas = new AdminText({ name, src, elements });
+    const savedCanvas = await newCanvas.save();
+    res.json(savedCanvas);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.get("/getaddtext", async (req, res) => {
+  try {
+    const canvases = await AdminText.find();
+    res.json(canvases);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.put("/updatetext/:id", async (req, res) => {
+  try {
+    const { name, src, elements } = req.body;
+    const updatedCanvas = await AdminText.findByIdAndUpdate(
+      req.params.id,
+      { name, src, elements },
+      { new: true }
+    );
+    res.json(updatedCanvas);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.delete("/deletetext/:id", async (req, res) => {
+  try {
+    const deletedCanvas = await AdminText.findByIdAndRemove(req.params.id);
+    res.json(deletedCanvas);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 
 module.exports = router;

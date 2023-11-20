@@ -50,12 +50,12 @@ const Image = () => {
             headers: { "Content-Type": "multipart/form-data" },
           });
         }
+        setTitle("");
+        setCategory("");
       }
       getImage(); // Refresh the image list after successful upload/update
       // Clear the input fields after successful upload/update
       setImage(null);
-      setTitle("");
-      setCategory("");
     } catch (error) {
       console.error("Error uploading image:", error);
     }
