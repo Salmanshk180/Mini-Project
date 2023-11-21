@@ -3,6 +3,7 @@ const router = express.Router();
 const Admin = require("../Models/AdminSignUp");
 const Image = require("../Models/ImageUpload");
 const AdminText = require("../Models/AdminText");
+const Element = require('../Models/Element');
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
@@ -265,8 +266,8 @@ router.delete("/images/:id", async (req, res) => {
 
 router.post("/addtext", async (req, res) => {
   try {
-    const { name, src, elements } = req.body;
-    const newCanvas = new AdminText({ name, src, elements });
+    const { name, src, elements,canvasBackgroundColor } = req.body;
+    const newCanvas = new AdminText({ name, src, elements,canvasBackgroundColor });
     const savedCanvas = await newCanvas.save();
     res.json(savedCanvas);
   } catch (error) {
@@ -285,7 +286,7 @@ router.get("/getaddtext", async (req, res) => {
 
 router.put("/updatetext/:id", async (req, res) => {
   try {
-    const { name, src, elements } = req.body;
+    const { name, src, elements,canvasBackgroundColor } = req.body;
     const updatedCanvas = await AdminText.findByIdAndUpdate(
       req.params.id,
       { name, src, elements },
@@ -306,5 +307,28 @@ router.delete("/deletetext/:id", async (req, res) => {
   }
 });
 
+
+router.post('/addshape', async (req, res) => {
+  try {
+    const { type, properties } = req.body;
+    const newShape = new Element({ type, properties });
+    await newShape.save();
+    res.json(newShape);
+  } catch (error) {
+    console.error('Error adding shape:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Get all shapes
+router.get('/getshapes', async (req, res) => {
+  try {
+    const shapes = await Element.find();
+    res.json(shapes);
+  } catch (error) {
+    console.error('Error getting shapes:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 module.exports = router;

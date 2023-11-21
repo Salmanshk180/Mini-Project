@@ -22,6 +22,7 @@ const AdminTextSchema = new mongoose.Schema({
       textAlignment: String,
     },
   ],
+  canvasBackgroundColor: String,
 });
 
 const AdminText = mongoose.model("AdminText", AdminTextSchema);

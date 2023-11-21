@@ -44,7 +44,7 @@ const AddTemplates = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
           />
         <Button className="me-5 text-center px-5 shadow" style={{background:"rgb(255,123,0)",border:"0px",borderRadius:"0px",padding:"10px"}}>
-          <NavLink style={{textDecoration:"none",color:"white"}}>Create New Template</NavLink>
+          <NavLink style={{textDecoration:"none",color:"white"}} to={"/admin/template-editor"}>Create New Template</NavLink>
         </Button>
       </div>
       <div
