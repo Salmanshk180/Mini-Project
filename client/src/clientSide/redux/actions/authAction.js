@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 export const signUp = (userData) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post("http://localhost:3000/client/addsignup", userData);
+      const response = await axios.post("http://localhost:3001/client/Csignup", userData);
       dispatch({ type: "SIGNUP_SUCCESS", payload: response.data.user });
       toast.success("Success");
     } catch (error) {
@@ -28,7 +28,7 @@ export const signUp = (userData) => {
 export const login = (user) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post("http://localhost:3000/client/addlogin", user);
+      const response = await axios.post("http://localhost:3001/client/Clogin", user);
       dispatch({ type: "LOGIN_SUCCESS", payload: response.data.user });
       toast.success("Login successful");
     } catch (error) {

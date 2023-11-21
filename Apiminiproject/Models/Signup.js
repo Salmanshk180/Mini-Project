@@ -9,10 +9,14 @@ signupSchema = mongoose.Schema({
         type:String,
         requied:true,
     },
-   
     addedOn:{
         type:String
     },
+
+    otp: {
+        type: String,
+    },
+
     isActive:{
         type:Boolean,
         default:true
