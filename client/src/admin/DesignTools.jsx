@@ -12,7 +12,6 @@ const DesignTools = () => {
         <Nav className="px-2 ">
           <Nav.Link onClick={() => setSelectedNavItem('text')}>Text</Nav.Link>
           <Nav.Link  onClick={() => setSelectedNavItem('images')}>Images</Nav.Link>
-          <Nav.Link  onClick={() => setSelectedNavItem('shapes')}>Shapes</Nav.Link>
         </Nav>
       </Navbar>
 
@@ -33,14 +32,7 @@ const DesignTools = () => {
           </div>
         )}
 
-        {selectedNavItem === 'shapes' && (
-          <div>
-            {/* Shapes component content */}
-            
-            <Shapes></Shapes>
-            {/* Add shape-related functionality here */}
-          </div>
-        )}
+       
 
        
       </Container>

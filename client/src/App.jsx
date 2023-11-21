@@ -46,6 +46,7 @@ function App() {
           <Route exact path={"/admin/design-tools"} element={<AdminDashboard />} />
           <Route exact path={"/admin/design-tools/images"} element={<AdminDashboard />} />
           <Route exact path={"/admin/my-account"} element={<AdminDashboard />} />
+          <Route exact path={"/admin/template-editor"} element={<TemplateEditor></TemplateEditor>}/>
           <Route exact path={"/*"} element={<ErrorPage></ErrorPage>}></Route>
           <Route
             exact
