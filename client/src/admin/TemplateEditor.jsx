@@ -3,7 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import DesignNavbar from "./DesignNavbar";
 import DesignSidebar from "../clientSide/Components/DesignSidebar/DesignSidebar";
 import Canvas from "../clientSide/Components/Canvas/Canvas";
-import ComponentSidebar from "../clientSide/Components/componentSidebar/componentSidebar";
+import ComponentSidebar from "../clientSide/Components/ComponentSidebar/ComponentSidebar";
 import EditBar from "../clientSide/Components/EditBar/EditBar";
 const Design = () => {
   return (
