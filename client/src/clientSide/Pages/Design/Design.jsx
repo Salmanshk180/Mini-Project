@@ -4,6 +4,7 @@ import DesignNavbar from "../../Components/DesignMav/DesignNavbar";
 import DesignSidebar from "../../Components/DesignSidebar/DesignSidebar";
 import Canvas from "../../Components/Canvas/Canvas";
 import ComponentSidebar from "../../Components/componentSidebar/componentSidebar";
+import EditBar from "../../Components/EditBar/EditBar";
 const Design = () => {
   return (
     <Container fluid className="p-0 overflow-hidden vh-100">
