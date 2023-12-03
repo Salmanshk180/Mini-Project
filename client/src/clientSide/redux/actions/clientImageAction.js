@@ -1,11 +1,8 @@
-// imageAction.js
-export const ADD_IMAGES = "ADD_IMAGES";
-
-export const addImages = (img) => ({
-  type: ADD_IMAGES,
+export const ADD_CLIENT_IMAGES = "ADD_CLIENT_IMAGES";
+export const addClientImages = (img) => ({
+  type: ADD_CLIENT_IMAGES,
   payload: { img },
 });
-
 
 export const SET_IMAGES = "SET_IMAGES";
 

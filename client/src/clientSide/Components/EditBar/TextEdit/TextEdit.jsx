@@ -1,161 +1,220 @@
-import React, { useState } from "react";
-import { Button } from "react-bootstrap";
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import { SketchPicker } from "react-color";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  incrementFontSize,
-  decrementFontSize,
-} from "../../../redux/actions/textAction";
+import React, { useEffect, useState } from "react";
 import {
   AiOutlineAlignCenter,
   AiOutlineAlignLeft,
   AiOutlineAlignRight,
 } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
-const TextEdit = () => {
+import { SketchPicker } from "react-color";
+import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import {
+  updateHeading,
+  changeFontFamily,
+  updateTextColor,
+  updateTextAlignment,
+  toggleStyle,
+  updateBackgroundColor
+} from "../../../redux/actions/headingAction";
+
+const TextEdit = ({
+  selectedText,
+  setSelectedText,
+  selectedHeading,
+  selectedFontSize,
+  setSelectedFontSize,
+  handleDelete,
+  selectedFontFamily,
+  setSelectedFontFamily,
+  selectedTextColor,
+  setSelectedTextColor,
+  selectedTextAlignment,
+  setSelectedTextAlignment,
+  selectedBold,
+  selectedItalic,
+  selectedUnderline,
+  setSelectedBold,
+  setSelectedItalic,
+  setSelectedUnderline,
+  selectedBackgroundColor,
+  setSelectedBackgroundColor
+}) => {
+  const [text, setText] = useState(selectedText);
+  const [fontSize, setFontSize] = useState(selectedFontSize);
+  const [fontFamily, setFontFamily] = useState(selectedFontFamily);
+  const [textColor, setTextColor] = useState(" ");
+  const [bgColor, setBgColor] = useState("")
+  const standardFontSizes = [
+    8, 9, 10, 12, 14, 16, 18, 20, 22, 24, 28, 32, 39, 48, 58, 72, 96,
+  ];
+
+  const standardFontFamily = [
+    "Roboto sans",
+    "Times New Roman",
+    "Arial",
+    "Cambria",
+  ];
+
   const dispatch = useDispatch();
-  const fontSizes = useSelector((state) => state.text.fontSizes);
-  const selectedTextid = useSelector(
-    (state) => state.selectedText.selectedText
-  );
-  const handleIncrementFontSize = () => {
-    dispatch(incrementFontSize(selectedTextid));
+
+  useEffect(() => {
+    // Retrieve the state from localStorage when the component mounts
+    const storedText = localStorage.getItem("text") || selectedText;
+    const storedFontSize =
+      parseInt(localStorage.getItem("fontSize")) || selectedFontSize;
+    const storedFontFamily =
+      localStorage.getItem("fontFamily") || selectedFontFamily;
+
+    setText(storedText);
+    setFontSize(storedFontSize);
+    setFontFamily(storedFontFamily);
+  }, [selectedText, selectedFontSize, selectedFontFamily]);
+
+  const handleTextChange = (e) => {
+    setText(e.target.value);
+    setSelectedText(e.target.value);
   };
 
-  const handleDecrementFontSize = () => {
-    dispatch(decrementFontSize(selectedTextid));
+  const handleFontSizeChange = (e) => {
+    const newSize = parseInt(e.target.value);
+    setFontSize(newSize);
+    setSelectedFontSize(newSize);
+    dispatch(updateFontSize(selectedHeading, newSize));
   };
 
-  const [selectedfontStyle, setSelectedFontStyle] = useState("Roboto Sans");
-  const [selectedColor, setSelectedColor] = useState("#000000");
-  const handleColorChange = (color) => {
-    setSelectedColor(color.hex);
-  };
-  const [alignment, setAlignment] = useState("left");
+  const handleUpdate = () => {
+    // Save the state to localStorage when the text is updated
+    localStorage.setItem("text", text);
+    localStorage.setItem("fontSize", fontSize);
+    localStorage.setItem("fontFamily", fontFamily);
 
-  const alignText = (alignment) => {
-    setAlignment(alignment);
+    dispatch(updateHeading(selectedHeading, { text: text }));
   };
 
-  const textStyle = {
-    textAlign: alignment,
+  const handleFontFamilyChange = (e) => {
+    const newFontFamily = e.target.value;
+    setFontFamily(newFontFamily);
+    setSelectedFontFamily(newFontFamily);
+    dispatch(changeFontFamily(selectedHeading, newFontFamily));
   };
+
+  const handleTextColorChange = (color) => {
+    const newColor = color;
+    setTextColor(newColor);
+    setSelectedTextColor(newColor);
+    dispatch(updateTextColor(selectedHeading, newColor));
+  };
+ 
+  const handleBackgroundColorChange = (color) => {
+    const newColor = color;
+    setBgColor(newColor);
+    setSelectedBackgroundColor(newColor);
+    dispatch(updateBackgroundColor(selectedHeading, newColor));
+  }
+
+  const handleTextAlignmentChange = (alignment) => {
+    setSelectedTextAlignment(alignment);
+    dispatch(updateTextAlignment(selectedHeading, alignment));
+  };
+
+  const handleToggleStyle = (style) => {
+    dispatch(toggleStyle(selectedHeading, style));
+  };
+
   return (
     <div>
       <Navbar>
         <Container>
           <Nav>
-            <div className="d-flex align-items-baseline justify-content-between">
-              <select
-                name="fontStyle"
-                id="fontStyle"
-                style={{ border: "none", outline: "none" }}
-              >
-                <option value="Roboto sans">Roboto Sans</option>
-                <option value="Times New Roman">Times New Roman</option>
-                <option value="Cambria">Cambria</option>
-                <option value="Arial">Arial</option>
-              </select>
-              {/* <NavDropdown title="24" className='fw-bold'>
-                    <NavDropdown.Item>24</NavDropdown.Item>
-                    <NavDropdown.Item>35</NavDropdown.Item>
-                  </NavDropdown> */}
-              {/* <div
-              className="d-flex align-items-baseline"
-            style={{ border: "1px solid white" }} */}
-              {/* > */}
-              {/* <Button
-                className="mx-1"
-                style={{
-                  backgroundColor: "gray",
-                  color: "black",
-                  border: "none",
-                  padding: "5px",
-                }}
-                onClick={handleDecrementFontSize}
-              >
-                -
-                </Button>
-                <input
+            <div className="d-flex align-items-center justify-content-between">
+              <input
                 type="text"
-                value={selectedTextid ? fontSizes[selectedTextid] : 24}
-                style={{ width: "30px", textAlign: "center", border: "none" }}
-                ></input>
-                <Button
-                className="mx-1"
-                style={{
-                  backgroundColor: "gray",
-                  color: "black",
-                  border: "none",
-                  padding: "5px",
-                }}
-                onClick={handleIncrementFontSize}
-                >
-                +
-                </Button>
-              </div> */}
+                className="border-1 me-1"
+                value={text}
+                onChange={handleTextChange}
+              />
+              <button
+                className="me-1 p-1 btn btn-primary"
+                onClick={handleUpdate}
+              >
+                Update
+              </button>
               <select
-                className="ms-5 px-2"
-                name="fontSize"
-                style={{ border: "none", outline: "none" }}
+                name="fontFamily"
+                id="fontFamily"
+                value={fontFamily}
+                onChange={handleFontFamilyChange}
+                style={{ border: "1px solid black", outline: "none" }}
               >
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="12">12</option>
-                <option value="14">14</option>
-                <option value="16">16</option>
-                <option value="18">18</option>
-                <option value="20">20</option>
-                <option value="22">22</option>
-                <option value="24">24</option>
-                <option value="28">28</option>
-                <option value="32">32</option>
-                <option value="48">48</option>
-                <option value="72">72</option>
-                <option value="96">96</option>
+                {standardFontFamily.map((fontFamily) => (
+                  <option key={fontFamily} value={fontFamily}>
+                    {fontFamily}
+                  </option>
+                ))}
               </select>
-              <NavDropdown
-                className="ms-5 bg-white"
-                title={selectedColor}
-                style={{ width: "100px" }}
+
+              <select
+                className="mx-1"
+                name="fontSize"
+                value={fontSize}
+                onChange={handleFontSizeChange}
+                style={{ border: "1px solid black", outline: "none" }}
               >
-                <NavDropdown.Item style={{ backgroundColor: "white" }}>
-                  <SketchPicker
-                    color={selectedColor}
-                    onChange={handleColorChange}
-                  />
-                </NavDropdown.Item>
-              </NavDropdown>
-              <div className="d-flex align-items-baseline ms-5">
+                {standardFontSizes.map((size) => (
+                  <option key={size} value={size}>
+                    {size}
+                  </option>
+                ))}
+                {standardFontSizes.indexOf(fontSize) === -1 && (
+                  <option value={fontSize}>{fontSize}</option>
+                )}
+              </select>
+
+              <input
+                type="color"
+                value={selectedTextColor}
+                style={{ marginLeft: "10px", height: "25px" }}
+                onChange={(e) => handleTextColorChange(e.target.value)}
+              />
+               {/* <input
+                type="color"
+                value={selectedBackgroundColor}
+                style={{ marginLeft: "10px", height: "25px" }}
+                onChange={(e) => handleBackgroundColorChange(e.target.value)}
+              /> */}
+             <div className="d-flex align-items-center">
                 <button
-                  className=" mx-2 px-2 fs-5 fw-bold"
+                  className={`fs-5 fw-bold ${
+                    selectedBold ? "selected" : ""
+                  }`}
                   style={{
                     background: "white",
                     border: "none",
                     color: "#555555",
                     outline: "none",
                   }}
+                  onClick={() => handleToggleStyle("bold")}
                 >
                   B
                 </button>
                 <button
-                  className=" mx-2 px-2 fs-4 fw-bold fst-italic"
+                  className={`fs-4 fw-bold fst-italic ${
+                    selectedItalic ? "selected" : ""
+                  }`}
                   style={{
                     background: "white",
                     border: "none",
                     color: "#555555",
                     outline: "none",
                   }}
+                  onClick={() => handleToggleStyle("italic")}
                 >
-                  <pre>I</pre>
+                  <pre className="mt-3">I</pre>
                 </button>
                 <button
-                  className=" mx-2 px-2 fs-5 fw-bold"
+                  className={`fs-5 fw-bold ${
+                    selectedUnderline ? "selected" : ""
+                  }`}
                   style={{
                     background: "white",
                     border: "none",
@@ -163,32 +222,44 @@ const TextEdit = () => {
                     outline: "none",
                     textDecoration: "underline",
                   }}
+                  onClick={() => handleToggleStyle("underline")}
                 >
                   U
                 </button>
               </div>
-              <div className="alignment-buttons ms-5">
+              <div className="alignment-buttons d-flex">
                 <button
-                  style={{ backgroundColor: "white", border: "none" }}
-                  onClick={() => alignText("left")}
+                  style={{
+                    backgroundColor:
+                      selectedTextAlignment === "left" ? "#eee" : "white",
+                    border: "none",
+                  }}
+                  onClick={() => handleTextAlignmentChange("left")}
                 >
-                  <AiOutlineAlignLeft></AiOutlineAlignLeft>
+                  <AiOutlineAlignLeft />
                 </button>
                 <button
-                  style={{ backgroundColor: "white", border: "none" }}
-                  onClick={() => alignText("center")}
+                  style={{
+                    backgroundColor:
+                      selectedTextAlignment === "center" ? "#eee" : "white",
+                    border: "none",
+                  }}
+                  onClick={() => handleTextAlignmentChange("center")}
                 >
-                  <AiOutlineAlignCenter></AiOutlineAlignCenter>
+                  <AiOutlineAlignCenter />
                 </button>
                 <button
-                  style={{ backgroundColor: "white", border: "none" }}
-                  onClick={() => alignText("right")}
+                  style={{
+                    backgroundColor:
+                      selectedTextAlignment === "right" ? "#eee" : "white",
+                    border: "none",
+                  }}
+                  onClick={() => handleTextAlignmentChange("right")}
                 >
-                  <AiOutlineAlignRight></AiOutlineAlignRight>
+                  <AiOutlineAlignRight />
                 </button>
               </div>
               <button
-                className="ms-5"
                 style={{
                   backgroundColor: "white",
                   color: "black",
@@ -196,6 +267,7 @@ const TextEdit = () => {
                   border: "none",
                   fontSize: "20px",
                 }}
+                onClick={handleDelete}
               >
                 <MdDelete></MdDelete>
               </button>

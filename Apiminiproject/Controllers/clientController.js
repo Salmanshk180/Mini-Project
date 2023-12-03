@@ -6,197 +6,12 @@ const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const Login = require('../Models/Login');
 const Signup = require('../Models/Signup');
-const dotenv = require("dotenv");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs")
 require('dotenv').config();
+const ImageClient = require("../Models/imageUploadClient");
 
-//Login
-/*
-router.post('/addlogin', async (req, res) => {
-    // var objLogin = new login();
-    // objLogin.email = req.body.email,
-    // objLogin.password = req.body.password,
-    // objLogin.addedOn = new Date(),
-    // objLogin.isActive = true;
-    // console.log();
-
-    // const inserted = await objLogin.save();
-
-    // if (inserted != null) {
-    //     res.json({ result: "success", msg: "User Verified", data: 1 });
-    // } else {
-    //     res.json({ result: "failure", msg: "User Not Verified", data: 0 });
-    // }
-    try {
-        const { email, password } = req.body;
-    
-        // Find the user by their email
-        const user = await Signup.findOne({ email });
-    
-        if (!user) {
-          return res.status(401).json({ message: 'Invalid email or password' });
-        }
-    
-        // Compare the provided password with the hashed password in the database
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-    
-        if (!isPasswordValid) {
-          return res.status(401).json({ message: 'Invalid email or password' });
-        }
-    
-        // Generate a JSON Web Token (JWT) for authentication
-        const token = jwt.sign(
-          {
-            userId: user._id,
-            email: user.email,
-          },
-          process.env.SECRET_KEY, // Replace with your secret key
-          {
-            expiresIn: '1h', // Token expiration time (e.g., 1 hour)
-          }
-        );
-    
-        res.status(200).json({ message: 'Login successful', token, userId: user._id });
-      } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Login failed' });
-      }
-});
-router.post('/updateLogin',async (req, res) => {
-    console.log(req.body.id)
-        const objLogin = await login.updateOne({
-            _id: req.body.id
-        }, {
-            email: req.body.email,
-            password: req.body.password
-        });
-        
-        if (objLogin != null) {
-            res.json({ result: "success", msg: "User update", data: 1 });
-        } else {
-            res.json({ result: "failure", msg: "User Not update", data: 0 });
-        }
-});
-router.delete('/deleteLogin/:id', async (req, res) => {
-    console.log(req.params.id);
-    const objDeleteLogin = await login.updateOne({
-        _id: req.params.id
-    },{
-        isActive : false
-    });
-    if (objDeleteLogin != null) {
-        res.json({ result: "success", msg: "User deleted", data: 1 });
-    } else {
-        res.json({ result: "failure", msg: "User Not deleted", data: 0 });
-    }
-});
-router.get('/fetchLogin/:id', async (req, res) => {
-    const fetchLoginObj = await login.findOne({
-        _id: req.params.id
-    });
-
-    if (fetchLoginObj != null) {
-        res.json({ result: "success", msg: "User Fetch", data: fetchLoginObj });
-    } else {
-        res.json({ result: "failure", msg: "User Not Fetch", data: fetchLoginObj});
-    }
-});
-router.get('/fetchLogin', async (req, res) => {
-    const fetchLoginObj = await login.find({
-        isActive:true,
-    });
-
-    if (fetchLoginObj != null) {
-        res.json({ result: "success", msg: "User List Load", data: fetchLoginObj });
-    } else {
-        res.json({ result: "failure", msg: "unsuccessfull", data: fetchLoginObj});
-    }
-});
-*/
-//Signup
-/*
-router.post('/addsignup', async (req, res) => {
-    try {
-        const { email, password, confirmpassword } = req.body;
-
-        // Check if the email is already registered
-        const existingUser = await Signup.findOne({ email });
-
-        if (existingUser) {
-          return res.status(400).json({ message: 'Email is already registered' });
-        }
-        if (password !== confirmpassword) {
-            return res.status(400).json({ message: 'Password and Confirm Password do not match' });
-        }
-
-        // Hash the password before saving it to the database
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        // Create a new user and save it to the database
-        const newUser = new Signup({ email, password: hashedPassword });
-        await newUser.save();
-
-        res.status(201).json({ message: 'User registered successfully' });
-      } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'User registration failed' });
-      }
-
-});
-router.post('/updateSignup',async (req, res) => {
-    console.log(req.body.id)
-        const objSignup = await signup.updateOne({
-            _id: req.body.id
-        }, {
-            email: req.body.email,
-            password: req.body.password,
-            confirmpassword: req.body.confirmpassword,
-        });
-        
-        if (objSignup != null) {
-            res.json({ result: "success", msg: "User update", data: 1 });
-        } else {
-            res.json({ result: "failure", msg: "User Not update", data: 0 });
-        }
-});
-router.delete('/deleteSignup/:id', async (req, res) => {
-    console.log(req.params.id);
-    const objDeleteSignup = await signup.updateOne({
-        _id: req.params.id
-    },{
-        isActive : false
-    });
-    if (objDeleteSignup != null) {
-        res.json({ result: "success", msg: "User deleted", data: 1 });
-    } else {
-        res.json({ result: "failure", msg: "User Not deleted", data: 0 });
-    }
-});
-router.get('/fetchSignup/:id', async (req, res) => {
-    const fetchSignupObj = await signup.findOne({
-        _id: req.params.id
-    });
-
-    if (fetchSignupObj != null) {
-        res.json({ result: "success", msg: "User Fetch", data: fetchSignupObj });
-    } else {
-        res.json({ result: "failure", msg: "User Not Fetch", data: fetchSignupObj});
-    }
-});
-router.get('/fetchSignup', async (req, res) => {
-    const fetchSignupObj = await signup.find({
-        isActive:true,
-    });
-
-    if (fetchSignupObj != null) {
-        res.json({ result: "success", msg: "User List Load", data: fetchSignupObj });
-    } else {
-        res.json({ result: "failure", msg: "unsuccessfull", data: fetchSignupObj});
-    }
-});
-*/
 
 router.post("/Csignup", async (req, res) => {
     try {
@@ -312,7 +127,7 @@ router.post("/Csignup", async (req, res) => {
 
   router.get("/Cmyaccount", async (req, res) => {
     try {
-      const admins = await Admin.find({}, "name email");
+      const admins = await Signup.find({}, "name email");
       res.status(200).json(admins);
     } catch (error) {
       res.status(500).json({ message: "Error fetching information" });
@@ -345,4 +160,67 @@ router.post("/Csignup", async (req, res) => {
       res.status(500).json({ message: "Failed to delete account" });
     }
   });
+
+  const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './upload/clientImages');
+    },
+    filename: function (req, file, cb) {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+      cb(null, uniqueSuffix + path.extname(file.originalname));
+    },
+  });
+  
+  const upload = multer({ storage: storage });
+  
+  router.post('/images/upload', upload.single('image'), async (req, res) => {
+    try {
+      const imageName = req.file.filename;
+  
+      // Assuming you have a Mongoose model named 'Image'
+      await ImageClient.create({ image: imageName });
+  
+      res.json({ status: 'ok' });
+    } catch (error) {
+      res.json({ status: error.message || 'Unknown error occurred' });
+    }
+  });
+  router.get("/images", async (req, res) => {
+    try {
+      const data = await ImageClient.find({});
+      res.json({ status: 'ok', data });
+    } catch (error) {
+      res.json({ status: 'error', message: error.message || 'Unknown error occurred' });
+    }
+  });
+  
+  router.get("/images/:filename", async (req, res) => {
+    try {
+      const { filename } = req.params;
+  
+      const imagePath = path.join(__dirname, '../upload/clientImages', filename);
+  
+      // Read the image file
+      fs.readFile(imagePath, (err, data) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).json({ status: 'error', message: 'Error reading image file' });
+        }
+  
+        // Get the file extension
+        const extname = path.extname(filename).slice(1);
+  
+        // Set the appropriate content type
+        res.contentType(`image/${extname}`);
+  
+        // Send the image data
+        res.send(data);
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ status: 'error', message: error.message || 'Unknown error occurred' });
+    }
+  });
+
+  
 module.exports = router;

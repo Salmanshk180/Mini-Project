@@ -2,7 +2,6 @@ import React from "react";
 import { Card, Container, Row, Col, Form, Image } from "react-bootstrap";
 import { BiSearch } from "react-icons/bi";
 import { useDispatch } from "react-redux";
-import { addShape } from "../../redux/actions/shapeAction";
 
 const topCardsData = [
   {
@@ -85,7 +84,6 @@ const ShapeModule = () => {
       fillLinearGradientColorStops: [0, "red", 1, "yellow"],
     };
 
-    dispatch(addShape(newShape));
   };
   const renderSubCards = (subCards) => (
     <div className="d-flex flex-row flex-wrap" style={{ maxHeight: '200px', overflowY: 'auto' }}>

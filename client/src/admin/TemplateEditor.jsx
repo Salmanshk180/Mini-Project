@@ -21,7 +21,6 @@ const Design = () => {
           </div>
         </Col>
         <Col lg={8} className="my-auto p-0 bg-light">
-        <EditBar></EditBar>
         <Canvas></Canvas>
         </Col>
       </Row>

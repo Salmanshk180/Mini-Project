@@ -7,7 +7,7 @@ const TextEditor = () => {
   const [texts, setTexts] = useState([]);
   const [newText, setNewText] = useState("");
   const [fontSize, setFontSize] = useState(16);
-  const [fontColor, setFontColor] = useState("#000000");
+  const [textColor, setTextColor] = useState("#000000");
   const [textBackgroundColor, setTextBackgroundColor] = useState("#ffffff");
   const [textStyle, setTextStyle] = useState({
     bold: false,
@@ -30,7 +30,7 @@ const TextEditor = () => {
     const newTextObj = {
       text: newText,
       fontSize,
-      fontColor,
+      textColor,
       textBackgroundColor,
       textStyle: { ...textStyle },
       fontFamily,
@@ -314,14 +314,14 @@ const TextEditor = () => {
                         <Text
                           text={textObj.text}
                           fontSize={textObj.fontSize}
-                          fill={textObj.fontColor}
+                          fill={textObj.textColor}
                           fontStyle={
-                            textObj.textStyle.italic ? "italic" : "normal"
-                          }
+                            (textObj.textStyle.italic ? 'italic ' : '') +
+                            (textObj.textStyle.bold ? 'bold' : 'normal')
+                          }   
                           textDecoration={
                             textObj.textStyle.underline ? "underline" : "none"
                           }
-                          fontWeight={textObj.fontWeight}
                           fontFamily={textObj.fontFamily}
                           align={textObj.textAlignment}
                           width={textObj.text.length * textObj.fontSize}
@@ -361,10 +361,10 @@ const TextEditor = () => {
                     <Form.Label>Font Color</Form.Label>
                     <Form.Control
                       type="color"
-                      value={texts[selectedTextIndex]?.fontColor || fontColor}
+                      value={texts[selectedTextIndex]?.textColor || textColor}
                       onChange={(e) =>
                         texts[selectedTextIndex]
-                          ? updateTextProperties({ fontColor: e.target.value })
+                          ? updateTextProperties({ textColor: e.target.value })
                           : setFontColor(e.target.value)
                       }
                     />

@@ -1,98 +1,79 @@
-import React, { useState, useRef } from "react";
-import { Button, Card } from "react-bootstrap";
-import { MdUpload } from "react-icons/md";
-import { FaFileUpload } from "react-icons/fa";
-const UploadModule = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [imageArray, setImageArray] = useState([]);
-  const fileInputRef = useRef(null);
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Image,Card} from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { addClientImages } from '../../redux/actions/clientImageAction';
 
+const UploadModule = () => {
+  const [image, setImage] = useState(null);
+  const [allImage, setAllImage] = useState(null);
+  const dispatch = useDispatch();
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      // You can perform additional checks on the file here, e.g., file type, size, etc.
-      setSelectedImage(file);
+    setImage(file);
+  };
+
+  const handleUpload = async () => {
+    if (!image) {
+      return; // No image selected, handle this case accordingly
+    }
+
+    const formData = new FormData();
+    formData.append('image', image);
+
+    try {
+      await axios.post('http://localhost:3000/client/images/upload', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+
+      // Optionally, you can handle success here
+      console.log('Image uploaded successfully');
+
+      // Refresh the list of images after successful upload
+      getImage();
+    } catch (error) {
+      // Handle error
+      console.error('Error uploading image:', error);
+    }
+  };
+  const renderCard = (card, index) => (
+    <Card key={index} className="m-1 border-0 p-0">
+      <Card.Body className="p-0">
+        <Image
+          src={`http://localhost:3000/client/images/${card.image}`}
+          height={130}
+          width={130}
+          onClick={() => dispatch(addClientImages(card.image))}
+        />
+      </Card.Body>
+    </Card>
+  );
+  const getImage = async () => {
+    try {
+      const result = await axios.get('http://localhost:3000/client/images');
+      setAllImage(result.data.data);
+    } catch (error) {
+      console.error('Error fetching images:', error);
     }
   };
 
-  const handleUpload = () => {
-    if (selectedImage) {
-      // Add the selected image to the array (simulate storing in an array).
-      setImageArray([...imageArray, selectedImage]);
-      setSelectedImage(null);
-    }
-  };
+  useEffect(() => {
+    getImage();
+  }, []);
 
-  const handleChooseFile = () => {
-    fileInputRef.current.click();
-  };
   return (
-    <div className="mx-1 my-1 p-1" >
+    <div>
       <div>
-        {selectedImage ? (
-          <div className="d-flex flex-column">
-            <img
-              src={URL.createObjectURL(selectedImage)}
-              alt={selectedImage.name}
-              style={{ maxWidth: "100%", maxHeight: "150px" }}
-            />
-            <Button
-              variant="primary"
-              onClick={handleUpload}
-              disabled={!selectedImage}
-              className="mt-1"
-              style={{backgroundColor:"#fa7b05"}}
-            >
-              Upload
-            </Button>
-          </div>
-        ) : (
-          <>
-            <input
-              type="file"
-              accept="image/*" // You can specify the accepted file types
-              onChange={handleImageChange}
-              ref={fileInputRef}
-              style={{
-                display: "none",
-                visibility: "hidden",
-                position: "absolute",
-              }}
-            />
-            <div className="card" style={{borderRadius:"0px"}}>
-              <div className="card-body text-center">
-                <FaFileUpload
-                  className="fs-4"
-                  style={{ color: "#aaaaaa" }}
-                ></FaFileUpload>
-                <p style={{ color: "#aaaaaa" }}>Upload Images</p>
-                <Button
-                  variant="primary"
-                  className="mx-auto w-100 border-0"
-                  style={{ backgroundColor: "#fa7b05" }}
-                  onClick={handleChooseFile}
-                >
-                  Choose Image
-                </Button>
-              </div>
-            </div>
-          </>
-        )}
-        <Card className="mt-1" style={{borderRadius:"0px"}}>
-          <Card.Body>
-            <p style={{color:"#aaaaaa"}}>{imageArray.length} Images</p>
-            {imageArray.map((image, index) => (
-              <div key={index}>
-                <img
-                  src={URL.createObjectURL(image)}
-                  className="border-1"
-                  alt={image.name}
-                  style={{ maxWidth: "100%", maxHeight: "150px" }}
-                />
-              </div>
-            ))}
-          </Card.Body>
-        </Card>
+        <input type="file" accept="image/*" name="image" onChange={handleImageChange} />
+        <button onClick={handleUpload}>Upload</button>
+      </div>
+
+      <div className='d-flex'>
+      {allImage && allImage.length > 0 ? (
+            allImage.map((card, index) => renderCard(card, index))
+          ) : (
+            <p>No images available.</p>
+          )}
       </div>
     </div>
   );

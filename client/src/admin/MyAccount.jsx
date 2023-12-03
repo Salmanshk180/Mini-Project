@@ -6,6 +6,7 @@ import { css } from "@emotion/react";
 import { ClipLoader } from "react-spinners";
 import { useNavigate, useNavigation } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
 const override = css`
   display: block;
   margin: 0 auto;
@@ -36,6 +37,8 @@ const MyAccount = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const userToken = useSelector((state) => state.adminAuth.token);
 
   const validateEmail = (email) => {
     const re = /\S+@\S+\.\S+/;
@@ -61,20 +64,11 @@ const MyAccount = () => {
   };
 
   useEffect(() => {
-    const fetchAdminInfo = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:3000/admin/myaccount"
-        );
-        setAdminInfo(response.data[0]);
-        setEditedInfo(response.data[0]);
-      } catch (error) {
-        console.error("Error fetching admin info:", error);
-      }
-    };
-
-    fetchAdminInfo();
-  }, []);
+    // Fetch user data when the component mounts
+    if (userToken) {
+      dispatch(fetchUserData(userToken));
+    }
+  }, [dispatch, userToken]);
 
   const handleEdit = () => {
     setIsEditing(true);

@@ -117,7 +117,6 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "5h", // Expiry time for the token
     });
-
     // Return the token and any other necessary data
     res.status(200).json({ message: "Login successful", token });
   } catch (error) {
@@ -126,14 +125,18 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/myaccount", async (req, res) => {
+router.get("/myaccount/:id", async (req, res) => {
   try {
-    const admins = await Admin.find({}, "name email gender profilePicture");
+    const id = req.params.id;
+    const admins = await Admin.findById({id});
     res.status(200).json(admins);
   } catch (error) {
     res.status(500).json({ message: "Error fetching admin information" });
   }
 });
+
+
+
 router.put("/my-account/:id", async (req, res) => {
   try {
     const { name, email, gender } = req.body;
